@@ -21,11 +21,14 @@ public class PlayerController : CharacterMovementController
         if (Input.GetKeyDown(KeyCode.E)) BackHop();
         Walk(Input.GetAxis("Horizontal"));
         base.Update();
-        if (grounded && Mathf.Abs(velocity.x) > Mathf.Epsilon)
-            animator.SetInteger("AnimState", 2);
-        else
-            animator.SetInteger("AnimState", 0);
-        animator.SetBool("Grounded", grounded);
+        UpdateAnimationState();
 
+    }
+
+    private void UpdateAnimationState()
+    {
+        animator.SetBool("Grounded", grounded);
+        animator.SetBool("Running", Mathf.Abs(velocity.x)>0);
+        animator.SetFloat("yVelocity", velocity.y);
     }
 }
