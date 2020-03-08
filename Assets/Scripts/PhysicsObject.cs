@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PhysicsObject : MonoBehaviour
 {
+    [Header("Physics Settings")]
     public float minGroundNormalY = 0.65f;
     public float baseGravityModifier = 1f;
 
@@ -50,8 +51,9 @@ public class PhysicsObject : MonoBehaviour
 
     void FixedUpdate()
     {
-        velocity.y = (targetVelocity.y>0? targetVelocity.y : (velocity + gravityModifier * Physics2D.gravity * Time.fixedDeltaTime).y);
+        velocity += gravityModifier * Physics2D.gravity * Time.fixedDeltaTime;
         velocity.x = targetVelocity.x;
+        if (targetVelocity.y != 0) velocity.y = targetVelocity.y;
 
         grounded = false;
 
@@ -104,4 +106,6 @@ public class PhysicsObject : MonoBehaviour
         }
         rb2d.position += move.normalized * distance;
     }
+
+
 }

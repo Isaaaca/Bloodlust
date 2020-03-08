@@ -155,11 +155,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   minGroundNormalY: 0.65
   baseGravityModifier: 3.5
-  groundSpeed: 7
+  groundSpeed: 10
   airSpeed: 8
   jumpTakeOffSpeed: 15
-  smallJumpDuration: 0.01
+  smallJumpDuration: 0.04
   fallingGravityMultiplier: 1.3
   cancelJumpGravity: 3
   backHopDistance: 2.5
   backHopDuration: 0.32
+  dashDistance: 3.4
+  dashDuration: 0.32
+  health: 100
+  maxHealth: 100
+  lust: 0
+  maxLust: 0

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CharacterMovementController : PhysicsObject
 {
-
+    [Header("Movement Settings")]
     public float groundSpeed = 7f;
     public float airSpeed = 8f;
     public float jumpTakeOffSpeed = 15f;
@@ -13,18 +13,25 @@ public class CharacterMovementController : PhysicsObject
     public float cancelJumpGravity = 3;
     public float backHopDistance = 2.5f;
     public float backHopDuration = 0.32f;
+    public float dashDistance = 2.5f;
+    public float dashDuration = 0.32f;
 
     protected SpriteRenderer spriteRenderer;
     protected bool backHopping;
-    protected bool jumped;
+    protected bool dashing;
+    protected bool jumped = false;
+    protected bool dashed = false;
     protected bool facingRight=false;
     protected float backHopAirtime;
+    protected float dashAirtime;
     protected float smallJumpAirtime;
 
     private float xMovement;
+    private float yMovement;
     private bool jumpInput = false;
     private bool releasedJumpInput = true;
     private bool backHopInput = false;
+    private bool dashInput = false;
 
 
 
@@ -33,6 +40,7 @@ public class CharacterMovementController : PhysicsObject
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
         backHopAirtime = backHopDuration;
+        dashAirtime = dashDuration;
         smallJumpAirtime =0;
     }
 
@@ -53,9 +61,14 @@ public class CharacterMovementController : PhysicsObject
         jumpInput = false;
     }
 
-    public void Walk(float xVelocity)
+    public void HoriMove(float xVelocity)
     {
         xMovement = xVelocity;
+    }
+
+    public void VertMove(float yVelocity)
+    {
+        yMovement = yVelocity;
     }
 
     public bool BackHop()
@@ -63,6 +76,17 @@ public class CharacterMovementController : PhysicsObject
         if (grounded)
         {
             backHopInput = true;
+            return true;
+        }
+        return false;
+    }
+    
+    public bool Dash()
+    {
+        if (!dashed)
+        {
+            dashInput = true;
+            dashed = true;
             return true;
         }
         return false;
@@ -87,11 +111,13 @@ public class CharacterMovementController : PhysicsObject
             {
                 backHopping = true;
             }
+            
             //only reset when landing or standing still. Else might get reset mid-jump when still registered as grounded.
             if (velocity.y <=0f)
             {
                 smallJumpAirtime = smallJumpDuration;
                 jumped = false;
+                dashed = false;
             }
 
         }
@@ -100,7 +126,7 @@ public class CharacterMovementController : PhysicsObject
             if (jumped)
             {
 
-                if (smallJumpAirtime > 0 && velocity.y > 0)
+                if (smallJumpAirtime > 0 && velocity.y >= 0)
                 {
                     velocity.y = jumpTakeOffSpeed;
                     smallJumpAirtime -= Time.deltaTime;
@@ -116,6 +142,18 @@ public class CharacterMovementController : PhysicsObject
             }
         }
 
+        if (dashInput)
+        {
+            dashing = true;
+            if((facingRight? groundNormal.x>0 : groundNormal.x < 0)|| !grounded)
+            {
+                groundNormal = Vector2.up;
+                velocity.y = 0;
+                gravityModifier = 0;
+            }
+
+        }
+
 
         if (backHopping)
         {
@@ -129,9 +167,23 @@ public class CharacterMovementController : PhysicsObject
                 move.x = 0;
             }
         }
+        else if (dashing)
+        {
+            move.x = (facingRight ? 1 : -1) * dashDistance / dashDuration * (Mathf.Sin(dashAirtime / dashDuration * Mathf.PI - Mathf.PI / 2) + 1);
+            dashAirtime = dashAirtime - Time.deltaTime;
+            if (dashAirtime <= 0)
+            {
+                dashInput = false;
+                dashing = false;
+                dashAirtime = dashDuration;
+                move.x = 0;
+                gravityModifier = baseGravityModifier;
+            }
+        } 
         else
         {
             move.x = xMovement * (grounded ? groundSpeed : airSpeed);
+            move.y = yMovement * airSpeed;
             newFacingDir = (move.x == 0 ? facingRight : move.x > 0.00f);
         }
 
