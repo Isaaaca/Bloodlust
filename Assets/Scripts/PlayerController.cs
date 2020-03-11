@@ -17,6 +17,8 @@ public class PlayerController : CharacterMovementController, ICharacter
     void Start()
     {
         animator = GetComponent<Animator>();
+        contactFilter.useTriggers = false;
+        contactFilter.SetLayerMask(Physics2D.GetLayerCollisionMask(gameObject.layer));
     }
 
     protected override void Update()
@@ -44,7 +46,7 @@ public class PlayerController : CharacterMovementController, ICharacter
         }
         VertMove(Input.GetAxis("Vertical"));
         HoriMove(Input.GetAxis("Horizontal"));
-        if (Input.GetKeyDown(KeyCode.T)) TakeDamage(10f);
+        if (Input.GetKeyDown(KeyCode.T)) Attack(10f);
     }
 
     private void UpdateAnimationState()
@@ -52,6 +54,15 @@ public class PlayerController : CharacterMovementController, ICharacter
         animator.SetBool("Grounded", grounded);
         animator.SetBool("Running", Mathf.Abs(velocity.x)>0);
         animator.SetFloat("yVelocity", velocity.y);
+    }
+
+
+    public void Attack(float dmg)
+    {
+        if (!animator.GetCurrentAnimatorStateInfo(0).IsName("Attack"))
+        {
+            animator.SetTrigger("Attack");
+        }
     }
 
     public void TakeDamage(float dmg)

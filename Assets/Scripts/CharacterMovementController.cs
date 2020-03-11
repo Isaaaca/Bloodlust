@@ -192,6 +192,12 @@ public class CharacterMovementController : PhysicsObject
         {
             spriteRenderer.flipX = !spriteRenderer.flipX;
             facingRight = newFacingDir;
+
+            foreach (Transform child in transform)
+            {
+                child.localPosition = new Vector3(-child.localPosition.x,child.localPosition.y,child.localPosition.z);
+
+            }
         }
 
         targetVelocity = move;

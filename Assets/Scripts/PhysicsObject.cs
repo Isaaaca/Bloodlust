@@ -5,8 +5,10 @@ using UnityEngine;
 public class PhysicsObject : MonoBehaviour
 {
     [Header("Physics Settings")]
-    public float minGroundNormalY = 0.65f;
     public float baseGravityModifier = 1f;
+    public Collider2D body;
+
+    private readonly float minGroundNormalY = 0.65f;
 
     protected float gravityModifier;
     protected bool grounded;
@@ -73,7 +75,7 @@ public class PhysicsObject : MonoBehaviour
 
         if (distance > minMoveDistance)
         {
-            int count = rb2d.Cast(move, contactFilter, hitBuffer, distance + shellRadius);
+            int count = body.Cast(move, contactFilter, hitBuffer, distance + shellRadius);
             hitBufferList.Clear();
             for (int i = 0; i<count; i++)
             {
