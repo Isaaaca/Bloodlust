@@ -15,7 +15,7 @@ public class QuickTimeEvent : MonoBehaviour
 
     public State state;
     private List<KeyCode> passivistKeys;
-    private KeyCode nextPassiveKey;
+    private short nextPassiveKey;
     private KeyCode agressiveKey;
     public List<KeyCode> validKeys;
     public float duration;
@@ -35,13 +35,13 @@ public class QuickTimeEvent : MonoBehaviour
         agressiveKey = validKeys[i];
         passivistKeys = new List<KeyCode>(validKeys);
         passivistKeys.RemoveAt(i);
-        nextPassiveKey = passivistKeys[0];
+        nextPassiveKey = 0;
         aggroButton.GetComponentInChildren<Text>().text = agressiveKey.ToString();
         aggroButton.SetActive(true);
         for (int j = 0; j<passivistKeys.Count; j++)
         {
-             PassiveButtons[j].GetComponentInChildren<Text>().text = passivistKeys[j].ToString();
-             PassiveButtons[j].SetActive(true);
+            PassiveButtons[j].GetComponentInChildren<Text>().text = passivistKeys[j].ToString();
+            PassiveButtons[j].SetActive(true);
         }
     }
 
@@ -61,8 +61,15 @@ public class QuickTimeEvent : MonoBehaviour
         {
             if (Input.GetKey(agressiveKey))
                 state = State.PassedAggro;
-            else if (Input.GetKey(nextPassiveKey))
-                state = State.PassedPassive;
+            else if (Input.GetKey(passivistKeys[nextPassiveKey]))
+            {
+                
+                nextPassiveKey++;
+                if (nextPassiveKey>= passivistKeys.Count)
+                {
+                    state = State.PassedPassive;
+                }
+            }
         }
         countdownTimer -= Time.unscaledDeltaTime;
         if (countdownTimer <= 0f)
