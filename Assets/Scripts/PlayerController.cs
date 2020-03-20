@@ -9,8 +9,15 @@ public class PlayerController : CharacterMovementController, ICharacter
     public float maxHealth;
     public float lust;
     public float maxLust;
+    public Vector3 attackRangeCenter;
+    public float attackRange;
+
+    [Header("Child Scripts")]
+    [SerializeField] private QuickTimeEvent qte;
+    [SerializeField] private Hurtbox sword;
 
     private Animator animator;
+    private bool playerInControl;
 
 
 
@@ -19,11 +26,30 @@ public class PlayerController : CharacterMovementController, ICharacter
         animator = GetComponent<Animator>();
         contactFilter.useTriggers = false;
         contactFilter.SetLayerMask(Physics2D.GetLayerCollisionMask(gameObject.layer));
+        InvokeRepeating("UpdatePlayerControl", 2.0f, 2f);
     }
 
     protected override void Update()
     {
-        GetInputs();
+        if (!playerInControl)
+        {
+            if (qte.state != QuickTimeEvent.State.Neutral)
+            {
+                if (qte.state == QuickTimeEvent.State.Failed)
+                    Attack(10f);
+                else if (qte.state == QuickTimeEvent.State.PassedAggro)
+                {
+                    Attack(30f);
+                    Debug.Log("Aggro");
+                }
+
+                qte.enabled = false;
+                Time.timeScale = 1;
+            }
+            playerInControl = !qte.enabled;
+        }
+        else if (!animator.GetCurrentAnimatorStateInfo(0).IsName("Attack"))
+            GetInputs();
         base.Update();
         UpdateAnimationState();
 
@@ -56,6 +82,32 @@ public class PlayerController : CharacterMovementController, ICharacter
         animator.SetFloat("yVelocity", velocity.y);
     }
 
+    private void UpdatePlayerControl()
+    {
+        if (Random.value <= health.GetNormalised())
+        {
+            Collider2D[] hitColliders = Physics2D.OverlapCircleAll(transform.localPosition + attackRangeCenter, attackRange, LayerMask.GetMask("Enemy"));
+            if (hitColliders.Length > 0)
+            {
+                float minDis = float.MaxValue;
+                float distance;
+                for (int i = 0; i < hitColliders.Length; i++)
+                {
+                    //TODO: get closest
+                    distance = hitColliders[i].transform.position.x - transform.position.x;
+                    if (Mathf.Abs(distance) < Mathf.Abs(minDis)) minDis = distance;
+
+
+                }
+                if ((minDis > 0)!= facingRight) Turn();
+                qte.facingRight = facingRight;
+                qte.enabled = true;
+                Time.timeScale = 0;
+                playerInControl = false;
+            }
+        }
+    }
+
 
     public void Attack(float dmg)
     {
@@ -76,5 +128,12 @@ public class PlayerController : CharacterMovementController, ICharacter
                 animator.SetBool("Dead",true);
             }
         }
+    }
+
+    void OnDrawGizmosSelected()
+    {
+        // Draw a yellow sphere at the transform's position
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(transform.localPosition + attackRangeCenter, attackRange);
     }
 }

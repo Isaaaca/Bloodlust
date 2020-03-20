@@ -190,16 +190,23 @@ public class CharacterMovementController : PhysicsObject
 
         if (newFacingDir!=facingRight)
         {
-            spriteRenderer.flipX = !spriteRenderer.flipX;
-            facingRight = newFacingDir;
-
-            foreach (Transform child in transform)
-            {
-                child.localPosition = new Vector3(-child.localPosition.x,child.localPosition.y,child.localPosition.z);
-
-            }
+            Turn();
         }
 
         targetVelocity = move;
+    }
+
+    protected void Turn()
+    {
+        spriteRenderer.flipX = !spriteRenderer.flipX;
+        facingRight = !facingRight;
+
+        List<Transform> childTranforms = new List<Transform>(gameObject.GetComponentsInChildren<Transform>(true));
+        childTranforms.Remove(transform);
+        foreach (Transform child in childTranforms)
+        {
+            child.localPosition = new Vector3(-child.localPosition.x, child.localPosition.y, child.localPosition.z);
+
+        }
     }
 }
