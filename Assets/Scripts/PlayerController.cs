@@ -5,16 +5,14 @@ using UnityEngine;
 public class PlayerController : CharacterMovementController, ICharacter
 {
     [Header("Character Settings")]
-    public float health;
-    public float maxHealth;
-    public float lust;
-    public float maxLust;
     public Vector3 attackRangeCenter;
     public float attackRange;
 
     [Header("Child Scripts")]
     [SerializeField] private QuickTimeEvent qte;
     [SerializeField] private Hurtbox sword;
+    [SerializeField] private HealthMeter health;
+    [SerializeField] private LustMeter lust;
 
     private Animator animator;
     private bool playerInControl;
@@ -57,6 +55,8 @@ public class PlayerController : CharacterMovementController, ICharacter
 
     private void GetInputs()
     {
+        VertMove(Input.GetAxis("Vertical"));
+        HoriMove(Input.GetAxis("Horizontal"));
         if (Input.GetButtonDown("Jump"))
         {
             if (Jump())
@@ -68,10 +68,8 @@ public class PlayerController : CharacterMovementController, ICharacter
         {
             if (Dash())
                 animator.SetTrigger("Dash");
-
         }
-        VertMove(Input.GetAxis("Vertical"));
-        HoriMove(Input.GetAxis("Horizontal"));
+
         if (Input.GetKeyDown(KeyCode.T)) Attack(10f);
     }
 
@@ -113,17 +111,19 @@ public class PlayerController : CharacterMovementController, ICharacter
     {
         if (!animator.GetCurrentAnimatorStateInfo(0).IsName("Attack"))
         {
+            sword.SetDamage(dmg);
             animator.SetTrigger("Attack");
+            HoriMove(0f);
         }
     }
 
     public void TakeDamage(float dmg)
     {
-        if (health > 0)
+        if (health.Get() > 0)
         {
-            health = Mathf.Clamp(health-dmg,0,maxHealth);
+            health.Decrease(dmg);
             animator.SetTrigger("Hurt");
-            if(health == 0)
+            if(health.Get() == 0)
             {
                 animator.SetBool("Dead",true);
             }
