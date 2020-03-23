@@ -8,7 +8,7 @@ public class PhysicsObject : MonoBehaviour
     public float baseGravityModifier = 1f;
     public Collider2D body;
 
-    private readonly float minGroundNormalY = 0.65f;
+    [SerializeField] private float minGroundNormalY = 0.65f;
 
     protected float gravityModifier;
     protected bool grounded;

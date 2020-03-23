@@ -42,13 +42,13 @@ public class PlayerController : CharacterMovementController, ICharacter
                 }
 
                 qte.enabled = false;
-                Time.timeScale = 1;
             }
             playerInControl = !qte.enabled;
         }
         else if (!animator.GetCurrentAnimatorStateInfo(0).IsName("Attack"))
             GetInputs();
         base.Update();
+
         UpdateAnimationState();
 
     }
@@ -82,7 +82,7 @@ public class PlayerController : CharacterMovementController, ICharacter
 
     private void UpdatePlayerControl()
     {
-        if (Random.value <= health.GetNormalised())
+        if (Random.value <= lust.GetNormalised())
         {
             Collider2D[] hitColliders = Physics2D.OverlapCircleAll(transform.localPosition + attackRangeCenter, attackRange, LayerMask.GetMask("Enemy"));
             if (hitColliders.Length > 0)
@@ -97,10 +97,10 @@ public class PlayerController : CharacterMovementController, ICharacter
 
 
                 }
-                if ((minDis > 0)!= facingRight) Turn();
-                qte.facingRight = facingRight;
+                HoriMove(0f);
+                if ((minDis > 0) != facingRight)
+                    Turn();
                 qte.enabled = true;
-                Time.timeScale = 0;
                 playerInControl = false;
             }
         }
@@ -121,13 +121,18 @@ public class PlayerController : CharacterMovementController, ICharacter
     {
         if (health.Get() > 0)
         {
-            health.Decrease(dmg);
+            health.Modify(-dmg);
             animator.SetTrigger("Hurt");
             if(health.Get() == 0)
             {
                 animator.SetBool("Dead",true);
             }
         }
+    }
+
+    public void ModifyLust(float amt)
+    {
+        lust.Modify(amt);
     }
 
     void OnDrawGizmosSelected()

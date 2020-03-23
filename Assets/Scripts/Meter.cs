@@ -19,13 +19,7 @@ public class Meter: MonoBehaviour
         return max;
     }
 
-    public float Decrease(float amt)
-    {
-        current = Mathf.Clamp(current - amt, 0, max);
-        return current;
-    }
-
-    public float Increase(float amt)
+    public float Modify(float amt)
     {
         current = Mathf.Clamp(current + amt, 0, max);
         return current;

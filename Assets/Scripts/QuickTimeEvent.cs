@@ -14,12 +14,12 @@ public class QuickTimeEvent : MonoBehaviour
     }
 
     public State state;
+    public float duration;
+    public float slowDownSpeed;
     private List<KeyCode> passivistKeys;
     private short nextPassiveKey;
     private KeyCode agressiveKey;
     public List<KeyCode> validKeys;
-    public float duration;
-    public bool facingRight;
     private float countdownTimer;
     [SerializeField] private GameObject aggroButton;
     [SerializeField] private List<GameObject> PassiveButtons;
@@ -27,8 +27,6 @@ public class QuickTimeEvent : MonoBehaviour
     // Start is called before the first frame update
     void OnEnable()
     {
-        float dir=1f;
-        if (facingRight) dir = -1f;
         countdownTimer = duration;
         state = State.Neutral;
         int i = Random.Range(0, validKeys.Count);
@@ -76,6 +74,10 @@ public class QuickTimeEvent : MonoBehaviour
         {
             state = State.Failed;
         }
+        if (state == State.Neutral)
+            Time.timeScale = Mathf.Clamp(Time.timeScale - Time.unscaledDeltaTime * slowDownSpeed, 0, 1);
+        else
+            Time.timeScale = 1;
         
     }
 }
