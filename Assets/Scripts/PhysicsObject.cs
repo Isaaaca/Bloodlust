@@ -6,7 +6,9 @@ public class PhysicsObject : MonoBehaviour
 {
     [Header("Physics Settings")]
     public float baseGravityModifier = 1f;
+    public float drag = 0f;
     public Collider2D body;
+    public Collider2D foot;
 
     [SerializeField] private float minGroundNormalY = 0.65f;
 
@@ -53,7 +55,7 @@ public class PhysicsObject : MonoBehaviour
 
     void FixedUpdate()
     {
-        velocity += gravityModifier * Physics2D.gravity * Time.fixedDeltaTime;
+        velocity += gravityModifier * Physics2D.gravity * Time.fixedDeltaTime - velocity.normalized*(grounded ? 0 : drag);
         velocity.x = targetVelocity.x;
         if (targetVelocity.y != 0) velocity.y = targetVelocity.y;
 
@@ -61,12 +63,16 @@ public class PhysicsObject : MonoBehaviour
 
         Vector2 deltaposition = velocity * Time.fixedDeltaTime;
 
-        Vector2 move = Vector2.up * deltaposition.y;
+        Vector2 move; 
+        move = Vector2.up * deltaposition.y;
         Movement(move, true);
+
+        if (!grounded) SlopeCheck();
 
         Vector2 moveAlongGround = new Vector2(groundNormal.y, -groundNormal.x);
         move = (grounded? moveAlongGround:Vector2.right)* deltaposition.x ;
         Movement(move, false);
+
     }
 
     void Movement(Vector2 move, bool yMovement)
@@ -109,5 +115,25 @@ public class PhysicsObject : MonoBehaviour
         rb2d.position += move.normalized * distance;
     }
 
+    private void SlopeCheck()
+    {
+        hitBufferList.Clear();
+        int count = foot.Cast(Vector2.down, contactFilter, hitBuffer, shellRadius);
+        for (int i = 0; i < count; i++)
+        {
+            hitBufferList.Add(hitBuffer[i]);
+        }
 
+        for (int i = 0; i < hitBufferList.Count; i++)
+        {
+            Vector2 currentNormal = hitBufferList[i].normal;
+            if (currentNormal.y > minGroundNormalY)
+            {
+                grounded = true;
+                groundNormal = currentNormal;
+                currentNormal.x = 0;
+            }
+
+        }
+    }
 }

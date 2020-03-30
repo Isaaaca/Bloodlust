@@ -39,7 +39,7 @@ CapsuleCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 646048719}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 1
@@ -195,6 +195,7 @@ Transform:
   m_Children:
   - {fileID: 646048720}
   - {fileID: 2064072456}
+  - {fileID: 4568269167632425465}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -317,7 +318,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   baseGravityModifier: 3.5
+  drag: 0
   body: {fileID: 7886966670472717770}
+  frontEdge: {fileID: 4568269167632425465}
+  minGroundNormalY: 0.5
   groundSpeed: 10
   airSpeed: 8
   jumpTakeOffSpeed: 15
@@ -362,6 +366,36 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   max: 100
   current: 0
+--- !u!1 &7954275240101491146
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4568269167632425465}
+  m_Layer: 0
+  m_Name: foot
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4568269167632425465
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7954275240101491146}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.336, y: 0.057, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 7886966670472717771}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &8421274124623039063
 PrefabInstance:
   m_ObjectHideFlags: 0

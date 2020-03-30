@@ -9,10 +9,10 @@ public class PlayerController : CharacterMovementController, ICharacter
     public float attackRange;
 
     [Header("Child Scripts")]
-    [SerializeField] private QuickTimeEvent qte;
-    [SerializeField] private Hurtbox sword;
-    [SerializeField] private HealthMeter health;
-    [SerializeField] private LustMeter lust;
+    [SerializeField] private QuickTimeEvent qte = null;
+    [SerializeField] private Hurtbox sword = null;
+    [SerializeField] private HealthMeter health = null;
+    [SerializeField] private LustMeter lust = null;
 
     private Animator animator;
     private bool playerInControl;
@@ -140,5 +140,10 @@ public class PlayerController : CharacterMovementController, ICharacter
         // Draw a yellow sphere at the transform's position
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(transform.localPosition + attackRangeCenter, attackRange);
+    }
+
+    public void OnDeath()
+    {
+        throw new System.NotImplementedException();
     }
 }

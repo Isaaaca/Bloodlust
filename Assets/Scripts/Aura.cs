@@ -26,5 +26,12 @@ public class Aura : MonoBehaviour
         PlayerController player = other.GetComponent<PlayerController>();
         if(player!=null)
             player.ModifyLust(resultantStrength *Time.deltaTime);
-    } 
+    }
+
+    void OnDrawGizmosSelected()
+    {
+        // Draw a yellow sphere at the transform's position
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(transform.position, radius);
+    }
 }

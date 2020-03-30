@@ -6,8 +6,8 @@ using UnityEngine.UI;
 public class FillBarUI : MonoBehaviour
 {
 
-    [SerializeField] Image bar;
-    [SerializeField] Meter meter;
+    [SerializeField] Image bar = null;
+    [SerializeField] Meter meter = null;
 
     private void Update()
     {

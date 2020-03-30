@@ -103,6 +103,7 @@ public class CharacterMovementController : PhysicsObject
             {
                 groundNormal = Vector2.up;
                 jumped = true;
+                grounded = false;
                 releasedJumpInput = false;
                 gravityModifier = baseGravityModifier;
                 velocity.y = jumpTakeOffSpeed;
@@ -194,6 +195,7 @@ public class CharacterMovementController : PhysicsObject
         }
 
         targetVelocity = move;
+
     }
 
     protected void Turn()

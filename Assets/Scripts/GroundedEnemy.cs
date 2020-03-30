@@ -28,8 +28,14 @@ public class GroundedEnemy : CharacterMovementController, ICharacter
             animator.SetTrigger("Hurt");
             if (health == 0)
             {
-                animator.SetBool("Dead", true);
+                OnDeath();
             }
         }
+    }
+
+    public void OnDeath()
+    {
+        animator.SetBool("Dead", true);
+        Destroy(gameObject);
     }
 }

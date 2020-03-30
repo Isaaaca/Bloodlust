@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CharacterSelector_Bandit : MonoBehaviour {
 
-    [SerializeField] GameObject[] characters;
+    [SerializeField] GameObject[] characters = null;
 
     private int m_index = 0;
     private int m_maxIndex;

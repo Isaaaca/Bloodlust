@@ -21,8 +21,8 @@ public class QuickTimeEvent : MonoBehaviour
     private KeyCode agressiveKey;
     public List<KeyCode> validKeys;
     private float countdownTimer;
-    [SerializeField] private GameObject aggroButton;
-    [SerializeField] private List<GameObject> PassiveButtons;
+    [SerializeField] private GameObject aggroButton = null;
+    [SerializeField] private List<GameObject> PassiveButtons = new List<GameObject>();
 
     // Start is called before the first frame update
     void OnEnable()
