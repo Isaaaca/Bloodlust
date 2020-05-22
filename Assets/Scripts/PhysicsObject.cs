@@ -8,7 +8,6 @@ public class PhysicsObject : MonoBehaviour
     public float baseGravityModifier = 1f;
     public float drag = 0f;
     public Collider2D body;
-    public Collider2D foot;
 
     [SerializeField] private float minGroundNormalY = 0.65f;
 
@@ -118,7 +117,7 @@ public class PhysicsObject : MonoBehaviour
     private void SlopeCheck()
     {
         hitBufferList.Clear();
-        int count = foot.Cast(Vector2.down, contactFilter, hitBuffer, shellRadius);
+        int count = body.Cast(Vector2.down, contactFilter, hitBuffer, .2f);
         for (int i = 0; i < count; i++)
         {
             hitBufferList.Add(hitBuffer[i]);
