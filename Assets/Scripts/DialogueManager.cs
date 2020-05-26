@@ -66,7 +66,6 @@ public class DialogueManager : MonoBehaviour
 
     private void UpdateSelectionUI()
     {
-        print("poo");
         for (int i = 0; i < 3; i++)
         {
             if (i == currSelection-1) selectionImages[i].enabled = true;
