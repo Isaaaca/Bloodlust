@@ -54,70 +54,110 @@ public class PhysicsObject : MonoBehaviour
 
     void FixedUpdate()
     {
-        velocity += gravityModifier * Physics2D.gravity * Time.fixedDeltaTime - velocity.normalized*(grounded ? 0 : drag);
+
+        grounded = false;
+        if (velocity.y <= 0)
+        {
+            //GROUND CHECK
+            GroundCheck(Vector2.down);
+        }
+        
         velocity.x = targetVelocity.x;
         if (targetVelocity.y != 0) velocity.y = targetVelocity.y;
 
-        grounded = false;
+        if (!grounded)
+        {
+            velocity += gravityModifier * Physics2D.gravity * Time.fixedDeltaTime - velocity.normalized * (grounded ? 0 : drag);
+            Vector2 deltaposition = velocity * Time.fixedDeltaTime;
+            Movement(deltaposition.y * Vector2.up);
+            Movement(deltaposition.x * Vector2.right);
+        }
+        else
+        {
+            if (groundNormal.x == 0) GroundCheck(velocity);
+            Vector2 groundTangent = new Vector2(groundNormal.y, -groundNormal.x);
+            Vector2 deltaposition = groundTangent.normalized * velocity.magnitude*Mathf.Sign(velocity.x);
+            Movement(deltaposition * Time.fixedDeltaTime);
+        }
 
-        Vector2 deltaposition = velocity * Time.fixedDeltaTime;
+        /* velocity += gravityModifier * Physics2D.gravity * Time.fixedDeltaTime - velocity.normalized*(grounded ? 0 : drag);
+         velocity.x = targetVelocity.x;
+         if (targetVelocity.y != 0) velocity.y = targetVelocity.y;
 
-        Vector2 move; 
-        move = Vector2.up * deltaposition.y;
-        Movement(move, true);
+         grounded = false;
 
-        if (!grounded) SlopeCheck();
+         Vector2 deltaposition = velocity * Time.fixedDeltaTime;
 
-        Vector2 moveAlongGround = new Vector2(groundNormal.y, -groundNormal.x);
-        move = (grounded? moveAlongGround:Vector2.right)* deltaposition.x ;
-        Movement(move, false);
+         Vector2 move; 
+         move = Vector2.up * deltaposition.y;
+         Movement(move, true);
+
+         if (!grounded) SlopeCheck();
+
+         Vector2 moveAlongGround = new Vector2(groundNormal.y, -groundNormal.x);
+         move = (grounded? moveAlongGround:Vector2.right)* deltaposition.x ;
+         Movement(move, false);*/
 
     }
 
-    void Movement(Vector2 move, bool yMovement)
+    void Movement(Vector2 move)
     {
         float distance = move.magnitude;
+        
 
         if (distance > minMoveDistance)
         {
+
             int count = body.Cast(move, contactFilter, hitBuffer, distance + shellRadius);
             hitBufferList.Clear();
             for (int i = 0; i<count; i++)
             {
                 hitBufferList.Add(hitBuffer[i]);
             }
-
-            for (int i = 0; i < hitBufferList.Count; i++)
+            if (hitBufferList.Count > 0)
             {
-                Vector2 currentNormal = hitBufferList[i].normal;
-                if (currentNormal.y > minGroundNormalY)
+                int nearestHit = 0;
+                float smallestDistance = hitBufferList[0].distance;
+                for (int i = 1; i < hitBufferList.Count; i++)
                 {
-                    grounded = true;
-                    if (yMovement)
+                    if (hitBufferList[i].distance < smallestDistance)
                     {
-                        groundNormal = currentNormal;
-                        currentNormal.x = 0;
+                        nearestHit = i;
+                        smallestDistance = hitBufferList[i].distance;
                     }
                 }
 
-                float projection = Vector2.Dot(velocity, currentNormal);
-                if (projection<0)
+                Vector2 currentNormal = hitBufferList[nearestHit].normal;
+              /*  if (currentNormal.y > minGroundNormalY)
+                {
+                    grounded = true;
+                    groundNormal = currentNormal;
+                }*/
+                /*float projection = Vector2.Dot(velocity, currentNormal);
+                if (projection < 0)
                 {
                     velocity = velocity - projection * currentNormal;
-                }
+                }*/
+                //bonking ceiling
+                print("move: " + Mathf.Sign( move.y));
+                print("norm: " + Mathf.Sign(currentNormal.y));
 
-                float modifiedDistance = hitBufferList[i].distance - shellRadius;
+                if (velocity.y>0 && Mathf.Sign(move.y) != Mathf.Sign(currentNormal.y))
+                {
+                    velocity.y = 0;
+                }
+                float modifiedDistance = hitBufferList[nearestHit].distance - shellRadius;
                 distance = modifiedDistance < distance ? modifiedDistance : distance;
             }
-
+            
         }
         rb2d.position += move.normalized * distance;
     }
 
-    private void SlopeCheck()
+    private void GroundCheck(Vector2 direction)
     {
         hitBufferList.Clear();
-        int count = body.Cast(Vector2.down, contactFilter, hitBuffer, .2f);
+        int count = body.Cast(direction, contactFilter, hitBuffer, .1f);
         for (int i = 0; i < count; i++)
         {
             hitBufferList.Add(hitBuffer[i]);
@@ -130,7 +170,7 @@ public class PhysicsObject : MonoBehaviour
             {
                 grounded = true;
                 groundNormal = currentNormal;
-                currentNormal.x = 0;
+                velocity.y = 0;
             }
 
         }
