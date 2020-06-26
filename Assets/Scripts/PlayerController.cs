@@ -45,7 +45,7 @@ public class PlayerController : CharacterMovementController, ICharacter
             }
             playerInControl = !qte.enabled;
         }
-        else if (!animator.GetCurrentAnimatorStateInfo(0).IsName("Attack"))
+        else 
             GetInputs();
         base.Update();
 
@@ -55,28 +55,38 @@ public class PlayerController : CharacterMovementController, ICharacter
 
     private void GetInputs()
     {
-        VertMove(Input.GetAxis("Vertical"));
-        HoriMove(Input.GetAxis("Horizontal"));
-        if (Input.GetButtonDown("Jump"))
+        if (!animator.GetCurrentAnimatorStateInfo(0).IsName("Attack")
+            &&!animator.GetCurrentAnimatorStateInfo(0).IsName("Attack2"))
         {
-            if (Jump())
-                animator.SetTrigger("Jump");
+            HoriMove(Input.GetAxis("Horizontal"));
+            if (Input.GetButtonDown("Jump"))
+            {
+                if (Jump())
+                    animator.SetTrigger("Jump");
+            }
+            if (Input.GetKeyDown(KeyCode.E)) BackHop();
+            if (Input.GetKeyDown(KeyCode.O))
+            {
+                if (Dash())
+                    animator.SetTrigger("Dash");
+            }
+        }
+        else if (!grounded)
+        {
+            HoriMove(Input.GetAxis("Horizontal"));
+        }
+        else
+        {
+            HoriMove(0);
         }
         if (Input.GetButtonUp("Jump")) ReleaseJump();
-        if (Input.GetKeyDown(KeyCode.E)) BackHop();
-        if (Input.GetKeyDown(KeyCode.O))
-        {
-            if (Dash())
-                animator.SetTrigger("Dash");
-        }
-
         if (Input.GetKeyDown(KeyCode.T)) Attack(10f);
     }
 
     private void UpdateAnimationState()
     {
         animator.SetBool("Grounded", grounded);
-        animator.SetBool("Running", Mathf.Abs(velocity.x)>0);
+        animator.SetBool("Running", Mathf.Abs(targetVelocity.x)>0);
         animator.SetFloat("yVelocity", velocity.y);
     }
 
@@ -109,16 +119,20 @@ public class PlayerController : CharacterMovementController, ICharacter
 
     public void Attack(float dmg)
     {
-        if (!animator.GetCurrentAnimatorStateInfo(0).IsName("Attack"))
+        if (animator.GetCurrentAnimatorStateInfo(0).IsName("Attack")||animator.GetCurrentAnimatorStateInfo(0).IsName("Attack2"))
         {
-            sword.SetDamage(dmg);
-            animator.SetTrigger("Attack");
-            HoriMove(0f);
+            animator.SetTrigger("Attack2");
         }
+        else
+        {
+            animator.SetTrigger("Attack");
+        }
+        sword.SetDamage(dmg);
     }
 
     public void TakeDamage(float dmg)
     {
+
         if (health.Get() > 0)
         {
             health.Modify(-dmg);
