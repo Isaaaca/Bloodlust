@@ -10,7 +10,25 @@ public class SiblingRuleTile : RuleTile
         Poles,
         Terrain,
     }
+
+    public enum Type
+    {
+        Ground,
+        Oneway,
+    }
+
     public SibingGroup sibingGroup;
+    public Type type;
+
+    public bool IsGround()
+    {
+        return type == Type.Ground;
+    }
+
+    public bool IsOneWayPlatform()
+    {
+        return type == Type.Oneway;
+    }
 
     public override bool RuleMatch(int neighbor, TileBase other)
     {

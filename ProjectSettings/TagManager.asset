@@ -17,8 +17,8 @@ TagManager:
   - Enemy
   - Aura
   - Obstacle
-  - 
-  - 
+  - Projectile
+  - Ethereal
   - 
   - 
   - 
@@ -38,6 +38,9 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: Terrain
+    uniqueID: 1746842607
+    locked: 0
   - name: BG
     uniqueID: 917018931
     locked: 0

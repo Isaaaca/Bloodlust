@@ -186,6 +186,11 @@ PrefabInstance:
       propertyPath: health
       value: 30
       objectReference: {fileID: 0}
+    - target: {fileID: 4049534738265075151, guid: 7b3c985ea0f62214db95c3d5f2f09b3d,
+        type: 3}
+      propertyPath: foot
+      value: 
+      objectReference: {fileID: 4548584196659932627}
     - target: {fileID: 4049534738265075189, guid: 7b3c985ea0f62214db95c3d5f2f09b3d,
         type: 3}
       propertyPath: m_Sprite
@@ -223,3 +228,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 26fca73f03dc66745bf9fb4bd599cf92, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!4 &4548584196659932627 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6467711391776056094, guid: 7b3c985ea0f62214db95c3d5f2f09b3d,
+    type: 3}
+  m_PrefabInstance: {fileID: 7412428026326142669}
+  m_PrefabAsset: {fileID: 0}
