@@ -56,7 +56,7 @@ public class PhysicsObject : MonoBehaviour
     {
 
         grounded = false;
-        if (velocity.y <= 0)
+        if (velocity.y <= 0 && gravityModifier!=0)
         {
             //GROUND CHECK
             GroundCheck(Vector2.down);
@@ -139,9 +139,6 @@ public class PhysicsObject : MonoBehaviour
                     velocity = velocity - projection * currentNormal;
                 }*/
                 //bonking ceiling
-                print("move: " + Mathf.Sign( move.y));
-                print("norm: " + Mathf.Sign(currentNormal.y));
-
                 if (velocity.y>0 && Mathf.Sign(move.y) != Mathf.Sign(currentNormal.y))
                 {
                     velocity.y = 0;

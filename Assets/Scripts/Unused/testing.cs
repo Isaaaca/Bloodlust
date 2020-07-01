@@ -4,19 +4,20 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 
-public class testing : MonoBehaviour
+public class testing : CharacterMovementController
 {
-    public DialogueManager dm;
-    public Dialogue d;
+
     private void Start()
     {
-        dm.LoadDialogue(d);
     }
 
     // Update is called once per frame
-    void Update()
+    protected override void Update()
     {
-        
+        if (Input.GetKeyDown(KeyCode.I)){
+            Arc(Vector2.down, 1f, 2f, 1f, true, "linear","sine");
+        }
+        base.Update();
     }
    
 }

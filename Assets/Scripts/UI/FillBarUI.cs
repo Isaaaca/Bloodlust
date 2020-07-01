@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class FillBarUI : MonoBehaviour
+public abstract class FillBarUI : MonoBehaviour
 {
 
-    [SerializeField] Image bar = null;
-    [SerializeField] Meter meter = null;
+    [SerializeField] private Image bar = null;
+
+    protected Meter meter=null;
 
     private void Update()
     {

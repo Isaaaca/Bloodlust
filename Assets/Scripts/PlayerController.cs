@@ -2,33 +2,44 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerController : CharacterMovementController, ICharacter
+public class PlayerController : MonoBehaviour, ICharacter
 {
     [Header("Character Settings")]
     public Vector3 attackRangeCenter;
     public float attackRange;
+    public float backHopDistance = 2.5f;
+    public float backHopDuration = 0.32f;
+    public float dashDistance = 2.5f;
+    public float dashDuration = 0.32f;
+    public float invulnerabilityDuration = 0.32f;
+    [SerializeField] private Meter health = null;
+    [SerializeField] private Meter lust = null;
 
     [Header("Child Scripts")]
     [SerializeField] private QuickTimeEvent qte = null;
     [SerializeField] private Hurtbox sword = null;
-    [SerializeField] private HealthMeter health = null;
-    [SerializeField] private LustMeter lust = null;
 
+    private CharacterMovementController controller;
     private Animator animator;
     private bool playerInControl;
+    private bool dashed = false;
+    private bool hurt = false;
 
 
 
     void Start()
     {
         animator = GetComponent<Animator>();
-        contactFilter.useTriggers = false;
-        contactFilter.SetLayerMask(Physics2D.GetLayerCollisionMask(gameObject.layer));
+        controller = GetComponent<CharacterMovementController>();
         InvokeRepeating("UpdatePlayerControl", 2.0f, 2f);
     }
 
-    protected override void Update()
+    private void Update()
     {
+        if(controller.IsGrounded() && !controller.IsDashing())
+        {
+            dashed = false;
+        }
         if (!playerInControl)
         {
             if (qte.state != QuickTimeEvent.State.Neutral)
@@ -45,10 +56,12 @@ public class PlayerController : CharacterMovementController, ICharacter
             }
             playerInControl = !qte.enabled;
         }
-        else 
-            GetInputs();
-        base.Update();
+        else if (hurt)
+        {
 
+        }
+        else
+            GetInputs();
         UpdateAnimationState();
 
     }
@@ -58,36 +71,47 @@ public class PlayerController : CharacterMovementController, ICharacter
         if (!animator.GetCurrentAnimatorStateInfo(0).IsName("Attack")
             &&!animator.GetCurrentAnimatorStateInfo(0).IsName("Attack2"))
         {
-            HoriMove(Input.GetAxis("Horizontal"));
+            controller.HoriMove(Input.GetAxis("Horizontal"));
             if (Input.GetButtonDown("Jump"))
             {
-                if (Jump())
+                if (controller.Jump())
                     animator.SetTrigger("Jump");
             }
-            if (Input.GetKeyDown(KeyCode.E)) BackHop();
-            if (Input.GetKeyDown(KeyCode.O))
+            if (controller.IsGrounded() && Input.GetKeyDown(KeyCode.E))
             {
-                if (Dash())
+                Vector2 dir = controller.IsFacingRight() ? Vector2.left : Vector2.right;
+                if (controller.Dash(dir, backHopDistance, backHopDuration, false, "Sine"))
+                {
                     animator.SetTrigger("Dash");
+                }
+            }
+            if (!dashed && Input.GetKeyDown(KeyCode.O))
+            {
+                Vector2 dir = controller.IsFacingRight() ? Vector2.right : Vector2.left;
+                if (controller.Dash(dir, dashDistance, dashDuration, true, "Sine"))
+                {
+                    dashed = true;
+                    animator.SetTrigger("Dash");
+                } 
             }
         }
-        else if (!grounded)
+        else if (!controller.IsGrounded())
         {
-            HoriMove(Input.GetAxis("Horizontal"));
+            controller.HoriMove(Input.GetAxis("Horizontal"));
         }
         else
         {
-            HoriMove(0);
+            controller.HoriMove(0);
         }
-        if (Input.GetButtonUp("Jump")) ReleaseJump();
+        if (Input.GetButtonUp("Jump")) controller.ReleaseJump();
         if (Input.GetKeyDown(KeyCode.T)) Attack(10f);
     }
 
     private void UpdateAnimationState()
     {
-        animator.SetBool("Grounded", grounded);
-        animator.SetBool("Running", Mathf.Abs(targetVelocity.x)>0);
-        animator.SetFloat("yVelocity", velocity.y);
+        animator.SetBool("Grounded", controller.IsGrounded());
+        animator.SetBool("Running", Mathf.Abs(controller.GetVelocity().x)>0);
+        animator.SetFloat("yVelocity", controller.GetVelocity().y);
     }
 
     private void UpdatePlayerControl()
@@ -107,9 +131,9 @@ public class PlayerController : CharacterMovementController, ICharacter
 
 
                 }
-                HoriMove(0f);
-                if ((minDis > 0) != facingRight)
-                    Turn();
+                controller.HoriMove(0f);
+                if ((minDis > 0) != controller.IsFacingRight())
+                    controller.Turn();
                 qte.enabled = true;
                 playerInControl = false;
             }
@@ -159,5 +183,15 @@ public class PlayerController : CharacterMovementController, ICharacter
     public void OnDeath()
     {
         throw new System.NotImplementedException();
+    }
+
+    public Meter GetHealth()
+    {
+        return health;
+    }
+    
+    public Meter GetLust()
+    {
+        return lust;
     }
 }

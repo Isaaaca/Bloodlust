@@ -5,8 +5,7 @@ using UnityEngine;
 public class GroundedEnemy : CharacterMovementController, ICharacter
 {
     [Header("Character Settings")]
-    public float health = 100;
-    public float maxHealth =100;
+    public Meter health;
     public float lust;
     public float maxLust;
 
@@ -22,11 +21,11 @@ public class GroundedEnemy : CharacterMovementController, ICharacter
 
     public void TakeDamage(float dmg)
     {
-        if (health > 0)
+        if (health.Get() > 0)
         {
-            health = Mathf.Clamp(health - dmg, 0, maxHealth);
+            health.Set(Mathf.Clamp(health.Get() - dmg, 0, health.GetMax()));
             animator.SetTrigger("Hurt");
-            if (health == 0)
+            if (health.Get() == 0)
             {
                 OnDeath();
             }
@@ -37,5 +36,10 @@ public class GroundedEnemy : CharacterMovementController, ICharacter
     {
         animator.SetBool("Dead", true);
         Destroy(gameObject);
+    }
+
+    public Meter GetHealth()
+    {
+        return health;
     }
 }

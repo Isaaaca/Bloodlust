@@ -9,6 +9,7 @@ public class SiblingRuleTile : RuleTile
     {
         Poles,
         Terrain,
+        Brambles
     }
 
     public enum Type

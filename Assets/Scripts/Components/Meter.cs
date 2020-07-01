@@ -1,6 +1,8 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
-public class Meter: MonoBehaviour
+[Serializable]
+public class Meter
 {
     [SerializeField] protected float max;
     [SerializeField] protected float current;

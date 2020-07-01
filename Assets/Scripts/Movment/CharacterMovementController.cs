@@ -11,36 +11,52 @@ public class CharacterMovementController : PhysicsObject
     public float smallJumpDuration = 0.01f;
     public float fallingGravityMultiplier = 1.3f;
     public float cancelJumpGravity = 3;
-    public float backHopDistance = 2.5f;
-    public float backHopDuration = 0.32f;
-    public float dashDistance = 2.5f;
-    public float dashDuration = 0.32f;
 
     protected SpriteRenderer spriteRenderer;
-    protected bool backHopping;
     protected bool dashing;
+    protected bool arcing;
     protected bool jumped = false;
-    protected bool dashed = false;
     protected bool facingRight=false;
-    protected float backHopAirtime;
-    protected float dashAirtime;
-    protected float smallJumpAirtime;
+    private float smallJumpAirtime;
 
+    private float dashElapsedTime;
+    private float mdashDistance = 2.5f;
+    private float mdashDuration = 0.32f;
+    private bool dashInput = false;
+    private Vector2 dashDir;
+    private VelocityFunctions dashFunction;
+
+    
+    private float arcElapsedTime;
+    private float arcHeight = 0.32f;
+    private float arcWidth = 0.32f;
+    private float arcDuration = 0.32f;
+    private bool arcInput = false;
+    private Vector2 arcHeightDir;
+    private Vector2 arcWidthDir;
+    private VelocityFunctions arcWfunc;
+    private VelocityFunctions arcHfunc;
+    
     private float xMovement;
     private float yMovement;
     private bool jumpInput = false;
     private bool releasedJumpInput = true;
-    private bool backHopInput = false;
-    private bool dashInput = false;
+    private bool turning = false;
 
+    private enum VelocityFunctions
+    {
+        Sine,
+        EaseIn,
+        EaseOut,
+        Linear
+    }
 
 
     // Start is called before the first frame update
     void Awake()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
-        backHopAirtime = backHopDuration;
-        dashAirtime = dashDuration;
+        dashElapsedTime = mdashDuration;
         smallJumpAirtime =0;
     }
 
@@ -71,25 +87,61 @@ public class CharacterMovementController : PhysicsObject
         yMovement = yVelocity;
     }
 
-    public bool BackHop()
+    public bool Dash(Vector2 direction, float distance, float duration, bool turn, string fucntion)
     {
-        if (grounded)
-        {
-            backHopInput = true;
-            return true;
-        }
-        return false;
-    }
-    
-    public bool Dash()
-    {
-        if (!dashed)
+        if (System.Enum.TryParse(fucntion, true, out dashFunction))
         {
             dashInput = true;
-            dashed = true;
-            return true;
+            dashDir = direction.normalized;
+            mdashDistance = distance;
+            mdashDuration = duration;
+            dashElapsedTime = 0;
+            turning = turn;
         }
-        return false;
+        else
+            return false;
+        return true;
+        
+    }
+
+    public bool Arc(Vector2 direction, float height, float width, float duration, bool turn, string xfucntion, string yfunction)
+    {
+        if (System.Enum.TryParse(xfucntion, true, out arcWfunc)
+            && System.Enum.TryParse(yfunction, true, out arcHfunc))
+        {
+            arcInput = true;
+            arcHeightDir = direction.normalized;
+            arcWidthDir = new Vector2(-arcHeightDir.y,arcHeightDir.x);
+            arcHeight = Mathf.Abs(height);
+            arcWidth = width;
+            arcDuration = duration;
+            arcElapsedTime = 0;
+            turning = turn;
+        }
+        else 
+            return false;
+        return true;
+    }
+    
+    public bool IsFacingRight()
+    {
+        return facingRight;
+    }
+     public bool IsGrounded()
+    {
+        return grounded;
+    }
+     public bool IsDashing()
+    {
+        return dashing;
+    }
+     public bool IsArcing()
+    {
+        return arcing;
+    }
+     public Vector2 GetVelocity()
+    {
+        return velocity;
     }
 
     protected override void ComputeVelocity()
@@ -108,17 +160,12 @@ public class CharacterMovementController : PhysicsObject
                 gravityModifier = baseGravityModifier;
                 velocity.y = jumpTakeOffSpeed;
             }
-            if (backHopInput)
-            {
-                backHopping = true;
-            }
             
             //only reset when landing or standing still. Else might get reset mid-jump when still registered as grounded.
             if (velocity.y <=0f)
             {
                 smallJumpAirtime = smallJumpDuration;
                 jumped = false;
-                dashed = false;
             }
 
         }
@@ -146,6 +193,10 @@ public class CharacterMovementController : PhysicsObject
         if (dashInput)
         {
             dashing = true;
+            if (turning && dashDir.x!=0)
+            {
+                facingRight = dashDir.x > 0;
+            }
             if((facingRight? groundNormal.x>0 : groundNormal.x < 0)|| !grounded)
             {
                 groundNormal = Vector2.up;
@@ -154,32 +205,48 @@ public class CharacterMovementController : PhysicsObject
             }
 
         }
-
-
-        if (backHopping)
+        
+        if (arcInput)
         {
-            move.x = (facingRight ? -1 : 1) * backHopDistance / backHopDuration * (Mathf.Sin(backHopAirtime / backHopDuration * Mathf.PI - Mathf.PI / 2) + 1);
-            backHopAirtime = backHopAirtime - Time.deltaTime;
-            if (backHopAirtime <= 0)
-            {
-                backHopInput = false;
-                backHopping = false;
-                backHopAirtime = backHopDuration;
-                move.x = 0;
-            }
+            arcing = true;
+
         }
-        else if (dashing)
+
+
+        if (dashing)
         {
-            move.x = (facingRight ? 1 : -1) * dashDistance / dashDuration * (Mathf.Sin(dashAirtime / dashDuration * Mathf.PI - Mathf.PI / 2) + 1);
-            dashAirtime = dashAirtime - Time.deltaTime;
-            if (dashAirtime <= 0)
+            dashElapsedTime += Time.deltaTime;
+            if (dashElapsedTime >= mdashDuration)
             {
                 dashInput = false;
                 dashing = false;
-                dashAirtime = dashDuration;
-                move.x = 0;
+                velocity = Vector2.zero;
                 gravityModifier = baseGravityModifier;
             }
+            else
+                move = ParametricMovement(dashDir, mdashDistance, mdashDuration, dashElapsedTime, dashFunction);
+        }
+        else if (arcing)
+        {
+            if (arcElapsedTime >= arcDuration)
+            {
+                arcInput = false;
+                arcing = false;
+                velocity = Vector2.zero;
+                gravityModifier = baseGravityModifier;
+            }
+            else
+            {
+                move = BoomerangMovement(arcHeightDir, arcHeight, arcDuration, arcElapsedTime, arcHfunc);
+
+                if (arcWidth != 0)
+                {
+                    move += ParametricMovement(arcWidthDir, arcWidth, arcDuration, arcElapsedTime, arcWfunc);
+                }
+                arcElapsedTime += Time.deltaTime;
+            }
+           
+           
         } 
         else
         {
@@ -198,7 +265,54 @@ public class CharacterMovementController : PhysicsObject
 
     }
 
-    protected void Turn()
+    private Vector2 ParametricMovement(Vector2 dir, float distance, float duration, float elapsedTime, VelocityFunctions velocityFunction)
+    {
+        Vector2 result = Vector2.zero;
+        switch (velocityFunction)
+        {
+            case VelocityFunctions.Linear:
+                result = dir * distance / duration;
+                break;
+            case VelocityFunctions.EaseOut:
+                result = dir * distance * 3 / duration * Mathf.Pow(elapsedTime / duration, 2f);
+                break;
+            case VelocityFunctions.EaseIn:
+                result = dir * distance * 3 / 2 / duration * (-Mathf.Pow(elapsedTime / duration, 2f) + 2 * (elapsedTime / duration));
+                break;
+            case VelocityFunctions.Sine:
+                result = dir * distance / duration * (Mathf.Sin(elapsedTime / duration * Mathf.PI - Mathf.PI / 2) + 1);
+                break;
+        }
+
+        return result;
+    }
+     private Vector2 BoomerangMovement(Vector2 dir, float distance, float duration, float elapsedTime, VelocityFunctions velocityFunction)
+    {
+        Vector2 result = Vector2.zero;
+        switch (velocityFunction)
+        {
+            case VelocityFunctions.Linear:
+                result = dir * distance * 8 / duration * (-2 * elapsedTime / duration + 1);
+                break;
+            case VelocityFunctions.EaseOut:
+                result = dir * distance * 6 / duration * Mathf.Pow(elapsedTime / duration, 2f);
+                if (elapsedTime >= 0.794f * duration)
+                    result = -result;
+                break;
+            case VelocityFunctions.EaseIn:
+                result = dir * distance * 3  / duration * (-Mathf.Pow(elapsedTime / duration, 2f) + 2 * (elapsedTime / duration));
+                if (elapsedTime >= 0.653f * duration)
+                    result = -result;
+                break;
+            case VelocityFunctions.Sine:
+                result = dir * distance *Mathf.PI/ duration * (Mathf.Cos(elapsedTime / duration * Mathf.PI));
+                break;
+        }
+
+        return result;
+    }
+
+    public void Turn()
     {
         spriteRenderer.flipX = !spriteRenderer.flipX;
         facingRight = !facingRight;

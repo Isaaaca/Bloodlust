@@ -5,12 +5,11 @@ using UnityEngine;
 public class FlutteringEnemyController : CharacterMovementController, ICharacter
 {
     [Header("Character Settings")]
-    public float health = 10;
-    public float maxHealth = 10; 
     public float range = 10;
     public float pauseTime = 2;
-    
-    
+    [SerializeField] private Meter health = null;
+
+
     private Animator animator;
     private float timer;
     private Vector2 targetPoint;
@@ -62,11 +61,11 @@ public class FlutteringEnemyController : CharacterMovementController, ICharacter
 
     public void TakeDamage(float dmg)
     {
-        if (health > 0)
+        if (health.Get() > 0)
         {
-            health = Mathf.Clamp(health - dmg, 0, maxHealth);
+            health.Set(Mathf.Clamp(health.Get() - dmg, 0, health.GetMax()));
             animator.SetTrigger("Hurt");
-            if (health == 0)
+            if (health.Get() == 0)
             {
                 animator.SetBool("Dead", true);
             }
@@ -84,5 +83,10 @@ public class FlutteringEnemyController : CharacterMovementController, ICharacter
         Gizmos.color = Color.green;
         Gizmos.DrawWireSphere(transform.localPosition, range);
         Gizmos.DrawIcon(targetPoint, "target");
+    }
+
+    public Meter GetHealth()
+    {
+        return health;
     }
 }

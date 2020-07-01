@@ -19,7 +19,7 @@ public class Hurtbox : MonoBehaviour
 
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnCollisionStay2D(Collision2D collision)
     {
         Collider2D col = collision.collider;
         ICharacter other = col.GetComponent<ICharacter>();
