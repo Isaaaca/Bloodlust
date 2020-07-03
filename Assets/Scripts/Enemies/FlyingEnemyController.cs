@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FlyingEnemyController : CharacterMovementController, ICharacter
+public class FlyingEnemyController : Character
 {
     public enum State
     {
@@ -13,7 +13,6 @@ public class FlyingEnemyController : CharacterMovementController, ICharacter
     [HideInInspector] public State state = State.patrol;
 
     [Header("Character Settings")]
-    [SerializeField] private Meter health = null;
     [SerializeField] private float aggroRange = 0;
     [SerializeField] private float deaggroRange = 0;
     [SerializeField] private float lungeRange = 0;
@@ -25,25 +24,24 @@ public class FlyingEnemyController : CharacterMovementController, ICharacter
     private int nextWaypoint = 1;
     private int step = 1;
     private float windUpTimer = 0;
-    private Animator animator;
     private GameObject player;
     private bool aggro = false;
     private bool windingUp = false;
     private Vector2 lungeDir= Vector2.zero;
     // Start is called before the first frame update
-    void Start()
+    protected override void Start()
     {
-        animator = GetComponent<Animator>();
+        base.Start();
         wayPoints[0] = transform.position;
         player = GameObject.Find("Player");
     }
 
     // Update is called once per frame
-    protected override void Update()
+    protected void Update()
     {
         Vector2 vectToPlayer = (Vector2)player.transform.position - rb2d.position;
         float distance = vectToPlayer.magnitude;
-        if (!arcing)
+        if (!controller.IsArcing())
         {
             if (distance < lungeRange && vectToPlayer.y<=0)
             {
@@ -68,15 +66,15 @@ public class FlyingEnemyController : CharacterMovementController, ICharacter
                 windUpTimer += Time.deltaTime;
                 if (windUpTimer >= windUpTime)
                 {
-                    Arc(Vector2.down, lungeDir.y, lungeDir.x * 2, diveDuration, true, "linear", "sine");
+                    controller.Arc(Vector2.down, lungeDir.y, lungeDir.x * 2, diveDuration, true, "linear", "sine");
                     windUpTimer = 0;
                     windingUp = false;
                 }
                 else
                 { 
-                    velocity = Vector2.zero;
-                    HoriMove(0);
-                    VertMove(0);
+                    controller.SetVelocity(Vector2.zero);
+                    controller.HoriMove(0);
+                    controller.VertMove(0);
                 }
             }
             else
@@ -108,31 +106,10 @@ public class FlyingEnemyController : CharacterMovementController, ICharacter
                     dir = dir.normalized;
                 }
 
-                HoriMove(dir.x);
-                VertMove(dir.y);
+                controller.HoriMove(dir.x);
+                controller.VertMove(dir.y);
             }
         }
-        
-        
-        base.Update();
-    }
-
-    public void TakeDamage(float dmg)
-    {
-        if (health.Get() > 0)
-        {
-            health.Modify(-dmg);
-            animator.SetTrigger("Hurt");
-            if (health.Get() == 0)
-            {
-                animator.SetBool("Dead", true);
-            }
-        }
-    }
-
-    public void OnDeath()
-    {
-        Destroy(gameObject);
     }
 
     void OnDrawGizmosSelected()
@@ -144,10 +121,5 @@ public class FlyingEnemyController : CharacterMovementController, ICharacter
         Gizmos.DrawWireSphere(transform.localPosition, aggroRange);
         Gizmos.color = Color.green;
         Gizmos.DrawWireSphere(transform.localPosition, deaggroRange);
-    }
-
-    public Meter GetHealth()
-    {
-        throw new System.NotImplementedException();
     }
 }

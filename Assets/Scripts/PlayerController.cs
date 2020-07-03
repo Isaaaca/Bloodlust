@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour, ICharacter
+public class PlayerController : Character
 {
     [Header("Character Settings")]
     public Vector3 attackRangeCenter;
@@ -12,25 +12,21 @@ public class PlayerController : MonoBehaviour, ICharacter
     public float dashDistance = 2.5f;
     public float dashDuration = 0.32f;
     public float invulnerabilityDuration = 0.32f;
-    [SerializeField] private Meter health = null;
     [SerializeField] private Meter lust = null;
 
     [Header("Child Scripts")]
     [SerializeField] private QuickTimeEvent qte = null;
     [SerializeField] private Hurtbox sword = null;
 
-    private CharacterMovementController controller;
-    private Animator animator;
     private bool playerInControl;
     private bool dashed = false;
     private bool hurt = false;
 
 
 
-    void Start()
+    protected override void Start()
     {
-        animator = GetComponent<Animator>();
-        controller = GetComponent<CharacterMovementController>();
+        base.Start();
         InvokeRepeating("UpdatePlayerControl", 2.0f, 2f);
     }
 
@@ -154,7 +150,7 @@ public class PlayerController : MonoBehaviour, ICharacter
         sword.SetDamage(dmg);
     }
 
-    public void TakeDamage(float dmg)
+    public override void TakeDamage(float dmg)
     {
 
         if (health.Get() > 0)
@@ -178,16 +174,6 @@ public class PlayerController : MonoBehaviour, ICharacter
         // Draw a yellow sphere at the transform's position
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(transform.localPosition + attackRangeCenter, attackRange);
-    }
-
-    public void OnDeath()
-    {
-        throw new System.NotImplementedException();
-    }
-
-    public Meter GetHealth()
-    {
-        return health;
     }
     
     public Meter GetLust()

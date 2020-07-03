@@ -143,6 +143,10 @@ public class CharacterMovementController : PhysicsObject
     {
         return velocity;
     }
+     public void SetVelocity(Vector2 velocity)
+    {
+        this.velocity= velocity;
+    }
 
     protected override void ComputeVelocity()
     {

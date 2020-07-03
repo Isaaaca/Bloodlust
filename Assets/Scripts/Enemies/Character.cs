@@ -2,37 +2,39 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GroundedEnemy : CharacterMovementController, ICharacter
+public abstract class Character : MonoBehaviour
 {
     [Header("Character Settings")]
     public Meter health;
-    public float lust;
-    public float maxLust;
 
-    private Animator animator;
+    protected CharacterMovementController controller;
+    protected Animator animator;
+    protected Rigidbody2D rb2d;
 
     // Start is called before the first frame update
-    void Start()
+    protected virtual void Start()
     {
+        controller = GetComponent<CharacterMovementController>();
         animator = GetComponent<Animator>();
+        rb2d = GetComponent<Rigidbody2D>();
     }
 
  
 
-    public void TakeDamage(float dmg)
+    public virtual void TakeDamage(float dmg)
     {
         if (health.Get() > 0)
         {
-            health.Set(Mathf.Clamp(health.Get() - dmg, 0, health.GetMax()));
+            health.Modify(-dmg);
             animator.SetTrigger("Hurt");
             if (health.Get() == 0)
             {
-                OnDeath();
+                animator.SetBool("Dead", true);
             }
         }
     }
 
-    public void OnDeath()
+    public virtual void OnDeath()
     {
         animator.SetBool("Dead", true);
         Destroy(gameObject);

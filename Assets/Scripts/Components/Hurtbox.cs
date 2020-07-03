@@ -14,7 +14,7 @@ public class Hurtbox : MonoBehaviour
     void OnTriggerEnter2D(Collider2D col)
     {
     
-        ICharacter other = col.GetComponent<ICharacter>();
+        Character other = col.GetComponent<Character>();
         if (other != null) other.TakeDamage(damage);
 
     }
@@ -22,7 +22,7 @@ public class Hurtbox : MonoBehaviour
     private void OnCollisionStay2D(Collision2D collision)
     {
         Collider2D col = collision.collider;
-        ICharacter other = col.GetComponent<ICharacter>();
+        Character other = col.GetComponent<Character>();
         if (other != null) other.TakeDamage(damage);
     }
 }

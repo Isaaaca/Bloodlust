@@ -2,28 +2,26 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FlutteringEnemyController : CharacterMovementController, ICharacter
+public class FlutteringEnemyController : Character
 {
     [Header("Character Settings")]
     public float range = 10;
     public float pauseTime = 2;
-    [SerializeField] private Meter health = null;
 
 
-    private Animator animator;
     private float timer;
     private Vector2 targetPoint;
     private Vector2 origin;
     // Start is called before the first frame update
-    void Start()
+    protected override void  Start()
     {
-        animator = GetComponent<Animator>();
+        base.Start();
         targetPoint = origin = rb2d.position;
         timer = 0;
     }
 
     // Update is called once per frame
-    protected override void Update()
+    private void Update()
     {
 
         if (timer <= 0)
@@ -32,20 +30,19 @@ public class FlutteringEnemyController : CharacterMovementController, ICharacter
             if (dir.magnitude < 0.1)
             {
                 targetPoint = GetNextDestination();
-                velocity = Vector2.zero;
-                HoriMove(0);
-                VertMove(0);
+                controller.SetVelocity(Vector2.zero);
+                controller.HoriMove(0);
+                controller.VertMove(0);
                 timer = pauseTime;
             }
             else
             {
                 dir = dir.normalized;
-                HoriMove(dir.x);
-                VertMove(dir.y);
+                controller.HoriMove(dir.x);
+                controller.VertMove(dir.y);
             }
         }
         timer -= Time.deltaTime;
-        base.Update();
     }
 
     private Vector2 GetNextDestination()
@@ -59,24 +56,7 @@ public class FlutteringEnemyController : CharacterMovementController, ICharacter
         return origin + new Vector2(x, y);
     }
 
-    public void TakeDamage(float dmg)
-    {
-        if (health.Get() > 0)
-        {
-            health.Set(Mathf.Clamp(health.Get() - dmg, 0, health.GetMax()));
-            animator.SetTrigger("Hurt");
-            if (health.Get() == 0)
-            {
-                animator.SetBool("Dead", true);
-            }
-        }
-    }
-
-    public void OnDeath()
-    {
-        Destroy(gameObject);
-    }
-
+  
     void OnDrawGizmosSelected()
     {
         // Draw a yellow sphere at the transform's position
@@ -85,8 +65,4 @@ public class FlutteringEnemyController : CharacterMovementController, ICharacter
         Gizmos.DrawIcon(targetPoint, "target");
     }
 
-    public Meter GetHealth()
-    {
-        return health;
-    }
 }

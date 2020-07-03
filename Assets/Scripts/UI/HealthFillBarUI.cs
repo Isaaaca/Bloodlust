@@ -9,6 +9,6 @@ public class HealthFillBarUI : FillBarUI
 
     private void Start()
     {
-        meter = character.GetComponent<ICharacter>().GetHealth();
+        meter = character.GetComponent<Character>().GetHealth();
     }
 }
