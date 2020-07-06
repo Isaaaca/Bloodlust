@@ -9,6 +9,7 @@ public abstract class Character : MonoBehaviour
 
     protected CharacterMovementController controller;
     protected Animator animator;
+    protected SpriteRenderer sprite;
     protected Rigidbody2D rb2d;
 
     // Start is called before the first frame update
@@ -16,12 +17,13 @@ public abstract class Character : MonoBehaviour
     {
         controller = GetComponent<CharacterMovementController>();
         animator = GetComponent<Animator>();
+        sprite = GetComponent<SpriteRenderer>();
         rb2d = GetComponent<Rigidbody2D>();
     }
 
  
 
-    public virtual void TakeDamage(float dmg)
+    public virtual void TakeDamage(float dmg, Vector2 source)
     {
         if (health.Get() > 0)
         {

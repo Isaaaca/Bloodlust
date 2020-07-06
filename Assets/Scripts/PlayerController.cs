@@ -11,7 +11,7 @@ public class PlayerController : Character
     public float backHopDuration = 0.32f;
     public float dashDistance = 2.5f;
     public float dashDuration = 0.32f;
-    public float invulnerabilityDuration = 0.32f;
+    public float invulnerabilityDuration = 1f;
     [SerializeField] private Meter lust = null;
 
     [Header("Child Scripts")]
@@ -20,7 +20,8 @@ public class PlayerController : Character
 
     private bool playerInControl;
     private bool dashed = false;
-    private bool hurt = false;
+    private float knockbackTime = 0.4f;
+    private float invulTimer = 0f;
 
 
 
@@ -52,52 +53,63 @@ public class PlayerController : Character
             }
             playerInControl = !qte.enabled;
         }
-        else if (hurt)
+        else 
         {
-
-        }
-        else
             GetInputs();
+        }
+
+
+        if (invulTimer > 0)
+        {
+            invulTimer -= Time.deltaTime;
+            sprite.enabled = !sprite.enabled;
+            if (invulTimer <= 0)
+                sprite.enabled = true;
+        }
+
         UpdateAnimationState();
 
     }
 
     private void GetInputs()
     {
-        if (!animator.GetCurrentAnimatorStateInfo(0).IsName("Attack")
-            &&!animator.GetCurrentAnimatorStateInfo(0).IsName("Attack2"))
+        if (!(invulTimer > (invulnerabilityDuration - knockbackTime)))
         {
-            controller.HoriMove(Input.GetAxis("Horizontal"));
-            if (Input.GetButtonDown("Jump"))
+            if (!animator.GetCurrentAnimatorStateInfo(0).IsName("Attack")
+                && !animator.GetCurrentAnimatorStateInfo(0).IsName("Attack2"))
             {
-                if (controller.Jump())
-                    animator.SetTrigger("Jump");
-            }
-            if (controller.IsGrounded() && Input.GetKeyDown(KeyCode.E))
-            {
-                Vector2 dir = controller.IsFacingRight() ? Vector2.left : Vector2.right;
-                if (controller.Dash(dir, backHopDistance, backHopDuration, false, "Sine"))
+                controller.HoriMove(Input.GetAxis("Horizontal"));
+                if (Input.GetButtonDown("Jump"))
                 {
-                    animator.SetTrigger("Dash");
+                    if (controller.Jump())
+                        animator.SetTrigger("Jump");
+                }
+                if (controller.IsGrounded() && Input.GetKeyDown(KeyCode.E))
+                {
+                    Vector2 dir = controller.IsFacingRight() ? Vector2.left : Vector2.right;
+                    if (controller.Dash(dir, backHopDistance, backHopDuration, false, "Sine"))
+                    {
+                        animator.SetTrigger("Dash");
+                    }
+                }
+                if (!dashed && Input.GetKeyDown(KeyCode.O))
+                {
+                    Vector2 dir = controller.IsFacingRight() ? Vector2.right : Vector2.left;
+                    if (controller.Dash(dir, dashDistance, dashDuration, true, "Sine"))
+                    {
+                        dashed = true;
+                        animator.SetTrigger("Dash");
+                    }
                 }
             }
-            if (!dashed && Input.GetKeyDown(KeyCode.O))
+            else if (!controller.IsGrounded())
             {
-                Vector2 dir = controller.IsFacingRight() ? Vector2.right : Vector2.left;
-                if (controller.Dash(dir, dashDistance, dashDuration, true, "Sine"))
-                {
-                    dashed = true;
-                    animator.SetTrigger("Dash");
-                } 
+                controller.HoriMove(Input.GetAxis("Horizontal"));
             }
-        }
-        else if (!controller.IsGrounded())
-        {
-            controller.HoriMove(Input.GetAxis("Horizontal"));
-        }
-        else
-        {
-            controller.HoriMove(0);
+            else
+            {
+                controller.HoriMove(0);
+            }
         }
         if (Input.GetButtonUp("Jump")) controller.ReleaseJump();
         if (Input.GetKeyDown(KeyCode.T)) Attack(10f);
@@ -150,12 +162,19 @@ public class PlayerController : Character
         sword.SetDamage(dmg);
     }
 
-    public override void TakeDamage(float dmg)
+    public override void TakeDamage(float dmg, Vector2 source)
     {
 
-        if (health.Get() > 0)
+        if (health.Get() > 0 && invulTimer<=0)
         {
+            invulTimer = invulnerabilityDuration;
             health.Modify(-dmg);
+            controller.HoriMove(0);
+            controller.VertMove(0);
+            Vector2 knockbackDir = (rb2d.position - source);
+            if (knockbackDir.x < 0 != controller.GetFacingRight()) controller.Turn();
+            if (knockbackDir.y>-0.2f)
+                controller.Arc(Vector2.up, 0.4f, Mathf.Sign(knockbackDir.x) * -1f, 0.5f, false, "easein", "linear");
             animator.SetTrigger("Hurt");
             if(health.Get() == 0)
             {
@@ -169,15 +188,15 @@ public class PlayerController : Character
         lust.Modify(amt);
     }
 
+    public Meter GetLust()
+    {
+        return lust;
+    }
+    
     void OnDrawGizmosSelected()
     {
         // Draw a yellow sphere at the transform's position
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(transform.localPosition + attackRangeCenter, attackRange);
-    }
-    
-    public Meter GetLust()
-    {
-        return lust;
     }
 }

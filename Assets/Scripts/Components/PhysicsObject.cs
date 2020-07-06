@@ -159,7 +159,7 @@ public class PhysicsObject : MonoBehaviour
         {
             hitBufferList.Add(hitBuffer[i]);
         }
-
+        float smallestDistance = float.MaxValue;
         for (int i = 0; i < hitBufferList.Count; i++)
         {
             Vector2 currentNormal = hitBufferList[i].normal;
@@ -168,8 +168,14 @@ public class PhysicsObject : MonoBehaviour
                 grounded = true;
                 groundNormal = currentNormal;
                 velocity.y = 0;
+                if (hitBufferList[i].distance < smallestDistance)
+                {
+                    smallestDistance = hitBufferList[i].distance;
+                }
             }
 
         }
+        if (smallestDistance!=float.MaxValue)
+            rb2d.position += direction.normalized * (smallestDistance - shellRadius);
     }
 }

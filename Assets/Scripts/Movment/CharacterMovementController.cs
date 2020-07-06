@@ -127,25 +127,48 @@ public class CharacterMovementController : PhysicsObject
     {
         return facingRight;
     }
-     public bool IsGrounded()
+    public bool IsGrounded()
     {
         return grounded;
     }
-     public bool IsDashing()
+    public bool IsDashing()
     {
         return dashing;
     }
-     public bool IsArcing()
+    public bool IsArcing()
     {
         return arcing;
     }
-     public Vector2 GetVelocity()
+    public Vector2 GetVelocity()
     {
         return velocity;
     }
-     public void SetVelocity(Vector2 velocity)
+    public void SetVelocity(Vector2 velocity)
     {
         this.velocity= velocity;
+    }
+    public bool GetFacingRight()
+    {
+        return facingRight;
+    }
+    public void Turn()
+    {
+        spriteRenderer.flipX = !spriteRenderer.flipX;
+        facingRight = !facingRight;
+
+        List<Transform> childTranforms = new List<Transform>(gameObject.GetComponentsInChildren<Transform>(true));
+        childTranforms.Remove(transform);
+        foreach (Transform child in childTranforms)
+        {
+            child.localPosition = new Vector3(-child.localPosition.x, child.localPosition.y, child.localPosition.z);
+
+        }
+    }
+    public void Halt()
+    {
+        dashing = false;
+        arcing = false;
+        targetVelocity = Vector2.zero;
     }
 
     protected override void ComputeVelocity()
@@ -197,6 +220,7 @@ public class CharacterMovementController : PhysicsObject
         if (dashInput)
         {
             dashing = true;
+            dashInput = false;
             if (turning && dashDir.x!=0)
             {
                 facingRight = dashDir.x > 0;
@@ -213,7 +237,7 @@ public class CharacterMovementController : PhysicsObject
         if (arcInput)
         {
             arcing = true;
-
+            arcInput = false;
         }
 
 
@@ -222,7 +246,6 @@ public class CharacterMovementController : PhysicsObject
             dashElapsedTime += Time.deltaTime;
             if (dashElapsedTime >= mdashDuration)
             {
-                dashInput = false;
                 dashing = false;
                 velocity = Vector2.zero;
                 gravityModifier = baseGravityModifier;
@@ -234,7 +257,6 @@ public class CharacterMovementController : PhysicsObject
         {
             if (arcElapsedTime >= arcDuration)
             {
-                arcInput = false;
                 arcing = false;
                 velocity = Vector2.zero;
                 gravityModifier = baseGravityModifier;
@@ -281,7 +303,7 @@ public class CharacterMovementController : PhysicsObject
                 result = dir * distance * 3 / duration * Mathf.Pow(elapsedTime / duration, 2f);
                 break;
             case VelocityFunctions.EaseIn:
-                result = dir * distance * 3 / 2 / duration * (-Mathf.Pow(elapsedTime / duration, 2f) + 2 * (elapsedTime / duration));
+                result = dir * distance * 3 / 2 / duration * (-Mathf.Pow(elapsedTime / duration, 2f) + 1);
                 break;
             case VelocityFunctions.Sine:
                 result = dir * distance / duration * (Mathf.Sin(elapsedTime / duration * Mathf.PI - Mathf.PI / 2) + 1);
@@ -290,7 +312,7 @@ public class CharacterMovementController : PhysicsObject
 
         return result;
     }
-     private Vector2 BoomerangMovement(Vector2 dir, float distance, float duration, float elapsedTime, VelocityFunctions velocityFunction)
+    private Vector2 BoomerangMovement(Vector2 dir, float distance, float duration, float elapsedTime, VelocityFunctions velocityFunction)
     {
         Vector2 result = Vector2.zero;
         switch (velocityFunction)
@@ -304,8 +326,8 @@ public class CharacterMovementController : PhysicsObject
                     result = -result;
                 break;
             case VelocityFunctions.EaseIn:
-                result = dir * distance * 3  / duration * (-Mathf.Pow(elapsedTime / duration, 2f) + 2 * (elapsedTime / duration));
-                if (elapsedTime >= 0.653f * duration)
+                result = dir * distance * 3  / duration * (-Mathf.Pow(elapsedTime / duration, 2f) + 1);
+                if (elapsedTime >= 0.347f * duration)
                     result = -result;
                 break;
             case VelocityFunctions.Sine:
@@ -316,17 +338,4 @@ public class CharacterMovementController : PhysicsObject
         return result;
     }
 
-    public void Turn()
-    {
-        spriteRenderer.flipX = !spriteRenderer.flipX;
-        facingRight = !facingRight;
-
-        List<Transform> childTranforms = new List<Transform>(gameObject.GetComponentsInChildren<Transform>(true));
-        childTranforms.Remove(transform);
-        foreach (Transform child in childTranforms)
-        {
-            child.localPosition = new Vector3(-child.localPosition.x, child.localPosition.y, child.localPosition.z);
-
-        }
-    }
 }
