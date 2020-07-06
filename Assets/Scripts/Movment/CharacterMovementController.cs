@@ -167,8 +167,12 @@ public class CharacterMovementController : PhysicsObject
     public void Halt()
     {
         dashing = false;
+        dashInput = false;
+        arcInput = false;
         arcing = false;
-        targetVelocity = Vector2.zero;
+        HoriMove(0);
+        VertMove(0);
+        velocity = Vector2.zero;
     }
 
     protected override void ComputeVelocity()
