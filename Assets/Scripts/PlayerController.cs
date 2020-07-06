@@ -173,8 +173,7 @@ public class PlayerController : Character
             controller.VertMove(0);
             Vector2 knockbackDir = (rb2d.position - source);
             if (knockbackDir.x < 0 != controller.GetFacingRight()) controller.Turn();
-            if (knockbackDir.y>-0.2f)
-                controller.Arc(Vector2.up, 0.4f, Mathf.Sign(knockbackDir.x) * -1f, 0.5f, false, "easein", "linear");
+            controller.Arc(Vector2.up, 0.4f, Mathf.Sign(knockbackDir.x) * -1f, 0.5f, false, "easein", "linear");
             animator.SetTrigger("Hurt");
             if(health.Get() == 0)
             {
