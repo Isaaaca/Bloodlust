@@ -9,11 +9,17 @@ public class DialogueManager : MonoBehaviour
     [SerializeField] private Text mainText = null;
     [SerializeField] private Text[] optionTexts = null;
     [SerializeField] private Image[] selectionImages = null;
+    [SerializeField] private GameObject dialogueBox = null;
 
     private Dialogue dialogue;
     private int currLine = 0;
     private int currSelection = 0;
     private int numOpt = 0;
+
+    private void Awake()
+    {
+        Interactable.OnInteractEvent += LoadDialogue;
+    }
     // Start is called before the first frame update
     void Start()
     {
@@ -23,26 +29,35 @@ public class DialogueManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space)) NextLine();
-        if (Input.GetKeyDown(KeyCode.DownArrow))ChangeSelection(true);
-        if (Input.GetKeyDown(KeyCode.UpArrow))ChangeSelection(false);
+        if (dialogueBox.activeSelf)
+        {
+            if (Input.GetKeyDown(KeyCode.Space)) NextLine();
+            if (Input.GetKeyDown(KeyCode.DownArrow)) ChangeSelection(true);
+            if (Input.GetKeyDown(KeyCode.UpArrow)) ChangeSelection(false);
+        }
     }
 
     public void LoadDialogue(Dialogue dialogue)
     {
+        Time.timeScale = 0;
         this.dialogue = dialogue;
         currLine = 0;
         UpdateTexts();
+        dialogueBox.SetActive(true);
     }
 
     public void NextLine()
     {
-        //send dialogue events
+        //TODO: send dialogue events
         print(dialogue.index.ToString()+ currLine.ToString() + currSelection.ToString());
+
+
         currLine++;
         if (currLine >= dialogue.dialogueLines.Length)
         {
             //end convo
+            Time.timeScale = 1;
+            dialogueBox.SetActive(false);
         }
         else
         {
