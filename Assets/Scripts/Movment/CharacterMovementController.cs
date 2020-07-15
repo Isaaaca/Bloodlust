@@ -229,7 +229,7 @@ public class CharacterMovementController : PhysicsObject
             {
                 facingRight = dashDir.x > 0;
             }
-            if((facingRight? groundNormal.x>0 : groundNormal.x < 0)|| !grounded)
+            if((facingRight? (groundNormal.x>0 && dashDir.x>0): (groundNormal.x < 0 && dashDir.x < 0))|| !grounded)
             {
                 groundNormal = Vector2.up;
                 velocity.y = 0;
