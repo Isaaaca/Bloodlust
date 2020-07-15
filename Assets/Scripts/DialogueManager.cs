@@ -1,10 +1,13 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class DialogueManager : MonoBehaviour
 {
+    public static event Action<bool> OnDialogueStartEnd = (active) => { };
+
     [SerializeField] private Text nameText = null;
     [SerializeField] private Text mainText = null;
     [SerializeField] private Text[] optionTexts = null;
@@ -39,11 +42,11 @@ public class DialogueManager : MonoBehaviour
 
     public void LoadDialogue(Dialogue dialogue)
     {
-        Time.timeScale = 0;
         this.dialogue = dialogue;
         currLine = 0;
         UpdateTexts();
         dialogueBox.SetActive(true);
+        OnDialogueStartEnd(true);
     }
 
     public void NextLine()
@@ -56,8 +59,9 @@ public class DialogueManager : MonoBehaviour
         if (currLine >= dialogue.dialogueLines.Length)
         {
             //end convo
-            Time.timeScale = 1;
             dialogueBox.SetActive(false);
+            OnDialogueStartEnd(false);
+
         }
         else
         {

@@ -19,11 +19,16 @@ public class PlayerController : Character
     [SerializeField] private Hurtbox sword = null;
 
     private bool playerInControl;
+    private bool inputControllable = true;
     private bool dashed = false;
     private float knockbackTime = 0.4f;
     private float invulTimer = 0f;
 
 
+    private void Awake()
+    {
+        DialogueManager.OnDialogueStartEnd +=(dialogueActive) =>SetInputControllable(!dialogueActive);
+    }
 
     protected override void Start()
     {
@@ -53,7 +58,7 @@ public class PlayerController : Character
             }
             playerInControl = !qte.enabled;
         }
-        else 
+        else if (inputControllable)
         {
             GetInputs();
         }
@@ -191,6 +196,12 @@ public class PlayerController : Character
     {
         return lust;
     }
+
+    public void SetInputControllable(bool inputControllable)
+    {
+        this.inputControllable = inputControllable;
+    }
+    
     
     void OnDrawGizmosSelected()
     {
