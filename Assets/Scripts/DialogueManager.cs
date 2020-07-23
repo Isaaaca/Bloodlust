@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,9 +9,9 @@ public class DialogueManager : MonoBehaviour
 {
     public static event Action<bool> OnDialogueStartEnd = (active) => { };
 
-    [SerializeField] private Text nameText = null;
-    [SerializeField] private Text mainText = null;
-    [SerializeField] private Text[] optionTexts = null;
+    [SerializeField] private TextMeshProUGUI nameText = null;
+    [SerializeField] private TextMeshProUGUI mainText = null;
+    [SerializeField] private TextMeshProUGUI[] optionTexts = null;
     [SerializeField] private Image[] selectionImages = null;
     [SerializeField] private GameObject dialogueBox = null;
 
@@ -19,10 +20,6 @@ public class DialogueManager : MonoBehaviour
     private int currSelection = 0;
     private int numOpt = 0;
 
-    private void Awake()
-    {
-        Interactable.OnInteractEvent += LoadDialogue;
-    }
     // Start is called before the first frame update
     void Start()
     {
