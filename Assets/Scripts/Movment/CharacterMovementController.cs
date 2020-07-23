@@ -206,7 +206,7 @@ public class CharacterMovementController : PhysicsObject
                     velocity.y = jumpTakeOffSpeed;
                     smallJumpAirtime -= Time.deltaTime;
                 }
-                else if (releasedJumpInput)
+                else if (releasedJumpInput && !dashing && !arcing)
                 {
                     gravityModifier = baseGravityModifier * cancelJumpGravity;
                 }

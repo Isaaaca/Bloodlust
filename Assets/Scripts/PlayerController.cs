@@ -100,7 +100,7 @@ public class PlayerController : Character
                 if (!dashed && Input.GetKeyDown(KeyCode.O))
                 {
                     Vector2 dir = controller.IsFacingRight() ? Vector2.right : Vector2.left;
-                    if (controller.Dash(dir, dashDistance, dashDuration, true, "Sine"))
+                    if (controller.Dash(dir, dashDistance, dashDuration, true, "easein"))
                     {
                         dashed = true;
                         animator.SetTrigger("Dash");
