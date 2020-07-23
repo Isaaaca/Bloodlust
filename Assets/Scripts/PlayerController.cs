@@ -177,7 +177,7 @@ public class PlayerController : Character
             controller.HoriMove(0);
             controller.VertMove(0);
             Vector2 knockbackDir = (rb2d.position - source);
-            if (knockbackDir.x < 0 != controller.GetFacingRight()) controller.Turn();
+            if (knockbackDir.x < 0 != controller.IsFacingRight()) controller.Turn();
             controller.Arc(Vector2.up, 0.4f, Mathf.Sign(knockbackDir.x) * -1f, 0.5f, false, "easein", "linear");
             animator.SetTrigger("Hurt");
             if(health.Get() == 0)
@@ -202,6 +202,10 @@ public class PlayerController : Character
         this.inputControllable = inputControllable;
     }
     
+    public bool IsFacing(Vector2 target)
+    {
+        return (target - rb2d.position).x > 0 ? controller.IsFacingRight() : !controller.IsFacingRight();
+    }
     
     void OnDrawGizmosSelected()
     {

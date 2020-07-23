@@ -147,10 +147,6 @@ public class CharacterMovementController : PhysicsObject
     {
         this.velocity= velocity;
     }
-    public bool GetFacingRight()
-    {
-        return facingRight;
-    }
     public void Turn()
     {
         spriteRenderer.flipX = !spriteRenderer.flipX;
