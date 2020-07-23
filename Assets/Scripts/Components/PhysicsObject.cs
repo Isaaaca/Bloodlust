@@ -17,12 +17,15 @@ public class PhysicsObject : MonoBehaviour
     protected Vector2 groundNormal;
     protected Vector2 velocity; 
     protected Rigidbody2D rb2d;
-    protected ContactFilter2D contactFilter;
+    protected ContactFilter2D downwardContactFilter;
+    protected ContactFilter2D upwardContactFilter;
+    protected ContactFilter2D oneWayContactFilter;
     protected RaycastHit2D[] hitBuffer = new RaycastHit2D[16];
     protected List<RaycastHit2D> hitBufferList = new List<RaycastHit2D>(16);
 
     protected const float minMoveDistance = 0.001f;
     protected const float shellRadius = 0.01f;
+    protected bool ignoreOneWay = false;
 
     private void OnEnable()
     {
@@ -34,14 +37,20 @@ public class PhysicsObject : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        contactFilter.useTriggers = false;
-        contactFilter.SetLayerMask(Physics2D.GetLayerCollisionMask(gameObject.layer));
+        LayerMask layerMask = Physics2D.GetLayerCollisionMask(gameObject.layer);
+        downwardContactFilter.useTriggers = false;
+        downwardContactFilter.SetLayerMask(layerMask);
+        upwardContactFilter.useTriggers = false;
+        upwardContactFilter.SetLayerMask(layerMask - LayerMask.GetMask("OneWay"));
+        oneWayContactFilter.useTriggers = false;
+        oneWayContactFilter.SetLayerMask(LayerMask.GetMask("OneWay"));
         
     }
 
     // Update is called once per frame
     protected virtual void Update()
     {
+
         targetVelocity = Vector2.zero;
         ComputeVelocity();
 
@@ -54,6 +63,7 @@ public class PhysicsObject : MonoBehaviour
 
     void FixedUpdate()
     {
+        ignoreOneWay = body.IsTouchingLayers(LayerMask.GetMask("OneWay")) || velocity.y>0;
 
         grounded = false;
         if (velocity.y <= 0 && gravityModifier!=0)
@@ -103,7 +113,7 @@ public class PhysicsObject : MonoBehaviour
     void Movement(Vector2 move)
     {
         float distance = move.magnitude;
-        
+        ContactFilter2D contactFilter = (move.y > 0 ||ignoreOneWay) ? upwardContactFilter : downwardContactFilter;
 
         if (distance > minMoveDistance)
         {
@@ -116,35 +126,32 @@ public class PhysicsObject : MonoBehaviour
             }
             if (hitBufferList.Count > 0)
             {
-                int nearestHit = 0;
-                float smallestDistance = hitBufferList[0].distance;
-                for (int i = 1; i < hitBufferList.Count; i++)
+                int nearestHit = -1;
+                float smallestDistance = float.MaxValue;
+                for (int i = 0; i < hitBufferList.Count; i++)
                 {
                     if (hitBufferList[i].distance < smallestDistance)
                     {
-                        nearestHit = i;
-                        smallestDistance = hitBufferList[i].distance;
+                        if(!ignoreOneWay||
+                            hitBufferList[i].collider.gameObject.layer != LayerMask.NameToLayer("OneWay"))
+                        {
+                            nearestHit = i;
+                            smallestDistance = hitBufferList[i].distance;
+                        }
                     }
                 }
 
-                Vector2 currentNormal = hitBufferList[nearestHit].normal;
-              /*  if (currentNormal.y > minGroundNormalY)
+                if (nearestHit != -1)
                 {
-                    grounded = true;
-                    groundNormal = currentNormal;
-                }*/
-                /*float projection = Vector2.Dot(velocity, currentNormal);
-                if (projection < 0)
-                {
-                    velocity = velocity - projection * currentNormal;
-                }*/
-                //bonking ceiling
-                if (velocity.y>0 && Mathf.Sign(move.y) != Mathf.Sign(currentNormal.y))
-                {
-                    velocity.y = 0;
+                    Vector2 currentNormal = hitBufferList[nearestHit].normal;
+                    //bonking ceiling
+                    if (velocity.y > 0 && Mathf.Sign(move.y) != Mathf.Sign(currentNormal.y))
+                    {
+                        velocity.y = 0;
+                    }
+                    float modifiedDistance = hitBufferList[nearestHit].distance - shellRadius;
+                    distance = modifiedDistance < distance ? modifiedDistance : distance;
                 }
-                float modifiedDistance = hitBufferList[nearestHit].distance - shellRadius;
-                distance = modifiedDistance < distance ? modifiedDistance : distance;
             }
             
         }
@@ -153,8 +160,9 @@ public class PhysicsObject : MonoBehaviour
 
     private void GroundCheck(Vector2 direction)
     {
+        
         hitBufferList.Clear();
-        int count = body.Cast(direction, contactFilter, hitBuffer, .1f);
+        int count = body.Cast(direction, downwardContactFilter, hitBuffer, .1f);
         for (int i = 0; i < count; i++)
         {
             hitBufferList.Add(hitBuffer[i]);
@@ -162,20 +170,25 @@ public class PhysicsObject : MonoBehaviour
         float smallestDistance = float.MaxValue;
         for (int i = 0; i < hitBufferList.Count; i++)
         {
-            Vector2 currentNormal = hitBufferList[i].normal;
-            if (currentNormal.y > minGroundNormalY)
+            if (!ignoreOneWay || hitBufferList[i].point.y < rb2d.position.y)
             {
-                grounded = true;
-                groundNormal = currentNormal;
-                velocity.y = 0;
-                if (hitBufferList[i].distance < smallestDistance)
+                Vector2 currentNormal = hitBufferList[i].normal;
+                if (currentNormal.y > minGroundNormalY)
                 {
-                    smallestDistance = hitBufferList[i].distance;
+                    grounded = true;
+                    groundNormal = currentNormal;
+                    velocity.y = 0;
+                    if (hitBufferList[i].distance < smallestDistance)
+                    {
+                        smallestDistance = hitBufferList[i].distance;
+                    }
                 }
             }
-
         }
-        if (smallestDistance!=float.MaxValue)
+        if (smallestDistance != float.MaxValue && smallestDistance > shellRadius)
+        {
             rb2d.position += direction.normalized * (smallestDistance - shellRadius);
+        }
+        
     }
 }
