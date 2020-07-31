@@ -1,9 +1,11 @@
-﻿using System.Collections;
+﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerController : Character
 {
+    public static event Action<char> OnGameOver = (type) => { };
+
     [Header("Character Settings")]
     public Vector3 attackRangeCenter;
     public float attackRange;
@@ -25,10 +27,6 @@ public class PlayerController : Character
     private float invulTimer = 0f;
 
 
-    private void Awake()
-    {
-        DialogueManager.OnDialogueStartEnd +=(dialogueActive) =>SetInputControllable(!dialogueActive);
-    }
 
     protected override void Start()
     {
@@ -129,7 +127,7 @@ public class PlayerController : Character
 
     private void UpdatePlayerControl()
     {
-        if (Random.value <= lust.GetNormalised())
+        if (UnityEngine.Random.value <= lust.GetNormalised())
         {
             Collider2D[] hitColliders = Physics2D.OverlapCircleAll(transform.localPosition + attackRangeCenter, attackRange, LayerMask.GetMask("Enemy"));
             if (hitColliders.Length > 0)
@@ -183,9 +181,12 @@ public class PlayerController : Character
             if(health.Get() == 0)
             {
                 animator.SetBool("Dead",true);
+                invulTimer = 0;
+                inputControllable = false;
             }
         }
     }
+
 
     public void ModifyLust(float amt)
     {
@@ -202,11 +203,32 @@ public class PlayerController : Character
         this.inputControllable = inputControllable;
     }
     
+    public void MakeInputControllable()
+    {
+        SetInputControllable(true);
+    }
+    
     public bool IsFacing(Vector2 target)
     {
         return (target - rb2d.position).x > 0 ? controller.IsFacingRight() : !controller.IsFacingRight();
     }
     
+    public void PlayWakeAnim()
+    {
+        animator.SetTrigger("Wake");
+    }
+
+    public override void Respawn()
+    {
+        base.Respawn();
+        animator.Play("Sleep");
+
+    }
+
+    public override void OnDeath()
+    {
+        OnGameOver('H');
+    }
     void OnDrawGizmosSelected()
     {
         // Draw a yellow sphere at the transform's position

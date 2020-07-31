@@ -21,7 +21,7 @@ public class Spawner : MonoBehaviour
         timer -= Time.deltaTime;
         if (timer <= 0)
         {
-            Instantiate(objectToSpawn, transform.parent);
+            Instantiate(objectToSpawn, transform);
             timer = spawnInterval;
         }
     }

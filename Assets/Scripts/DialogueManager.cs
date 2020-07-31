@@ -9,6 +9,7 @@ public class DialogueManager : MonoBehaviour
 {
     public static event Action<bool> OnDialogueStartEnd = (active) => { };
 
+    [SerializeField] private Cinemachine.CinemachineVirtualCamera cam = null;
     [SerializeField] private TextMeshProUGUI nameText = null;
     [SerializeField] private TextMeshProUGUI mainText = null;
     [SerializeField] private TextMeshProUGUI[] optionTexts = null;
@@ -19,6 +20,7 @@ public class DialogueManager : MonoBehaviour
     private int currLine = 0;
     private int currSelection = 0;
     private int numOpt = 0;
+    private Dictionary<string,Transform> speakers = new Dictionary<string, Transform>();
 
     // Start is called before the first frame update
     void Start()
@@ -40,17 +42,33 @@ public class DialogueManager : MonoBehaviour
     public void LoadDialogue(Dialogue dialogue)
     {
         this.dialogue = dialogue;
+        GetSpeakers(dialogue);
         currLine = 0;
-        UpdateTexts();
+        UpdateDialogueDisplay();
         dialogueBox.SetActive(true);
         OnDialogueStartEnd(true);
+    }
+
+    private void GetSpeakers(Dialogue dialogue)
+    {
+        speakers.Clear();
+        foreach (Dialogue.DialogueLine  line in dialogue.dialogueLines)
+        {
+            if (!speakers.ContainsKey(line.speaker))
+            {
+                var gameObj = GameObject.Find(line.speaker);
+                if(gameObj != null)
+                {
+                    speakers.Add(line.speaker, gameObj.transform);
+                }
+            }
+        }
     }
 
     public void NextLine()
     {
         //TODO: send dialogue events
         print(dialogue.index.ToString()+ currLine.ToString() + currSelection.ToString());
-
 
         currLine++;
         if (currLine >= dialogue.dialogueLines.Length)
@@ -62,7 +80,7 @@ public class DialogueManager : MonoBehaviour
         }
         else
         {
-            UpdateTexts();
+            UpdateDialogueDisplay();
         }
     }
 
@@ -89,8 +107,11 @@ public class DialogueManager : MonoBehaviour
         }
     }
 
-    private void UpdateTexts()
+    private void UpdateDialogueDisplay()
     {
+        if(speakers[dialogue.dialogueLines[currLine].speaker]!=null)
+            cam.Follow = speakers[dialogue.dialogueLines[currLine].speaker];
+
         nameText.text = dialogue.dialogueLines[currLine].speaker;
         mainText.text = dialogue.dialogueLines[currLine].text;
         numOpt = dialogue.dialogueLines[currLine].options.Length;

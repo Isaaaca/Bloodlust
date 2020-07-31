@@ -1,16 +1,20 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public abstract class Character : MonoBehaviour
 {
-    [Header("Character Settings")]
+    public static event Action<Character> OnCharacterDeath = (character) => { };
+
+    [Header("Generic Character Settings")]
     public Meter health;
 
     protected CharacterMovementController controller;
     protected Animator animator;
     protected SpriteRenderer sprite;
     protected Rigidbody2D rb2d;
+    protected Vector2 initialPosition;
 
     // Start is called before the first frame update
     protected virtual void Start()
@@ -19,6 +23,7 @@ public abstract class Character : MonoBehaviour
         animator = GetComponent<Animator>();
         sprite = GetComponent<SpriteRenderer>();
         rb2d = GetComponent<Rigidbody2D>();
+        initialPosition = rb2d.position;
     }
 
  
@@ -38,12 +43,19 @@ public abstract class Character : MonoBehaviour
 
     public virtual void OnDeath()
     {
-        animator.SetBool("Dead", true);
-        Destroy(gameObject);
+        Character.OnCharacterDeath(this);
+        gameObject.SetActive(false);
     }
 
     public Meter GetHealth()
     {
         return health;
+    }
+
+    public virtual void Respawn()
+    {
+        animator.SetBool("Dead", false);
+        rb2d.position = initialPosition;
+        health.Set(health.GetMax());
     }
 }
