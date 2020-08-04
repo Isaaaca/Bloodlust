@@ -130,10 +130,7 @@ MonoBehaviour:
   lungeRange: 3.62
   windUpTime: 1
   diveDuration: 1
-  wayPoints:
-  - {x: -5.69, y: -1.69}
-  - {x: -10.875, y: -1.3125}
-  - {x: -8.25, y: 1.0625}
+  wayPoints: []
   loop: 1
 --- !u!114 &3390192375213646526
 MonoBehaviour:

@@ -24,7 +24,7 @@ public class WayPointEditor : Editor
                 Handles.DrawAAPolyLine(new Vector3[] { feController.wayPoints[i-1], feController.wayPoints[i] });
                 feController.wayPoints[i] = Handles.PositionHandle(feController.wayPoints[i], Quaternion.identity);
             }
-
+            PrefabUtility.RecordPrefabInstancePropertyModifications(feController);
             if (feController.loop)
             {
                 Handles.DrawAAPolyLine(new Vector3[]{ feController.wayPoints[0], feController.wayPoints[feController.wayPoints.Length - 1] });
