@@ -15,14 +15,18 @@ MonoBehaviour:
   index: 0
   dialogueLines:
   - speaker: NPC1
+    lookAt: 
     text: 
     options: []
   - speaker: NPC2
+    lookAt: FlyingEnemy
     text: 
     options: []
   - speaker: NPC1
+    lookAt: 
     text: 
     options: []
   - speaker: NPC2
+    lookAt: 
     text: 
     options: []
