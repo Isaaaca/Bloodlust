@@ -8,6 +8,8 @@ public class Room : MonoBehaviour
     public static event Action<Room> OnEnterRoom = (room) => { };
 
     [SerializeField] private float topBorder = 1;
+    [SerializeField] private float leftBorder = 1;
+    [SerializeField] private float rightBorder = 1;
     private PolygonCollider2D col2D;
     private void Awake()
     {
@@ -17,10 +19,10 @@ public class Room : MonoBehaviour
         {
             bounds.Encapsulate(col.bounds);
         }
-        bounds.center += Vector3.up * (topBorder / 2);
+        bounds.center += Vector3.up * (topBorder / 2) + Vector3.right * (rightBorder / 2) + Vector3.left * (leftBorder / 2);
         bounds.center -= transform.position;
         bounds.size += Vector3.up * topBorder;
-        bounds.size -= Vector3.right*0.5f;
+        bounds.size -= Vector3.right*(leftBorder+rightBorder);
 
         col2D = gameObject.AddComponent<PolygonCollider2D>();
 

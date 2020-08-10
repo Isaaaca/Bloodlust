@@ -11,6 +11,7 @@ public class Dialogue : ScriptableObject
     public class DialogueLine
     {
         public string speaker = "";
+        public string lookAt = "";
         [TextArea()]
         public string text = "";
         public string[] options;

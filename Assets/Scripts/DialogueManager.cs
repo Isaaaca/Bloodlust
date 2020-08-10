@@ -9,7 +9,7 @@ public class DialogueManager : MonoBehaviour
 {
     public static event Action<bool> OnDialogueStartEnd = (active) => { };
 
-    [SerializeField] private Cinemachine.CinemachineVirtualCamera cam = null;
+    [SerializeField] private CamController camController = null;
     [SerializeField] private TextMeshProUGUI nameText = null;
     [SerializeField] private TextMeshProUGUI mainText = null;
     [SerializeField] private TextMeshProUGUI[] optionTexts = null;
@@ -20,7 +20,7 @@ public class DialogueManager : MonoBehaviour
     private int currLine = 0;
     private int currSelection = 0;
     private int numOpt = 0;
-    private Dictionary<string,Transform> speakers = new Dictionary<string, Transform>();
+    private Dictionary<string,Transform> cameraTargets = new Dictionary<string, Transform>();
 
     // Start is called before the first frame update
     void Start()
@@ -51,15 +51,19 @@ public class DialogueManager : MonoBehaviour
 
     private void GetSpeakers(Dialogue dialogue)
     {
-        speakers.Clear();
+        cameraTargets.Clear();
         foreach (Dialogue.DialogueLine  line in dialogue.dialogueLines)
         {
-            if (!speakers.ContainsKey(line.speaker))
+            string target = line.lookAt;
+            if (target == "")
+                target = line.speaker;
+
+            if (target!="" && !cameraTargets.ContainsKey(target))
             {
-                var gameObj = GameObject.Find(line.speaker);
+                var gameObj = GameObject.Find(target);
                 if(gameObj != null)
                 {
-                    speakers.Add(line.speaker, gameObj.transform);
+                    cameraTargets.Add(target, gameObj.transform);
                 }
             }
         }
@@ -109,8 +113,12 @@ public class DialogueManager : MonoBehaviour
 
     private void UpdateDialogueDisplay()
     {
-        if(speakers[dialogue.dialogueLines[currLine].speaker]!=null)
-            cam.Follow = speakers[dialogue.dialogueLines[currLine].speaker];
+        string target = dialogue.dialogueLines[currLine].lookAt;
+        if (target == "")
+            target = dialogue.dialogueLines[currLine].speaker;
+
+        if (target!="" && cameraTargets[target] != null)
+            camController.ChangeFollowTarget(cameraTargets[target]);
 
         nameText.text = dialogue.dialogueLines[currLine].speaker;
         mainText.text = dialogue.dialogueLines[currLine].text;

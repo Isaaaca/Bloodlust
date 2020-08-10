@@ -6,8 +6,9 @@ using UnityEngine.UI;
 [RequireComponent(typeof(Image))]
 public class ScreenFader : MonoBehaviour
 {
-    [SerializeField] private float duration =1;
+    [SerializeField] private float defaultDuration =1;
 
+    private float duration =1;
     private float targetOpacity = 0;
     private Image image;
     private bool inTransition = false;
@@ -16,6 +17,7 @@ public class ScreenFader : MonoBehaviour
     void Start()
     {
         image = GetComponent<Image>();
+        duration = defaultDuration;
     }
 
     // Update is called once per frame
@@ -49,13 +51,22 @@ public class ScreenFader : MonoBehaviour
     public void FadeToBlack()
     {
         inTransition = true;
+        duration = defaultDuration;
         targetOpacity = 1;
+    }
+    
+    public void CustomFade(float opacity, float duration)
+    {
+        inTransition = true;
+        targetOpacity = opacity;
+        this.duration = duration;
     }
 
     public void FadeIn()
     {
         inTransition = true;
         targetOpacity = 0;
+        duration = defaultDuration;
     }
 
     public bool isTransitioning()

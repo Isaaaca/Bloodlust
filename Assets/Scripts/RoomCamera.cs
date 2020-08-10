@@ -8,7 +8,7 @@ public class RoomCamera : MonoBehaviour
     private Cinemachine.CinemachineVirtualCamera vcam;
     private Cinemachine.CinemachineFramingTransposer vcamFrame;
     private Transform followTarget;
-    [SerializeField]private PlayerController player;
+    [SerializeField]private PlayerController player = null;
 
 
     private void Awake()
@@ -26,17 +26,15 @@ public class RoomCamera : MonoBehaviour
 
     private void Update()
     {
-        if (followTarget.position.x - vcamFrame.TrackedPoint.x < -0.01)
+        if (followTarget.position.x - vcamFrame.TrackedPoint.x < -1f)
         {
             vcamFrame.m_ScreenX = 0.35f;
         }
-        else if (followTarget.position.x - vcamFrame.TrackedPoint.x > 0.01)
+        else if (followTarget.position.x - vcamFrame.TrackedPoint.x > 1f)
         {
             vcamFrame.m_ScreenX = 0.65f;
 
         }
-        else
-            vcamFrame.m_ScreenX = 0.5f;
     }
 
     void ChangeRoom(Room room)

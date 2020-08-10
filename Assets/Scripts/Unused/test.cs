@@ -7,6 +7,8 @@ public class test: MonoBehaviour
     public DialogueManager dm;
     public Dialogue d;
     public ScreenFader SF;
+    public CutsceneDirector cd;
+    public ScriptedEventSequence sequence;
     // Start is called before the first frame update
     private void Start()
     {
@@ -20,7 +22,7 @@ public class test: MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Alpha9)) SF.FadeToBlack();
         if (Input.GetKeyDown(KeyCode.Alpha0)) SF.FadeIn();
-        if (Input.GetKeyDown(KeyCode.Alpha8)) dm.LoadDialogue(d);
+        if (Input.GetKeyDown(KeyCode.Alpha8)) cd.PlaySequence(sequence);
     }
     void OnDrawGizmosSelected()
     {

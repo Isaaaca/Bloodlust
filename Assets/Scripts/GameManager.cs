@@ -8,8 +8,9 @@ public class GameManager : MonoBehaviour
     [SerializeField] DialogueManager dialogueManager = null;
     [SerializeField] PlayerController player = null;
     [SerializeField] ScreenFader screen = null;
-    [SerializeField] Cinemachine.CinemachineVirtualCamera followCam = null;
-    [SerializeField] Cinemachine.CinemachineVirtualCamera convoCam = null;
+    [SerializeField] CamController camController = null;
+    [SerializeField] CutsceneDirector cutsceneDirector = null;
+    [SerializeField] EventSequenceDictionary eventDictionary = null;
 
     private bool gameEventRunning = false;
     private bool isReloading = false;
@@ -21,6 +22,16 @@ public class GameManager : MonoBehaviour
         DialogueManager.OnDialogueStartEnd += HandleDialogueEvent;
         Character.OnCharacterDeath += HandleCharacterDeath;
         PlayerController.OnGameOver += HandleGameOver;
+        CutsceneDirector.OnSequenceEnd += HandleSequenceEnd;
+    }
+
+    private void HandleSequenceEnd(ScriptedEventSequence sequence)
+    {
+        //TODO: check for continued event/conditional dialogue
+        screen.FadeIn();
+        gameEventRunning = false;
+        camController.SwitchCamera(CamController.CameraMode.Follow);
+        player.SetInputControllable(true);
     }
 
     private void HandleGameOver(char type)
@@ -48,20 +59,19 @@ public class GameManager : MonoBehaviour
         if (dialogueStart)
         {
             player.SetInputControllable(false);
-            convoCam.enabled = true;
-            followCam.enabled = false;
+            camController.SwitchCamera(CamController.CameraMode.Center);
         }
         else if (!gameEventRunning)
         {
             player.SetInputControllable(true);
-            convoCam.enabled = false;
-            followCam.enabled = true;
+            camController.SwitchCamera(CamController.CameraMode.Follow);
         }
     }
 
     private void HandleEnterRoomEvent(Room room)
     {
         print(room.name);
+        CheckForScriptedEvent(room.name);
     }
 
     private void HandleInteractEvent(string id, Interactable interactable)
@@ -74,12 +84,6 @@ public class GameManager : MonoBehaviour
                 dialogueManager.LoadDialogue(obj.message);
                 break; 
         }
-    }
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
     }
 
     // Update is called once per frame
@@ -101,6 +105,15 @@ public class GameManager : MonoBehaviour
                     isReloading = false;
                 }
             }
+        }
+    }
+
+    private void CheckForScriptedEvent(string key)
+    {
+        if (eventDictionary.ContainsKey(key))
+        {
+            cutsceneDirector.PlaySequence(eventDictionary[key]);
+            gameEventRunning = true;
         }
     }
 }
