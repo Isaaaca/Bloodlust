@@ -14,10 +14,18 @@ public class Dialogue : ScriptableObject
         public string lookAt = "";
         [TextArea()]
         public string text = "";
-        public string[] options;
+        public DialogueChoice[] options;
 
     }
 
-    public int index;
+    [Serializable]
+    public class DialogueChoice
+    {
+        public string text = "";
+        public Dialogue nextDialogue = null;
+    }
+
     public DialogueLine[] dialogueLines;
+    //for cases where branching dialogue merges
+    public Dialogue nextDialogue = null;
 }

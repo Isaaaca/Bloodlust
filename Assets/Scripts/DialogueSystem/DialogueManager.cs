@@ -8,6 +8,7 @@ using UnityEngine.UI;
 public class DialogueManager : MonoBehaviour
 {
     public static event Action<bool> OnDialogueStartEnd = (active) => { };
+    public static event Action<string> OnDialogueEvent = (dialogueEventID) => { };
 
     [SerializeField] private CamController camController = null;
     [SerializeField] private TextMeshProUGUI nameText = null;
@@ -17,7 +18,7 @@ public class DialogueManager : MonoBehaviour
     [SerializeField] private GameObject dialogueBox = null;
 
     private Dialogue dialogue;
-    private int currLine = 0;
+    private int currLineIndex = 0;
     private int currSelection = 0;
     private int numOpt = 0;
     private Dictionary<string,Transform> cameraTargets = new Dictionary<string, Transform>();
@@ -43,7 +44,7 @@ public class DialogueManager : MonoBehaviour
     {
         this.dialogue = dialogue;
         GetSpeakers(dialogue);
-        currLine = 0;
+        currLineIndex = 0;
         UpdateDialogueDisplay();
         dialogueBox.SetActive(true);
         OnDialogueStartEnd(true);
@@ -71,15 +72,32 @@ public class DialogueManager : MonoBehaviour
 
     public void NextLine()
     {
-        //TODO: send dialogue events
-        print(dialogue.index.ToString()+ currLine.ToString() + currSelection.ToString());
-
-        currLine++;
-        if (currLine >= dialogue.dialogueLines.Length)
+        var currentLine = dialogue.dialogueLines[currLineIndex];
+        if (currentLine.options.Length > 0)
         {
-            //end convo
-            dialogueBox.SetActive(false);
-            OnDialogueStartEnd(false);
+            //TODO: send dialogue events
+            OnDialogueEvent(dialogue.name + (char)(currSelection+64));
+        }
+
+        currLineIndex++;
+        if (currLineIndex >= dialogue.dialogueLines.Length)
+        {
+            if (dialogue.nextDialogue != null)
+            {
+                LoadDialogue(dialogue.nextDialogue);
+            }
+            else if (currentLine.options.Length > 0 &&
+                    currentLine.options[currSelection - 1].nextDialogue != null)
+            {
+                LoadDialogue(currentLine.options[currSelection - 1].nextDialogue);
+            }
+            else
+            {
+                //end convo
+                dialogueBox.SetActive(false);
+                OnDialogueEvent(dialogue.name);
+                OnDialogueStartEnd(false);
+            }
 
         }
         else
@@ -113,21 +131,21 @@ public class DialogueManager : MonoBehaviour
 
     private void UpdateDialogueDisplay()
     {
-        string target = dialogue.dialogueLines[currLine].lookAt;
+        string target = dialogue.dialogueLines[currLineIndex].lookAt;
         if (target == "")
-            target = dialogue.dialogueLines[currLine].speaker;
+            target = dialogue.dialogueLines[currLineIndex].speaker;
 
         if (target!="" && cameraTargets[target] != null)
             camController.ChangeFollowTarget(cameraTargets[target]);
 
-        nameText.text = dialogue.dialogueLines[currLine].speaker;
-        mainText.text = dialogue.dialogueLines[currLine].text;
-        numOpt = dialogue.dialogueLines[currLine].options.Length;
+        nameText.text = dialogue.dialogueLines[currLineIndex].speaker;
+        mainText.text = dialogue.dialogueLines[currLineIndex].text;
+        numOpt = dialogue.dialogueLines[currLineIndex].options.Length;
         if (numOpt > 0)
         {
             for (int i = 0; i < numOpt; i++)
             {
-                optionTexts[i].text = dialogue.dialogueLines[currLine].options[i];
+                optionTexts[i].text = dialogue.dialogueLines[currLineIndex].options[i].text;
             }
             currSelection = 1;
 

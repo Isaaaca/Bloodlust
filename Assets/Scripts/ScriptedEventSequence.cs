@@ -6,7 +6,6 @@ using UnityEngine;
 [CreateAssetMenu]
 public class ScriptedEventSequence: ScriptableObject
 {
-    public int index;
-    public ScriptedEvent[] scriptedEvents;
+    public ScriptedEvent[] scriptedEvents = new ScriptedEvent[1];
 }
 

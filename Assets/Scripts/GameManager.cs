@@ -5,12 +5,14 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    [SerializeField] DialogueManager dialogueManager = null;
     [SerializeField] PlayerController player = null;
     [SerializeField] ScreenFader screen = null;
     [SerializeField] CamController camController = null;
     [SerializeField] CutsceneDirector cutsceneDirector = null;
     [SerializeField] EventSequenceDictionary eventDictionary = null;
+
+    public static event Action<bool> SetGameplayEnabled = (enable) => { };
+
 
     private bool gameEventRunning = false;
     private bool isReloading = false;
@@ -19,10 +21,15 @@ public class GameManager : MonoBehaviour
     {
         Interactable.OnInteractEvent += HandleInteractEvent;
         Room.OnEnterRoom += HandleEnterRoomEvent;
-        DialogueManager.OnDialogueStartEnd += HandleDialogueEvent;
         Character.OnCharacterDeath += HandleCharacterDeath;
         PlayerController.OnGameOver += HandleGameOver;
         CutsceneDirector.OnSequenceEnd += HandleSequenceEnd;
+        DialogueManager.OnDialogueEvent += HandleDialogueEvent;
+    }
+
+    private void HandleDialogueEvent(string eventCode)
+    {
+        SaveManager.AddEvent(eventCode);
     }
 
     private void HandleSequenceEnd(ScriptedEventSequence sequence)
@@ -54,20 +61,6 @@ public class GameManager : MonoBehaviour
          
     }
 
-    private void HandleDialogueEvent(bool dialogueStart)
-    {
-        if (dialogueStart)
-        {
-            player.SetInputControllable(false);
-            camController.SwitchCamera(CamController.CameraMode.Center);
-        }
-        else if (!gameEventRunning)
-        {
-            player.SetInputControllable(true);
-            camController.SwitchCamera(CamController.CameraMode.Follow);
-        }
-    }
-
     private void HandleEnterRoomEvent(Room room)
     {
         print(room.name);
@@ -81,7 +74,7 @@ public class GameManager : MonoBehaviour
         {
             case "OBJ":
                 ObservableObject obj = interactable as ObservableObject;
-                dialogueManager.LoadDialogue(obj.message);
+                StartSequence(obj.sequence);
                 break; 
         }
     }
@@ -112,8 +105,17 @@ public class GameManager : MonoBehaviour
     {
         if (eventDictionary.ContainsKey(key))
         {
-            cutsceneDirector.PlaySequence(eventDictionary[key]);
+            StartSequence(eventDictionary[key]);
             gameEventRunning = true;
         }
+    }
+
+
+    private void StartSequence(ScriptedEventSequence sequence)
+    {
+        player.SetInputControllable(false);
+        camController.SwitchCamera(CamController.CameraMode.Center);
+        cutsceneDirector.PlaySequence(sequence);
+
     }
 }

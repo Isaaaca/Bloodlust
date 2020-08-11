@@ -10,27 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bc713fd48c9bbdd41b4c72f20e126069, type: 3}
-  m_Name: TestDialogue
+  m_Name: A
   m_EditorClassIdentifier: 
   dialogueLines:
   - speaker: NPC1
     lookAt: 
-    text: 
+    text: Fool
     options: []
-  - speaker: NPC2
-    lookAt: Pouncer
-    text: 
-    options: []
-  - speaker: NPC1
-    lookAt: 
-    text: 
-    options: []
-  - speaker: NPC2
-    lookAt: 
-    text: 
-    options:
-    - text: Sure
-      nextDialogue: {fileID: 11400000, guid: eda56164c5536ef49b7a3d37293095cb, type: 2}
-    - text: No
-      nextDialogue: {fileID: 11400000, guid: 79d4a63b9989a0144986213d9cf7f183, type: 2}
   nextDialogue: {fileID: 0}

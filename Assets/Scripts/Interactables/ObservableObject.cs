@@ -7,7 +7,7 @@ public class ObservableObject : Interactable
 {
 
 
-    public Dialogue message = null;
+    public ScriptedEventSequence sequence = null;
     // Start is called before the first frame update
     void Start()
     {

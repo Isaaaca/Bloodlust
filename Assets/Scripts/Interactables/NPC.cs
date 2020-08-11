@@ -10,7 +10,7 @@ public class NPC : Interactable
         Onetime
     }
 
-    [SerializeField]private ConversationType convoType;
+    [SerializeField] private ConversationType convoType = ConversationType.Cycle;
     [SerializeField]private Dialogue[] dialogues;
     [SerializeField]private int currDialogue = 0;
 

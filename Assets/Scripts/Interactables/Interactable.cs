@@ -16,7 +16,7 @@ public abstract class Interactable : MonoBehaviour
 
     private void Awake()
     {
-        DialogueManager.OnDialogueStartEnd += (dialogueActive) => SetInteractable(!dialogueActive);
+        GameManager.SetGameplayEnabled += (enabled) => SetInteractable(enabled);
     }
 
 
