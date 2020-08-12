@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RoomCamera : MonoBehaviour
+public class FollowCamera : MonoBehaviour
 {
     private Cinemachine.CinemachineConfiner confiner;
     private Cinemachine.CinemachineVirtualCamera vcam;
@@ -26,13 +26,15 @@ public class RoomCamera : MonoBehaviour
 
     private void Update()
     {
-        if (followTarget.position.x - vcamFrame.TrackedPoint.x < -1f)
+        if (player.GetVelocity().x > 3f &&
+            player.IsFacingRight())
         {
-            vcamFrame.m_ScreenX = 0.35f;
+            vcamFrame.m_ScreenX = 0.25f;
         }
-        else if (followTarget.position.x - vcamFrame.TrackedPoint.x > 1f)
+        else if (player.GetVelocity().x < -3f &&
+            !player.IsFacingRight())
         {
-            vcamFrame.m_ScreenX = 0.65f;
+            vcamFrame.m_ScreenX = 0.75f;
 
         }
     }

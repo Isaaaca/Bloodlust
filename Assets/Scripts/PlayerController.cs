@@ -211,8 +211,16 @@ public class PlayerController : Character
     public bool IsFacing(Vector2 target)
     {
         return (target - rb2d.position).x > 0 ? controller.IsFacingRight() : !controller.IsFacingRight();
+    } 
+    public bool IsFacingRight()
+    {
+        return controller.IsFacingRight();
     }
     
+    public Vector2 GetVelocity()
+    {
+        return controller.GetVelocity();
+    }
     public void PlayWakeAnim()
     {
         animator.SetTrigger("Wake");
