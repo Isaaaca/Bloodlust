@@ -11,7 +11,7 @@ public static class SaveManager
         gameProgress.Add(eventCode);
     }
 
-    public static bool GetEvent(string eventCode)
+    public static bool CheckCondition(string eventCode)
     {
         return gameProgress.Contains(eventCode);
     }

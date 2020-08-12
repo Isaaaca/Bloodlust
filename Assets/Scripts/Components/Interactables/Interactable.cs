@@ -12,7 +12,6 @@ public abstract class Interactable : MonoBehaviour
 
     private bool focused = false;
     private bool interactable = true;
-    protected string id;
 
     private void Awake()
     {
@@ -37,7 +36,7 @@ public abstract class Interactable : MonoBehaviour
 
     protected virtual void OnInteract()
     {
-        OnInteractEvent(id, this);
+        OnInteractEvent(gameObject.name, this);
     }
 
     private void OnTriggerStay2D(Collider2D collision)
@@ -84,4 +83,6 @@ public abstract class Interactable : MonoBehaviour
     {
         this.interactable = interactable;
     }
+
+    public abstract Sequence GetSequence();
 }

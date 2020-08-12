@@ -7,11 +7,10 @@ public class ObservableObject : Interactable
 {
 
 
-    public ScriptedEventSequence sequence = null;
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField]private Sequence sequence = null;
+    public override Sequence GetSequence()
     {
-        id = gameObject.name;
+        return sequence;
     }
 
 }

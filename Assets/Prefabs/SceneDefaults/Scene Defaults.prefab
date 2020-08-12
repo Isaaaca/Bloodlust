@@ -353,7 +353,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9111928130307013461}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 3.2000003, y: 2.1599984, z: -10}
+  m_LocalPosition: {x: 14.75, y: 3.469998, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 8748282542415087763}
@@ -1310,7 +1310,7 @@ MonoBehaviour:
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
-  m_enableWordWrapping: 0
+  m_enableWordWrapping: 1
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
   m_firstOverflowCharacterIndex: -1
@@ -1505,7 +1505,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ad980451443d70438faac0bc6c235a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_LookaheadTime: 0.645
+  m_LookaheadTime: 0
   m_LookaheadSmoothing: 3
   m_LookaheadIgnoreY: 1
   m_XDamping: 1
@@ -1514,14 +1514,14 @@ MonoBehaviour:
   m_ScreenX: 0.35
   m_ScreenY: 0.6799998
   m_CameraDistance: 10
-  m_DeadZoneWidth: 0.258
-  m_DeadZoneHeight: 0.274
+  m_DeadZoneWidth: 0.12
+  m_DeadZoneHeight: 0.13
   m_DeadZoneDepth: 0
   m_UnlimitedSoftZone: 0
   m_SoftZoneWidth: 0.8
   m_SoftZoneHeight: 0.761
   m_BiasX: 0
-  m_BiasY: -0.2649992
+  m_BiasY: -0.36100003
   m_CenterOnActivate: 1
   m_GroupFramingMode: 2
   m_AdjustmentMode: 0
@@ -2925,7 +2925,7 @@ GameObject:
   - component: {fileID: 9111928131592354916}
   - component: {fileID: 9111928131592354917}
   - component: {fileID: 9111928131592354922}
-  m_Layer: 8
+  m_Layer: 12
   m_Name: SwordHurtbox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3737,7 +3737,7 @@ GameObject:
   - component: {fileID: 9111928132322083459}
   - component: {fileID: 9111928132322083456}
   m_Layer: 0
-  m_Name: Room Vcam
+  m_Name: Follow Vcam
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3751,7 +3751,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9111928132322083457}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 3.2000003, y: 2.1599984, z: -10}
+  m_LocalPosition: {x: 3.2, y: 2.159998, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 9111928130998608867}

@@ -9,7 +9,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] ScreenFader screen = null;
     [SerializeField] CamController camController = null;
     [SerializeField] CutsceneDirector cutsceneDirector = null;
-    [SerializeField] EventSequenceDictionary eventDictionary = null;
+    [SerializeField] GameEventDictionary eventDictionary = null;
 
     public static event Action<bool> SetGameplayEnabled = (enable) => { };
 
@@ -32,7 +32,7 @@ public class GameManager : MonoBehaviour
         SaveManager.AddEvent(eventCode);
     }
 
-    private void HandleSequenceEnd(ScriptedEventSequence sequence)
+    private void HandleSequenceEnd(Sequence sequence)
     {
         //TODO: check for continued event/conditional dialogue
         screen.FadeIn();
@@ -63,20 +63,13 @@ public class GameManager : MonoBehaviour
 
     private void HandleEnterRoomEvent(Room room)
     {
-        print(room.name);
         CheckForScriptedEvent(room.name);
     }
 
     private void HandleInteractEvent(string id, Interactable interactable)
     {
-        string type = id.Substring(0,3);
-        switch (type)
-        {
-            case "OBJ":
-                ObservableObject obj = interactable as ObservableObject;
-                StartSequence(obj.sequence);
-                break; 
-        }
+        Sequence seq = interactable.GetSequence();
+        if (seq != null) StartSequence(seq);
     }
 
     // Update is called once per frame
@@ -105,16 +98,19 @@ public class GameManager : MonoBehaviour
     {
         if (eventDictionary.ContainsKey(key))
         {
-            StartSequence(eventDictionary[key]);
-            gameEventRunning = true;
+            Sequence seq = eventDictionary[key].GetSequence();
+            if (seq != null)
+            {
+                StartSequence(seq);
+                gameEventRunning = true;
+            }
         }
     }
 
 
-    private void StartSequence(ScriptedEventSequence sequence)
+    private void StartSequence(Sequence sequence)
     {
         player.SetInputControllable(false);
-        camController.SwitchCamera(CamController.CameraMode.Center);
         cutsceneDirector.PlaySequence(sequence);
 
     }

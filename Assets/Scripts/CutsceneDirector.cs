@@ -5,14 +5,14 @@ using UnityEngine;
 
 public class CutsceneDirector : MonoBehaviour
 {
-    public static event Action<ScriptedEventSequence> OnSequenceEnd = (senquence) => { };
+    public static event Action<Sequence> OnSequenceEnd = (senquence) => { };
 
     [SerializeField]private ScreenFader screen = null;
     [SerializeField]private DialogueManager dialogueManager = null;
     private int index = -1;
-    private ScriptedEventSequence currentSequence = null;
-    private ScriptedEvent.EventType currEventType = ScriptedEvent.EventType.Null;
-    private ScriptedEvent currEvent = null;
+    private Sequence currentSequence = null;
+    private SequenceEvent.EventType currEventType = SequenceEvent.EventType.Null;
+    private SequenceEvent currEvent = null;
     private bool waiting = true;
 
     private void Awake()
@@ -39,41 +39,50 @@ public class CutsceneDirector : MonoBehaviour
 
                 switch (currEventType)
                 {
-                    case ScriptedEvent.EventType.Dialogue:
+                    case SequenceEvent.EventType.Dialogue:
                         dialogueManager.LoadDialogue(currEvent.dialogue);
                         waiting = true;
                         break;
-                    case ScriptedEvent.EventType.Fade:
+                    case SequenceEvent.EventType.Fade:
                         screen.CustomFade(currEvent.opacity, currEvent.duration);
                         waiting = true;
+                        break;
+                    case SequenceEvent.EventType.Switchable:
+                        currEvent.switchable.OnSwitch();
+                        waiting = true;
+                        Invoke("StopWaiting", currEvent.switchable.GetDuration());
                         break;
                 }
             }
 
         }
-        else if (currEventType == ScriptedEvent.EventType.Fade)
+        else if (currEventType == SequenceEvent.EventType.Fade)
         {
             if (!screen.isTransitioning())
             {
-                waiting = false;
-                index++;
+                StopWaiting();
             }
         }
     }
 
-    public void PlaySequence(ScriptedEventSequence eventSequence)
+    public void PlaySequence(Sequence eventSequence)
     {
         currentSequence = eventSequence;
-        index = 0;
-        waiting = false;
+        index = -1;
+        StopWaiting();
     }
 
     private void HandleDialogueEvent(bool start)
     {
-        if (currEventType == ScriptedEvent.EventType.Dialogue && !start)
+        if (currEventType == SequenceEvent.EventType.Dialogue && !start)
         {
-            waiting = false;
-            index++;
+            StopWaiting();
         }
+    }
+
+    private void StopWaiting()
+    {
+        waiting = false;
+        index++;
     }
 }

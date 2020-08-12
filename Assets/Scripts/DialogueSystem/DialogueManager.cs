@@ -73,11 +73,6 @@ public class DialogueManager : MonoBehaviour
     public void NextLine()
     {
         var currentLine = dialogue.dialogueLines[currLineIndex];
-        if (currentLine.options.Length > 0)
-        {
-            //TODO: send dialogue events
-            OnDialogueEvent(dialogue.name + (char)(currSelection+64));
-        }
 
         currLineIndex++;
         if (currLineIndex >= dialogue.dialogueLines.Length)
@@ -89,6 +84,7 @@ public class DialogueManager : MonoBehaviour
             else if (currentLine.options.Length > 0 &&
                     currentLine.options[currSelection - 1].nextDialogue != null)
             {
+                OnDialogueEvent(dialogue.name + (char)(currSelection+64));
                 LoadDialogue(currentLine.options[currSelection - 1].nextDialogue);
             }
             else

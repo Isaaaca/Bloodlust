@@ -93,8 +93,8 @@ GameObject:
   - component: {fileID: 4489185183756387381}
   - component: {fileID: 4489185183756387380}
   - component: {fileID: 726514619154113244}
-  m_Layer: 0
-  m_Name: Interactable
+  m_Layer: 16
+  m_Name: OBJ000000
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -204,4 +204,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tooltip: {fileID: 7374815322114378994}
-  message: {fileID: 0}
+  sequence: {fileID: 0}
