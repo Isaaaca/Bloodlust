@@ -10,15 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bed2e3f082527e2428aaa765f23f4b31, type: 3}
-  m_Name: Test Sequence
-  m_EditorClassIdentifier:
-  index: 2
+  m_Name: 00SEQ001_2
+  m_EditorClassIdentifier: 
   scriptedEvents:
   - eventType: 0
-    dialogue: {fileID: 11400000, guid: 94bb1aa43c5d4aa46a7b183570ed5457, type: 2}
+    dialogue: {fileID: 11400000, guid: e7140677503706c4da11c9145b0a1a70, type: 2}
     duration: 0
     opacity: 0
-  - eventType: 1
-    dialogue: {fileID: 0}
-    duration: 1
-    opacity: 1

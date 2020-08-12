@@ -1,6 +1,7 @@
 ﻿using UnityEditor;
 
-[CustomPropertyDrawer(typeof(EventSequenceDictionary))]
+[CustomPropertyDrawer(typeof(GameEventDictionary))]
+[CustomPropertyDrawer(typeof(SequenceDictionary))]
 public class AnySerializableDictionaryPropertyDrawer :
 SerializableDictionaryPropertyDrawer
 { }

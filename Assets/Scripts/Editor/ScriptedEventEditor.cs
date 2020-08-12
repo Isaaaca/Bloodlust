@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
-[CustomPropertyDrawer(typeof(ScriptedEvent))]
+[CustomPropertyDrawer(typeof(SequenceEvent))]
 public class ScriptedEventEditor : PropertyDrawer
 {
     public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
@@ -14,10 +14,10 @@ public class ScriptedEventEditor : PropertyDrawer
         SerializedProperty[] displayedProperty = new SerializedProperty[3];
         switch (eventTypeProperty.enumValueIndex)
         {
-            case (int)ScriptedEvent.EventType.Dialogue:
+            case (int)SequenceEvent.EventType.Dialogue:
                 displayedProperty[0] = property.FindPropertyRelative("dialogue");
                 break;
-            case (int)ScriptedEvent.EventType.Fade:
+            case (int)SequenceEvent.EventType.Fade:
                 displayedProperty[0] = property.FindPropertyRelative("opacity");
                 displayedProperty[1] = property.FindPropertyRelative("duration");
                 break;
@@ -52,10 +52,10 @@ public class ScriptedEventEditor : PropertyDrawer
         float height = base.GetPropertyHeight(property, label);
         switch (eventTypeProperty.enumValueIndex)
         {
-            case (int)ScriptedEvent.EventType.Dialogue:
+            case (int)SequenceEvent.EventType.Dialogue:
                 height *= 2;
                 break;
-            case (int)ScriptedEvent.EventType.Fade:
+            case (int)SequenceEvent.EventType.Fade:
                 height *= 3;
                 break;
         }
