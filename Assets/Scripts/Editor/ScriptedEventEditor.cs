@@ -21,6 +21,20 @@ public class ScriptedEventEditor : PropertyDrawer
                 displayedProperty[0] = property.FindPropertyRelative("opacity");
                 displayedProperty[1] = property.FindPropertyRelative("duration");
                 break;
+            case (int)SequenceEvent.EventType.Switchable:
+                displayedProperty[0] = property.FindPropertyRelative("target");
+                break;
+            case (int)SequenceEvent.EventType.CameraPanTo:
+                displayedProperty[0] = property.FindPropertyRelative("target");
+                break;
+            case (int)SequenceEvent.EventType.CameraJumpTo:
+                displayedProperty[0] = property.FindPropertyRelative("target");
+                break;
+            case (int)SequenceEvent.EventType.Teleport:
+                displayedProperty[0] = property.FindPropertyRelative("position");
+                break;
+
+
         }
 
 
@@ -53,6 +67,18 @@ public class ScriptedEventEditor : PropertyDrawer
         switch (eventTypeProperty.enumValueIndex)
         {
             case (int)SequenceEvent.EventType.Dialogue:
+                height *= 2;
+                break;
+            case (int)SequenceEvent.EventType.Switchable:
+                height *= 2;
+                break;
+            case (int)SequenceEvent.EventType.CameraPanTo:
+                height *= 2;
+                break;
+            case (int)SequenceEvent.EventType.CameraJumpTo:
+                height *= 2;
+                break;
+            case (int)SequenceEvent.EventType.Teleport:
                 height *= 2;
                 break;
             case (int)SequenceEvent.EventType.Fade:

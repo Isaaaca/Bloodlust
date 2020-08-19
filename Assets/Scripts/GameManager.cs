@@ -25,6 +25,12 @@ public class GameManager : MonoBehaviour
         PlayerController.OnGameOver += HandleGameOver;
         CutsceneDirector.OnSequenceEnd += HandleSequenceEnd;
         DialogueManager.OnDialogueEvent += HandleDialogueEvent;
+        AreaTrigger.OnEnterAreaTrigger += HandleTrigger;
+    }
+
+    private void HandleTrigger(string triggerCode)
+    {
+        CheckForScriptedEvent(triggerCode);
     }
 
     private void HandleDialogueEvent(string eventCode)

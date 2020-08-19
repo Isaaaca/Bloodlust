@@ -28,6 +28,16 @@ public class PlayerController : Character
 
 
 
+    private void Awake()
+    {
+        SavePoint.OnEnterSavePoint += HandleEnterSavePoint;
+    }
+
+    private void HandleEnterSavePoint(Vector2 savePointPos)
+    {
+        initialPosition = savePointPos;
+    }
+
     protected override void Start()
     {
         base.Start();
@@ -60,6 +70,10 @@ public class PlayerController : Character
         {
             GetInputs();
         }
+        else
+        {
+            ReleaseInputs();
+        }
 
 
         if (invulTimer > 0)
@@ -72,6 +86,12 @@ public class PlayerController : Character
 
         UpdateAnimationState();
 
+    }
+
+    private void ReleaseInputs()
+    {
+        controller.HoriMove(0);
+        controller.ReleaseJump();
     }
 
     private void GetInputs()
@@ -203,6 +223,7 @@ public class PlayerController : Character
         this.inputControllable = inputControllable;
     }
     
+    //used by animator
     public void MakeInputControllable()
     {
         SetInputControllable(true);
@@ -231,6 +252,11 @@ public class PlayerController : Character
         base.Respawn();
         animator.Play("Sleep");
 
+    }
+
+    public void SetRespawnPoint(Vector2 respawnPoint)
+    {
+        initialPosition = respawnPoint;
     }
 
     public override void OnDeath()

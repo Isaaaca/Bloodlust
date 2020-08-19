@@ -42,6 +42,7 @@ public class DialogueManager : MonoBehaviour
 
     public void LoadDialogue(Dialogue dialogue)
     {
+        camController.SwitchCamera(CamController.CameraMode.Center);
         this.dialogue = dialogue;
         GetSpeakers(dialogue);
         currLineIndex = 0;

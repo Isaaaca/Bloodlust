@@ -9,6 +9,8 @@ public class CutsceneDirector : MonoBehaviour
 
     [SerializeField]private ScreenFader screen = null;
     [SerializeField]private DialogueManager dialogueManager = null;
+    [SerializeField]private CamController camController = null;
+    [SerializeField]private PlayerController player = null;
     private int index = -1;
     private Sequence currentSequence = null;
     private SequenceEvent.EventType currEventType = SequenceEvent.EventType.Null;
@@ -36,7 +38,7 @@ public class CutsceneDirector : MonoBehaviour
             {
                 currEvent = currentSequence.scriptedEvents[index];
                 currEventType = currEvent.eventType;
-
+                GameObject targetObject = null;
                 switch (currEventType)
                 {
                     case SequenceEvent.EventType.Dialogue:
@@ -48,9 +50,60 @@ public class CutsceneDirector : MonoBehaviour
                         waiting = true;
                         break;
                     case SequenceEvent.EventType.Switchable:
-                        currEvent.switchable.OnSwitch();
-                        waiting = true;
-                        Invoke("StopWaiting", currEvent.switchable.GetDuration());
+                        if (currEvent.switchable == null)
+                        {
+                            targetObject = GameObject.Find(currEvent.target);
+                            if (targetObject != null)
+                                currEvent.switchable = targetObject.GetComponent<SwitchControllableObject>();
+
+                        }
+                        if (currEvent.switchable != null)
+                        {
+                            currEvent.switchable.OnSwitch();
+                            waiting = true;
+                            Invoke("StopWaiting", currEvent.switchable.GetDuration());
+                        }
+                        break;
+                    case SequenceEvent.EventType.CameraJumpTo:
+                        if (currEvent.targetTransform == null)
+                        {
+                            targetObject = GameObject.Find(currEvent.target);
+                            if (targetObject != null)
+                            {
+                                currEvent.targetTransform = targetObject.transform;
+                                
+                            }
+                        }
+                        if (currEvent.targetTransform != null)
+                        {
+                            camController.JumpToTarget(currEvent.targetTransform);
+                            StopWaiting();
+                        }
+                        break;
+                    case SequenceEvent.EventType.CameraPanTo:
+                        if (currEvent.targetTransform == null)
+                        {
+                            targetObject = GameObject.Find(currEvent.target);
+                            if (targetObject != null)
+                            {
+                                currEvent.targetTransform = targetObject.transform;
+
+                            }
+                        }
+                        if (currEvent.targetTransform != null)
+                        {
+                            camController.PanToTarget(currEvent.targetTransform);
+                            waiting = true;
+                            Invoke("StopWaiting", 1f);
+                        }
+                        break;
+                    case SequenceEvent.EventType.Teleport:
+                        player.transform.position = currEvent.position;
+                        StopWaiting();
+                        break;
+                    case SequenceEvent.EventType.TeleportRelative:
+                        player.transform.position += (Vector3)currEvent.position;
+                        StopWaiting();
                         break;
                 }
             }
