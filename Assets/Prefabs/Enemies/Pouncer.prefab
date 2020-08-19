@@ -161,6 +161,9 @@ MonoBehaviour:
   drag: 0
   body: {fileID: 5704908462003959462}
   minGroundNormalY: 0.65
+  physicsIgnoredLayers:
+    serializedVersion: 2
+    m_Bits: 0
   groundSpeed: 1.6
   airSpeed: 8
   jumpTakeOffSpeed: 15

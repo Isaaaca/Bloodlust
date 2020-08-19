@@ -10,6 +10,7 @@ public class PhysicsObject : MonoBehaviour
     public Collider2D body;
 
     [SerializeField] private float minGroundNormalY = 0.65f;
+    [SerializeField] private LayerMask physicsIgnoredLayers = 0;
 
     protected float gravityModifier;
     protected bool grounded;
@@ -37,7 +38,7 @@ public class PhysicsObject : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        LayerMask layerMask = Physics2D.GetLayerCollisionMask(gameObject.layer);
+        LayerMask layerMask = Physics2D.GetLayerCollisionMask(gameObject.layer) - physicsIgnoredLayers;
         downwardContactFilter.useTriggers = false;
         downwardContactFilter.SetLayerMask(layerMask);
         upwardContactFilter.useTriggers = false;
