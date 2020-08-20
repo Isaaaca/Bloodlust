@@ -92,7 +92,8 @@ public class DialogueManager : MonoBehaviour
             {
                 //end convo
                 dialogueBox.SetActive(false);
-                OnDialogueEvent(dialogue.name);
+                //since dialogues are contained within sequences, only choices need to be logged.
+                //OnDialogueEvent(dialogue.name);
                 OnDialogueStartEnd(false);
             }
 

@@ -5,6 +5,7 @@ using UnityEngine;
 public static class SaveManager 
 {
     private static HashSet<string> gameProgress = new HashSet<string>();
+    private static Dictionary<string, int> counters = new Dictionary<string, int>();
     public static Vector2 playerSpawnPoint;
 
     public static void AddEvent(string eventCode)
@@ -18,6 +19,31 @@ public static class SaveManager
         if(eventCode[0] == '!')
             return !gameProgress.Contains(eventCode.Remove(0,1));
         return gameProgress.Contains(eventCode);
+    }
+
+    public static void IncrementCounter(string counterCode)
+    {
+        Debug.Log("code:" + counterCode);
+        if (counters.ContainsKey(counterCode))
+        {
+            counters[counterCode]++;
+        }
+        else
+        {
+            counters.Add(counterCode, 1);
+        }
+    }
+
+    public static int GetCounter(string counterCode)
+    {
+        if (counters.ContainsKey(counterCode))
+        {
+            return counters[counterCode];
+        }
+        else
+        {
+            return 0;
+        }
     }
    
 }

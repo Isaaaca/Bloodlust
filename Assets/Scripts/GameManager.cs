@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] ScreenFader screen = null;
     [SerializeField] CamController camController = null;
     [SerializeField] CutsceneDirector cutsceneDirector = null;
+    [SerializeField] string lastCondition = "";
     [SerializeField] GameEventDictionary eventDictionary = null;
 
     public static event Action<bool> SetGameplayEnabled = (enable) => { };
@@ -16,6 +17,7 @@ public class GameManager : MonoBehaviour
 
     private bool gameEventRunning = false;
     private bool isReloading = false;
+    private string currRoom = "";
 
     private void Awake()
     {
@@ -36,30 +38,27 @@ public class GameManager : MonoBehaviour
     private void HandleDialogueEvent(string eventCode)
     {
         SaveManager.AddEvent(eventCode);
+        CheckForScriptedEvent(eventCode);
     }
 
     private void HandleSequenceEnd(Sequence sequence)
     {
         //TODO: check for continued event/conditional dialogue
+        SaveManager.AddEvent(sequence.name);
         screen.FadeIn();
         gameEventRunning = false;
         camController.SwitchCamera(CamController.CameraMode.Follow);
         player.SetInputControllable(true);
+        CheckForScriptedEvent(sequence.name);
     }
 
     private void HandleGameOver(char type)
     {
-        switch (type)
-        {
-            case 'H':
-                print("death");
-                screen.FadeToBlack();
-                isReloading = true;
-                break;
-            case 'L':
-                print("tranform");
-                break;
-        }
+        string code = type + currRoom;
+        SaveManager.IncrementCounter(code);
+        screen.FadeToBlack();
+        isReloading = true;
+        CheckForScriptedEvent(code);
     }
 
     private void HandleCharacterDeath(Character character)
@@ -69,6 +68,7 @@ public class GameManager : MonoBehaviour
 
     private void HandleEnterRoomEvent(Room room)
     {
+        currRoom = room.name;
         CheckForScriptedEvent(room.name);
     }
 
@@ -81,7 +81,7 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (isReloading)
+        if (isReloading &&! gameEventRunning)
         {
             if (!screen.isTransitioning())
             {
@@ -110,6 +110,13 @@ public class GameManager : MonoBehaviour
                 StartSequence(seq);
                 gameEventRunning = true;
             }
+        }
+        else if (key == lastCondition)
+        {
+            isReloading = false;
+            screen.FadeToBlack();
+            player.enabled = false;
+            //Load Level End screen
         }
     }
 

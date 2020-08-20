@@ -33,6 +33,7 @@ public class CutsceneDirector : MonoBehaviour
             {
                 //End Sequence
                 OnSequenceEnd(currentSequence);
+                waiting = true;
             }
             else
             {

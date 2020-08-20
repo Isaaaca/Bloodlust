@@ -202,7 +202,7 @@ public class PlayerController : Character
             {
                 animator.SetBool("Dead",true);
                 invulTimer = 0;
-                inputControllable = false;
+                SetInputControllable(false);
             }
         }
     }
@@ -210,7 +210,13 @@ public class PlayerController : Character
 
     public void ModifyLust(float amt)
     {
-        lust.Modify(amt);
+        
+        if (lust.Get()!= lust.GetMax()
+            && lust.Modify(amt) == lust.GetMax())
+        {
+            animator.Play("Transform");
+            SetInputControllable(false);
+        }
     }
 
     public Meter GetLust()
@@ -261,7 +267,11 @@ public class PlayerController : Character
 
     public override void OnDeath()
     {
-        OnGameOver('H');
+        OnGameOver('D');
+    }
+    public void OnTransform()
+    {
+        OnGameOver('L');
     }
     void OnDrawGizmosSelected()
     {
