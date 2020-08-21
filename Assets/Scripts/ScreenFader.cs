@@ -7,9 +7,9 @@ using UnityEngine.UI;
 public class ScreenFader : MonoBehaviour
 {
     [SerializeField] private float defaultDuration =1;
+    [SerializeField] private float targetOpacity = 0;
 
     private float duration =1;
-    private float targetOpacity = 0;
     private Image image;
     private bool inTransition = false;
 

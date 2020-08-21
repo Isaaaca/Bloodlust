@@ -72,7 +72,7 @@ public class CutsceneDirector : MonoBehaviour
                             if (targetObject != null)
                             {
                                 currEvent.targetTransform = targetObject.transform;
-                                
+
                             }
                         }
                         if (currEvent.targetTransform != null)
@@ -110,7 +110,8 @@ public class CutsceneDirector : MonoBehaviour
             }
 
         }
-        else if (currEventType == SequenceEvent.EventType.Fade)
+        else if (currEventType == SequenceEvent.EventType.Fade
+            && index < currentSequence.scriptedEvents.Length)
         {
             if (!screen.isTransitioning())
             {

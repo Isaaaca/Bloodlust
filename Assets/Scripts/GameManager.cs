@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] ScreenFader screen = null;
     [SerializeField] CamController camController = null;
     [SerializeField] CutsceneDirector cutsceneDirector = null;
+    [SerializeField] LevelEndMenu levelEndMenu = null;
     [SerializeField] string lastCondition = "";
     [SerializeField] GameEventDictionary eventDictionary = null;
 
@@ -117,6 +118,7 @@ public class GameManager : MonoBehaviour
             screen.FadeToBlack();
             player.enabled = false;
             //Load Level End screen
+            levelEndMenu.ShowMenu();
         }
     }
 
