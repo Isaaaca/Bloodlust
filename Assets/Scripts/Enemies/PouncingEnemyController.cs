@@ -24,9 +24,9 @@ public class PouncingEnemyController : Character
     {
         base.Start();
         layer_mask = LayerMask.GetMask("Obstacle");
-        player = GameObject.Find("Player");
+        player = GameManager.GetPlayer();
     }
-    private void Update()
+    protected override void Update()
     {
        
        
@@ -87,14 +87,16 @@ public class PouncingEnemyController : Character
         {
             controller.HoriMove(controller.IsFacingRight() ? 1 : -1);
         }
+
+        base.Update();
     }
 
     void OnDrawGizmosSelected()
     {
         // Draw a yellow sphere at the transform's position
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.localPosition, lungeDistance);
+        Gizmos.DrawWireSphere(transform.position, lungeDistance);
         Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(transform.localPosition, aggroRange);
+        Gizmos.DrawWireSphere(transform.position, aggroRange);
     }
 }

@@ -33,11 +33,11 @@ public class FlyingEnemyController : Character
     {
         base.Start();
         wayPoints[0] = transform.position;
-        player = GameObject.Find("Player");
+        player = GameManager.GetPlayer();
     }
 
     // Update is called once per frame
-    protected void Update()
+    protected override void Update()
     {
         Vector2 vectToPlayer = (Vector2)player.transform.position - rb2d.position;
         float distance = vectToPlayer.magnitude;
@@ -110,6 +110,7 @@ public class FlyingEnemyController : Character
                 controller.VertMove(dir.y);
             }
         }
+        base.Update();
     }
 
     void OnDrawGizmosSelected()

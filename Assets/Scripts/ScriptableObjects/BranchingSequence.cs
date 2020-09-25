@@ -6,6 +6,7 @@ using UnityEngine;
 public class BranchingSequence : BaseGameEvent
 {
     [SerializeField] private SequenceDictionary sequenceDictionary = new SequenceDictionary();
+
     public override Sequence GetSequence()
     {
         foreach (string s in sequenceDictionary.Keys)

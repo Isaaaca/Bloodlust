@@ -12,17 +12,11 @@ public abstract class Interactable : MonoBehaviour
 
     private bool focused = false;
     private bool interactable = true;
+    protected PlayerController player = null;
 
     private void Awake()
     {
         GameManager.SetGameplayEnabled += (enabled) => SetInteractable(enabled);
-    }
-
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
     }
 
     // Update is called once per frame
@@ -43,7 +37,8 @@ public abstract class Interactable : MonoBehaviour
     {
         if (collision.name.Equals("Player"))
         {
-            if (collision.gameObject.GetComponent<PlayerController>().IsFacing(this.transform.position))
+            player = collision.gameObject.GetComponent<PlayerController>();
+            if (player.IsFacing(this.transform.position))
             {
                 Focus();
 

@@ -32,8 +32,8 @@ public class CutsceneDirector : MonoBehaviour
             if (index >= currentSequence.scriptedEvents.Length)
             {
                 //End Sequence
-                OnSequenceEnd(currentSequence);
                 waiting = true;
+                OnSequenceEnd(currentSequence);
             }
             else
             {
@@ -105,6 +105,20 @@ public class CutsceneDirector : MonoBehaviour
                     case SequenceEvent.EventType.TeleportRelative:
                         player.transform.position += (Vector3)currEvent.position;
                         StopWaiting();
+                        break;
+                    case SequenceEvent.EventType.Turn:
+                        targetObject = GameObject.Find(currEvent.target);
+                        if (targetObject != null)
+                        {
+                            CharacterMovementController controller = targetObject.GetComponent<CharacterMovementController>();
+                            if (controller != null) controller.Turn();
+
+                        }
+                        StopWaiting();
+                        break;
+                    case SequenceEvent.EventType.Pause:
+                        waiting = true;
+                        Invoke("StopWaiting", currEvent.duration);
                         break;
                 }
             }

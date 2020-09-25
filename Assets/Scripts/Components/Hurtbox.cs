@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class Hurtbox : MonoBehaviour
 {
-    private float damage = 10f;
+    [SerializeField]private float damage = 10f;
+    public bool active = true;
 
     public void SetDamage(float dmg)
     {
@@ -13,23 +14,31 @@ public class Hurtbox : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D col)
     {
-    
-        Character other = col.GetComponent<Character>();
-        if (other != null) other.TakeDamage(damage, this.transform.position);
+        if (active)
+        {
+            Character other = col.GetComponent<Character>();
+            if (other != null) other.TakeDamage(damage, this.transform.position);
+        }
 
     }
 
     private void OnCollisionStay2D(Collision2D collision)
     {
-        Collider2D col = collision.collider;
-        Character other = col.GetComponent<Character>();
-        if (other != null) other.TakeDamage(damage, collision.GetContact(0).point);
+        if (active)
+        {
+            Collider2D col = collision.collider;
+            Character other = col.GetComponent<Character>();
+            if (other != null) other.TakeDamage(damage, collision.GetContact(0).point);
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        Collider2D col = collision.collider;
-        Character other = col.GetComponent<Character>();
-        if (other != null) other.TakeDamage(damage, collision.GetContact(0).point);
+        if (active)
+        {
+            Collider2D col = collision.collider;
+            Character other = col.GetComponent<Character>();
+            if (other != null) other.TakeDamage(damage, collision.GetContact(0).point);
+        }
     }
 }

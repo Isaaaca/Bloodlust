@@ -36,6 +36,12 @@ public class ScriptedEventEditor : PropertyDrawer
             case (int)SequenceEvent.EventType.TeleportRelative:
                 displayedProperty[0] = property.FindPropertyRelative("position");
                 break;
+            case (int)SequenceEvent.EventType.Turn:
+                displayedProperty[0] = property.FindPropertyRelative("target");
+                break;
+            case (int)SequenceEvent.EventType.Pause:
+                displayedProperty[0] = property.FindPropertyRelative("duration");
+                break;
 
 
         }
@@ -85,6 +91,12 @@ public class ScriptedEventEditor : PropertyDrawer
                 height *= 2;
                 break;
             case (int)SequenceEvent.EventType.TeleportRelative:
+                height *= 2;
+                break;
+            case (int)SequenceEvent.EventType.Turn:
+                height *= 2;
+                break;
+            case (int)SequenceEvent.EventType.Pause:
                 height *= 2;
                 break;
             case (int)SequenceEvent.EventType.Fade:

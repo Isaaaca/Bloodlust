@@ -5,6 +5,7 @@ using UnityEngine;
 public class DestroyOnHit : MonoBehaviour
 {
     private Animator animator;
+    [SerializeField] private bool destroy = false;
 
     private void Start()
     {
@@ -15,7 +16,7 @@ public class DestroyOnHit : MonoBehaviour
     {
         if (animator != null)
         {
-            animator.Play("Destroy");
+            animator.SetBool("Destroyed",true);
         }
         else
         {
@@ -25,6 +26,9 @@ public class DestroyOnHit : MonoBehaviour
 
     public void OnDestroyAnimFinish()
     {
-        Destroy(this.gameObject);
+        if (destroy)
+            Destroy(this.gameObject);
+        else
+            this.gameObject.SetActive(false);
     }
 }

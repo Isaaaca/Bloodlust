@@ -25,6 +25,7 @@ public class InteractableSwitch : Interactable
         };
        
         sequence.scriptedEvents[1] = seqEvent;
+        sequence.name = name+"seq";
 
     }
     public override Sequence GetSequence()

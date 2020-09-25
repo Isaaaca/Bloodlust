@@ -12,11 +12,12 @@ public class CharacterMovementController : PhysicsObject
     public float fallingGravityMultiplier = 1.3f;
     public float cancelJumpGravity = 3;
 
+    [SerializeField]protected bool facingRight=false;
+
     protected SpriteRenderer spriteRenderer;
     protected bool dashing;
     protected bool arcing;
     protected bool jumped = false;
-    protected bool facingRight=false;
     private float smallJumpAirtime;
 
     private float dashElapsedTime;
@@ -60,15 +61,9 @@ public class CharacterMovementController : PhysicsObject
         smallJumpAirtime =0;
     }
 
-    public bool Jump()
+    public void Jump()
     {
-        if (grounded)
-        {
-            jumpInput = true;
-            return true;
-        }
-
-        return false;
+        jumpInput = true;
     }
 
     public void ReleaseJump()
@@ -127,6 +122,11 @@ public class CharacterMovementController : PhysicsObject
     {
         return facingRight;
     }
+    public bool IsFacing(Vector2 target)
+    {
+        return (target - rb2d.position).x > 0 ? IsFacingRight() : !IsFacingRight();
+    }
+
     public bool IsGrounded()
     {
         return grounded;
@@ -149,7 +149,10 @@ public class CharacterMovementController : PhysicsObject
     }
     public void Turn()
     {
-        spriteRenderer.flipX = !spriteRenderer.flipX;
+        transform.localScale = new Vector3(transform.localScale.x * -1, transform.localScale.y, transform.localScale.z);
+        facingRight = !facingRight;
+
+        /*spriteRenderer.flipX = !spriteRenderer.flipX;
         facingRight = !facingRight;
 
         List<Transform> childTranforms = new List<Transform>(gameObject.GetComponentsInChildren<Transform>(true));
@@ -158,7 +161,7 @@ public class CharacterMovementController : PhysicsObject
         {
             child.localPosition = new Vector3(-child.localPosition.x, child.localPosition.y, child.localPosition.z);
 
-        }
+        }*/
     }
     public void Halt()
     {
@@ -168,6 +171,7 @@ public class CharacterMovementController : PhysicsObject
         arcing = false;
         HoriMove(0);
         VertMove(0);
+        gravityModifier = baseGravityModifier;
         velocity = Vector2.zero;
     }
 
@@ -176,17 +180,17 @@ public class CharacterMovementController : PhysicsObject
         Vector2 move = Vector2.zero;
         bool newFacingDir = facingRight;
 
+        if (jumpInput && releasedJumpInput)
+        {
+            groundNormal = Vector2.up;
+            jumped = true;
+            grounded = false;
+            releasedJumpInput = false;
+            gravityModifier = baseGravityModifier;
+            velocity.y = jumpTakeOffSpeed;
+        }
         if (grounded)
         {
-            if (jumpInput && releasedJumpInput)
-            {
-                groundNormal = Vector2.up;
-                jumped = true;
-                grounded = false;
-                releasedJumpInput = false;
-                gravityModifier = baseGravityModifier;
-                velocity.y = jumpTakeOffSpeed;
-            }
             
             //only reset when landing or standing still. Else might get reset mid-jump when still registered as grounded.
             if (velocity.y <=0f)
@@ -223,7 +227,7 @@ public class CharacterMovementController : PhysicsObject
             dashInput = false;
             if (turning && dashDir.x!=0)
             {
-                facingRight = dashDir.x > 0;
+                newFacingDir = dashDir.x > 0;
             }
             if((facingRight? (groundNormal.x>0 && dashDir.x>0): (groundNormal.x < 0 && dashDir.x < 0))|| !grounded)
             {
@@ -251,7 +255,17 @@ public class CharacterMovementController : PhysicsObject
                 gravityModifier = baseGravityModifier;
             }
             else
+            {
                 move = ParametricMovement(dashDir, mdashDistance, mdashDuration, dashElapsedTime, dashFunction);
+                if (Physics2D.OverlapPoint(rb2d.position + Vector2.down * 0.2f + dashDir*Time.deltaTime, LayerMask.GetMask("Obstacle")) != null)
+                {
+                    gravityModifier = baseGravityModifier;
+                }
+                else
+                {
+                    gravityModifier = 0;
+                }
+            }
         }
         else if (arcing)
         {

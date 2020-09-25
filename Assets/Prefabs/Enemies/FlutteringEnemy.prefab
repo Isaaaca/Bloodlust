@@ -97,10 +97,10 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -2081236666602350228, guid: fdd9a0d16ffa4274f811a478adb081be,
+  m_Sprite: {fileID: -3873300752652410689, guid: f4b04bf81e514894fa98313d5af61c34,
     type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_FlipX: 1
+  m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
   m_Size: {x: 0.48, y: 0.48}
@@ -119,7 +119,7 @@ Animator:
   m_GameObject: {fileID: 5434508822114570949}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 62cfa67e84709cf41ab1d40dc7827cc7, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -157,10 +157,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health:
-    max: 0
-    current: 0
-  range: 0.97
-  pauseTime: 1
+    max: 5
+    current: 5
+  invulnerabilityDuration: 0.4
+  range: 2
+  pauseTime: 2
 --- !u!114 &5434508822114570956
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -177,12 +178,16 @@ MonoBehaviour:
   drag: 0
   body: {fileID: 5434508822114570947}
   minGroundNormalY: 0.65
+  physicsIgnoredLayers:
+    serializedVersion: 2
+    m_Bits: 0
   groundSpeed: 7
   airSpeed: 2
   jumpTakeOffSpeed: 15
   smallJumpDuration: 0.01
   fallingGravityMultiplier: 1.3
   cancelJumpGravity: 3
+  facingRight: 0
 --- !u!1001 &5434508821576129262
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -249,6 +254,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6466655846444592196, guid: 291951522a67c6b4eb23c749eb87943a,
+        type: 3}
+      propertyPath: m_Intensity
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6466655846444592199, guid: 291951522a67c6b4eb23c749eb87943a,
+        type: 3}
+      propertyPath: strength
+      value: 1.5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 291951522a67c6b4eb23c749eb87943a, type: 3}

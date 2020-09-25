@@ -6,12 +6,19 @@ using UnityEngine;
 public class ConditionalSequence : BaseGameEvent
 {
     [SerializeField] private Sequence sequence = null;
-    [SerializeField] private string condition ="";
+    [SerializeField] private string[] condition = null;
     public override Sequence GetSequence()
     {
-        if (SaveManager.CheckCondition(condition))
+        foreach (string con in condition)
+        {
+            if (!SaveManager.CheckCondition(con))
+                return null;
+        }
+
+        return sequence;
+        /*if (SaveManager.CheckCondition(condition))
             return sequence;
         else
-            return null;
+            return null;*/
     }
 }

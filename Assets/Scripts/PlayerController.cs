@@ -13,24 +13,26 @@ public class PlayerController : Character
     public float backHopDuration = 0.32f;
     public float dashDistance = 2.5f;
     public float dashDuration = 0.32f;
-    public float invulnerabilityDuration = 1f;
     [SerializeField] private Meter lust = null;
+    [SerializeField] int jumpAbility = 1;
 
     [Header("Child Scripts")]
     [SerializeField] private QuickTimeEvent qte = null;
     [SerializeField] private Hurtbox sword = null;
+    [SerializeField] private Transform foot = null;
 
     private bool playerInControl;
     private bool inputControllable = true;
     private bool dashed = false;
     private float knockbackTime = 0.4f;
-    private float invulTimer = 0f;
+    private int jumpsLeft = 0;
 
 
 
     private void Awake()
     {
         SavePoint.OnEnterSavePoint += HandleEnterSavePoint;
+        GameManager.SetGameplayEnabled += SetInputControllable;
     }
 
     private void HandleEnterSavePoint(Vector2 savePointPos)
@@ -44,11 +46,12 @@ public class PlayerController : Character
         InvokeRepeating("UpdatePlayerControl", 2.0f, 2f);
     }
 
-    private void Update()
+    protected override void Update()
     {
-        if(controller.IsGrounded() && !controller.IsDashing())
+        if(controller.IsGrounded())
         {
-            dashed = false;
+            jumpsLeft = jumpAbility;
+            if (!controller.IsDashing()) dashed = false;
         }
         if (!playerInControl)
         {
@@ -79,7 +82,14 @@ public class PlayerController : Character
         if (invulTimer > 0)
         {
             invulTimer -= Time.deltaTime;
-            sprite.enabled = !sprite.enabled;
+            if (invulTimer % 0.1f > 0.05f)
+            {
+                sprite.enabled = true;
+            }
+            else
+            {
+                sprite.enabled = false;
+            }
             if (invulTimer <= 0)
                 sprite.enabled = true;
         }
@@ -104,8 +114,12 @@ public class PlayerController : Character
                 controller.HoriMove(Input.GetAxis("Horizontal"));
                 if (Input.GetButtonDown("Jump"))
                 {
-                    if (controller.Jump())
+                    if (CanJump())
+                    {
+                        controller.Jump(); 
                         animator.SetTrigger("Jump");
+                        jumpsLeft--;
+                    }
                 }
                 if (controller.IsGrounded() && Input.GetKeyDown(KeyCode.E))
                 {
@@ -192,8 +206,7 @@ public class PlayerController : Character
         {
             invulTimer = invulnerabilityDuration;
             health.Modify(-dmg);
-            controller.HoriMove(0);
-            controller.VertMove(0);
+            controller.Halt();
             Vector2 knockbackDir = (rb2d.position - source);
             if (knockbackDir.x < 0 != controller.IsFacingRight()) controller.Turn();
             controller.Arc(Vector2.up, 0.4f, Mathf.Sign(knockbackDir.x) * -1f, 0.5f, false, "easein", "linear");
@@ -237,7 +250,7 @@ public class PlayerController : Character
     
     public bool IsFacing(Vector2 target)
     {
-        return (target - rb2d.position).x > 0 ? controller.IsFacingRight() : !controller.IsFacingRight();
+        return controller.IsFacing(target);
     } 
     public bool IsFacingRight()
     {
@@ -273,6 +286,16 @@ public class PlayerController : Character
     {
         OnGameOver('L');
     }
+
+    private bool CanJump()
+    {
+        int groundLayerMask = LayerMask.GetMask("Obstacle","OneWay");
+        RaycastHit2D hit2D = Physics2D.Raycast(foot.position, Vector2.down, 0.5f, groundLayerMask);
+        Collider2D overlap2D = Physics2D.OverlapPoint(foot.position, groundLayerMask);
+
+        return controller.IsGrounded() || (hit2D.collider != null && overlap2D == null && jumpsLeft>0);
+    }
+
     void OnDrawGizmosSelected()
     {
         // Draw a yellow sphere at the transform's position

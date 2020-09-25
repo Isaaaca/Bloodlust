@@ -11,7 +11,11 @@ public class Room : MonoBehaviour
     [SerializeField] private float bottomBorder = 1;
     [SerializeField] private float leftBorder = 1;
     [SerializeField] private float rightBorder = 1;
+    private List<GameObject> childObjects = new List<GameObject>();
     private PolygonCollider2D col2D;
+    private bool roomActive = false;
+
+
     private void Awake()
     {
         Collider2D[] colliders = GetComponentsInChildren<Collider2D>();
@@ -37,15 +41,56 @@ public class Room : MonoBehaviour
                 new Vector2(bounds.center.x - bounds.extents.x, bounds.center.y - bounds.extents.y),
                 new Vector2(bounds.center.x - bounds.extents.x, bounds.center.y + bounds.extents.y),
             };
+
+        GetRoomChildren();
+        DeactivateChildren();
+
+        Room.OnEnterRoom += (enteredroom) => {
+            if (roomActive && enteredroom != this)
+            {
+                DeactivateChildren();
+                roomActive = false;
+            }
+        };
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         OnEnterRoom(this);
+        roomActive = true;
+        ActivateChildren();
     }
 
     public Collider2D GetCollider2D()
     {
         return col2D;
+    }
+
+    void DeactivateChildren()
+    {
+        foreach (GameObject child in childObjects)
+        {
+            child.SetActive(false);
+        }
+    }
+    
+    void ActivateChildren()
+    {
+        foreach (GameObject child in childObjects)
+        {
+            child.SetActive(true);
+        }
+    }
+
+    void GetRoomChildren()
+    {
+        for (int i = 0; i < transform.childCount; i++)
+        {
+            GameObject child = transform.GetChild(i).gameObject;
+            if (!child.name.Contains(name))
+            {
+                childObjects.Add(child);
+            }
+        }
     }
 }

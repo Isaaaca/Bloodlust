@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class test: MonoBehaviour
 {
+    public SequenceDictionary sd;
     public DialogueManager dm;
     public Dialogue d;
     public ScreenFader SF;

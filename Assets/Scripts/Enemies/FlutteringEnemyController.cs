@@ -16,12 +16,13 @@ public class FlutteringEnemyController : Character
     protected override void  Start()
     {
         base.Start();
-        targetPoint = origin = rb2d.position;
+        origin = rb2d.position;
+        targetPoint = GetNextDestination();
         timer = 0;
     }
 
     // Update is called once per frame
-    private void Update()
+    protected override void Update()
     {
 
         if (timer <= 0)
@@ -37,12 +38,24 @@ public class FlutteringEnemyController : Character
             }
             else
             {
+                animator.SetBool("Moving", true);
                 dir = dir.normalized;
                 controller.HoriMove(dir.x);
                 controller.VertMove(dir.y);
             }
         }
-        timer -= Time.deltaTime;
+        else
+        {
+            timer -= Time.deltaTime;
+            animator.SetBool("Moving", false);
+
+        }
+
+        base.Update();
+        if (dead)
+        {
+            controller.baseGravityModifier = 1;
+        }
     }
 
     private Vector2 GetNextDestination()
@@ -61,7 +74,7 @@ public class FlutteringEnemyController : Character
     {
         // Draw a yellow sphere at the transform's position
         Gizmos.color = Color.green;
-        Gizmos.DrawWireSphere(transform.localPosition, range);
+        Gizmos.DrawWireSphere(transform.position, range);
         Gizmos.DrawIcon(targetPoint, "target");
     }
 

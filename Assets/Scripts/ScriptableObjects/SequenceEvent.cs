@@ -14,6 +14,8 @@ public class SequenceEvent
         CameraJumpTo,
         Teleport,
         TeleportRelative,
+        Turn,
+        Pause,
         Null
     }
 

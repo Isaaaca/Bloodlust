@@ -5,7 +5,8 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    [SerializeField] PlayerController player = null;
+    [SerializeField] string levelCode = "";
+    [SerializeField] PlayerController _player = null;
     [SerializeField] ScreenFader screen = null;
     [SerializeField] CamController camController = null;
     [SerializeField] CutsceneDirector cutsceneDirector = null;
@@ -20,8 +21,15 @@ public class GameManager : MonoBehaviour
     private bool isReloading = false;
     private string currRoom = "";
 
+    private static PlayerController player;
+    public static GameObject GetPlayer()
+    {
+        return player.gameObject;
+    }
+
     private void Awake()
     {
+        player = _player;
         Interactable.OnInteractEvent += HandleInteractEvent;
         Room.OnEnterRoom += HandleEnterRoomEvent;
         Character.OnCharacterDeath += HandleCharacterDeath;
@@ -49,7 +57,7 @@ public class GameManager : MonoBehaviour
         screen.FadeIn();
         gameEventRunning = false;
         camController.SwitchCamera(CamController.CameraMode.Follow);
-        player.SetInputControllable(true);
+        SetGameplayEnabled(true);
         CheckForScriptedEvent(sequence.name);
     }
 
@@ -64,13 +72,23 @@ public class GameManager : MonoBehaviour
 
     private void HandleCharacterDeath(Character character)
     {
-         
+        if(character.name == "Boss")
+        {
+            string code = levelCode + character.name;
+            SaveManager.AddEvent(code);
+            CheckForScriptedEvent(code);
+        }
+        else
+        {
+            SaveManager.IncrementCounter(levelCode + character.name.Substring(0,3)+currRoom);
+        }
     }
 
     private void HandleEnterRoomEvent(Room room)
     {
         currRoom = room.name;
         CheckForScriptedEvent(room.name);
+        print(room.name);
     }
 
     private void HandleInteractEvent(string id, Interactable interactable)
@@ -125,7 +143,7 @@ public class GameManager : MonoBehaviour
 
     private void StartSequence(Sequence sequence)
     {
-        player.SetInputControllable(false);
+        SetGameplayEnabled(false);
         cutsceneDirector.PlaySequence(sequence);
 
     }

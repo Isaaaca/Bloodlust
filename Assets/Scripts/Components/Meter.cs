@@ -4,8 +4,8 @@ using UnityEngine;
 [Serializable]
 public class Meter
 {
-    [SerializeField] protected float max;
-    [SerializeField] protected float current;
+    [SerializeField] protected float max = 100;
+    [SerializeField] protected float current = 100;
 
     public float GetNormalised()
     {

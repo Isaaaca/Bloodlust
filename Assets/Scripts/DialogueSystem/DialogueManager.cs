@@ -21,12 +21,13 @@ public class DialogueManager : MonoBehaviour
     private int currLineIndex = 0;
     private int currSelection = 0;
     private int numOpt = 0;
+    private GameObject player;
     private Dictionary<string,Transform> cameraTargets = new Dictionary<string, Transform>();
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        player = GameManager.GetPlayer();
     }
 
     // Update is called once per frame
@@ -120,7 +121,7 @@ public class DialogueManager : MonoBehaviour
 
     private void UpdateSelectionUI()
     {
-        for (int i = 0; i < 3; i++)
+        for (int i = 0; i < selectionImages.Length; i++)
         {
             if (i == currSelection-1) selectionImages[i].enabled = true;
             else selectionImages[i].enabled = false;
@@ -134,7 +135,17 @@ public class DialogueManager : MonoBehaviour
             target = dialogue.dialogueLines[currLineIndex].speaker;
 
         if (target!="" && cameraTargets[target] != null)
+        {
             camController.ChangeFollowTarget(cameraTargets[target]);
+            if (cameraTargets[target] != player.transform)
+            {
+                CharacterMovementController pController = player.GetComponent<CharacterMovementController>();
+                if (pController!=null && !pController.IsFacing(cameraTargets[target].position))
+                {
+                    pController.Turn();
+                }
+            }
+        }
 
         nameText.text = dialogue.dialogueLines[currLineIndex].speaker;
         mainText.text = dialogue.dialogueLines[currLineIndex].text;
@@ -149,7 +160,7 @@ public class DialogueManager : MonoBehaviour
 
         }
         else currSelection = 0;
-        for (int i = numOpt; i < 3; i++)
+        for (int i = numOpt; i < optionTexts.Length; i++)
         {
             optionTexts[i].text = "";
         }

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEditor;
 using UnityEngine.Experimental.Rendering.Universal;
 
 public class Aura : MonoBehaviour
@@ -14,6 +15,7 @@ public class Aura : MonoBehaviour
     {
         glow = GetComponent<Light2D>();
         glow.pointLightOuterRadius = radius;
+        glow.intensity = strength * 0.2f;
         glow.pointLightInnerRadius = radius*0.2f;
         auraCircle = GetComponent<CircleCollider2D>();
         auraCircle.radius = radius;
@@ -33,5 +35,19 @@ public class Aura : MonoBehaviour
         // Draw a yellow sphere at the transform's position
         Gizmos.color = Color.blue;
         Gizmos.DrawWireSphere(transform.position, radius);
+    }
+
+    [ContextMenu("AutoAdjuctComponents")]
+    void AdjustColliderAndLight()
+    {
+        glow = GetComponent<Light2D>();
+        glow.pointLightOuterRadius = radius;
+        glow.pointLightInnerRadius = radius * 0.2f;
+        glow.intensity = strength * 0.2f;
+        auraCircle = GetComponent<CircleCollider2D>();
+        auraCircle.radius = radius;
+        PrefabUtility.RecordPrefabInstancePropertyModifications(glow);
+        PrefabUtility.RecordPrefabInstancePropertyModifications(auraCircle);
+
     }
 }

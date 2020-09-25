@@ -64,7 +64,16 @@ public class PhysicsObject : MonoBehaviour
 
     void FixedUpdate()
     {
-        ignoreOneWay = body.IsTouchingLayers(LayerMask.GetMask("OneWay")) || velocity.y>0;
+        Collider2D[] oneWayContacts = new Collider2D[1];
+        
+        if(body.OverlapCollider(oneWayContactFilter, oneWayContacts) > 0)
+        {
+            ignoreOneWay = velocity.y > 0 || oneWayContacts[0].transform.position.y > transform.position.y;
+        }
+        else
+        {
+            ignoreOneWay = velocity.y > 0 ;
+        }
 
         grounded = false;
         if (velocity.y <= 0 && gravityModifier!=0)

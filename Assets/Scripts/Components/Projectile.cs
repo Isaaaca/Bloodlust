@@ -5,14 +5,13 @@ using UnityEngine;
 public class Projectile : MonoBehaviour
 {
     public float drag = 0f;
-    protected Rigidbody2D rb2d;
+    [SerializeField] protected Rigidbody2D rb2d;
     protected Vector2 velocity;
     [SerializeField] protected float gravityModifier;
     [SerializeField] protected Vector2 initialVelocity;
     // Start is called before the first frame update
-    void Start()
+    protected virtual void Start()
     {
-        rb2d = GetComponent<Rigidbody2D>();
         velocity = initialVelocity;
     }
 

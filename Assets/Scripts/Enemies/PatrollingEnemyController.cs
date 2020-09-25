@@ -15,7 +15,7 @@ public class PatrollingEnemyController : Character
         base.Start();
         layer_mask = LayerMask.GetMask("Obstacle");
     }
-    private void Update()
+    protected override void Update()
     {
         RaycastHit2D groundInfo = Physics2D.Raycast(groundDetection.position, Vector2.down,0.3f,layer_mask);
         Collider2D wallInfo = Physics2D.OverlapPoint(groundDetection.position,layer_mask);
@@ -24,5 +24,7 @@ public class PatrollingEnemyController : Character
             movingRight = !movingRight;
         }
         controller.HoriMove(movingRight ? 1: -1);
+
+        base.Update();
     }
 }
