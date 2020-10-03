@@ -134,7 +134,7 @@ public class DialogueManager : MonoBehaviour
         if (target == "")
             target = dialogue.dialogueLines[currLineIndex].speaker;
 
-        if (target!="" && cameraTargets[target] != null)
+        if (target!="" && cameraTargets.ContainsKey(target))
         {
             camController.ChangeFollowTarget(cameraTargets[target]);
             if (cameraTargets[target] != player.transform)

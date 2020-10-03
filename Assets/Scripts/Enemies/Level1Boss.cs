@@ -41,7 +41,6 @@ public class Level1Boss : BaseBossController
             else if (dashesLeft > 0)
             {
                 controller.HoriMove(0);
-                animator.SetBool("Running", false);
                 animator.SetBool("CoolDown",false);
                
                 if (!isWindUpDone)
@@ -102,7 +101,6 @@ public class Level1Boss : BaseBossController
             else if (dashesLeft > 0)
             {
                 controller.HoriMove(0);
-                animator.SetBool("Running", false);
                 animator.SetBool("CoolDown", false);
 
                 if (!isWindUpDone)
@@ -148,6 +146,9 @@ public class Level1Boss : BaseBossController
         }
     }
 
-
-
+    protected override void TriggerPhase2()
+    {  
+        dashesLeft = phase2DashCount;
+        isWindUpDone = false;
+    }
 }

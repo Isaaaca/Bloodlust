@@ -38,7 +38,7 @@ public class PhysicsObject : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        LayerMask layerMask = Physics2D.GetLayerCollisionMask(gameObject.layer) - physicsIgnoredLayers;
+        LayerMask layerMask = (Physics2D.GetLayerCollisionMask(gameObject.layer) | physicsIgnoredLayers) ^ physicsIgnoredLayers;
         downwardContactFilter.useTriggers = false;
         downwardContactFilter.SetLayerMask(layerMask);
         upwardContactFilter.useTriggers = false;
@@ -65,10 +65,10 @@ public class PhysicsObject : MonoBehaviour
     void FixedUpdate()
     {
         Collider2D[] oneWayContacts = new Collider2D[1];
-        
-        if(body.OverlapCollider(oneWayContactFilter, oneWayContacts) > 0)
+
+        if (body.OverlapCollider(oneWayContactFilter, oneWayContacts) > 0)
         {
-            ignoreOneWay = velocity.y > 0 || oneWayContacts[0].transform.position.y > transform.position.y;
+            ignoreOneWay = velocity.y > 0 || oneWayContacts[0].ClosestPoint(transform.position).y - shellRadius> transform.position.y;
         }
         else
         {

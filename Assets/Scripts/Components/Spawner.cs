@@ -20,11 +20,14 @@ public class Spawner : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        timer -= Time.deltaTime;
-        if (timer <= 0)
+        if (timer> 0)
         {
-            Spawn();
-            timer = spawnInterval;
+            timer -= Time.deltaTime;
+            if (timer <= 0)
+            {
+                Spawn();
+                timer = spawnInterval;
+            }
         }
     }
 
@@ -37,8 +40,7 @@ public class Spawner : MonoBehaviour
             if (!objectPool[i].activeSelf) availableObect = i;
         }
 
-        GameObject objToSpawn = null;
-
+        GameObject objToSpawn;
         if (availableObect == -1)
         {
             objToSpawn = Instantiate(objectToSpawn, transform);
@@ -50,6 +52,7 @@ public class Spawner : MonoBehaviour
         }
 
         objToSpawn.SetActive(true);
+        objToSpawn.GetComponent<ResetableInterface>().Reset();
         objToSpawn.transform.position = transform.position;
     }
 }

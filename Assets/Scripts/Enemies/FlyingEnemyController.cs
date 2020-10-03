@@ -18,6 +18,8 @@ public class FlyingEnemyController : Character
     [SerializeField] private float lungeRange = 0;
     [SerializeField] private float windUpTime = 0;
     [SerializeField] private float diveDuration = 0;
+    [SerializeField] private float diveHeight = 0;
+    [SerializeField] private float diveWidth = 0;
     public Vector2[] wayPoints ;
     public bool loop;
 
@@ -47,6 +49,8 @@ public class FlyingEnemyController : Character
             {
                 if (!windingUp)
                 {
+                    if (!controller.IsFacing(player.transform.position)) controller.Turn();
+                    animator.SetTrigger("WindUp");
                     windingUp = true;
                     lungeDir = vectToPlayer;
                 }
@@ -66,7 +70,8 @@ public class FlyingEnemyController : Character
                 windUpTimer += Time.deltaTime;
                 if (windUpTimer >= windUpTime)
                 {
-                    controller.Arc(Vector2.down, lungeDir.y, lungeDir.x * 2, diveDuration, true, "linear", "sine");
+                    controller.Arc(Vector2.down, diveHeight, diveWidth*Mathf.Sign(lungeDir.x), diveDuration, true, "linear", "sine");
+                    animator.SetTrigger("Attack");
                     windUpTimer = 0;
                     windingUp = false;
                 }
@@ -110,6 +115,8 @@ public class FlyingEnemyController : Character
                 controller.VertMove(dir.y);
             }
         }
+
+        animator.SetFloat("yVelocity", controller.GetVelocity().y);
         base.Update();
     }
 

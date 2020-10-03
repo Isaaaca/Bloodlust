@@ -1,53 +1,29 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEditor;
-using UnityEngine.Experimental.Rendering.Universal;
 
 public class Aura : MonoBehaviour
 {
-    public float strength;
-    public float radius;
-    private Light2D glow;
-    private CircleCollider2D auraCircle;
+    [SerializeField]protected float strength;
+    private PlayerController player;
 
-    private void Start()
+    protected virtual void Start()
     {
-        glow = GetComponent<Light2D>();
-        glow.pointLightOuterRadius = radius;
-        glow.intensity = strength * 0.2f;
-        glow.pointLightInnerRadius = radius*0.2f;
-        auraCircle = GetComponent<CircleCollider2D>();
-        auraCircle.radius = radius;
+        player = GameManager.GetPlayer().GetComponent<PlayerController>();
     }
 
     void OnTriggerStay2D(Collider2D other)
     {
-        float distance = Vector3.Distance(other.transform.position,transform.position);
-        float resultantStrength = strength / (distance / radius);
-        PlayerController player = other.GetComponent<PlayerController>();
-        if(player!=null)
-            player.ModifyLust(resultantStrength *Time.deltaTime);
+        if(other.gameObject == GameManager.GetPlayer())
+        {
+            PlayerController player = other.GetComponent<PlayerController>();
+            player.ModifyLust(GetStrength(other) * Time.deltaTime);
+            
+        }
     }
 
-    void OnDrawGizmosSelected()
+    protected virtual float GetStrength(Collider2D playerCol)
     {
-        // Draw a yellow sphere at the transform's position
-        Gizmos.color = Color.blue;
-        Gizmos.DrawWireSphere(transform.position, radius);
-    }
-
-    [ContextMenu("AutoAdjuctComponents")]
-    void AdjustColliderAndLight()
-    {
-        glow = GetComponent<Light2D>();
-        glow.pointLightOuterRadius = radius;
-        glow.pointLightInnerRadius = radius * 0.2f;
-        glow.intensity = strength * 0.2f;
-        auraCircle = GetComponent<CircleCollider2D>();
-        auraCircle.radius = radius;
-        PrefabUtility.RecordPrefabInstancePropertyModifications(glow);
-        PrefabUtility.RecordPrefabInstancePropertyModifications(auraCircle);
-
+        return strength;
     }
 }

@@ -34,6 +34,11 @@ public class PlayerController : Character
         SavePoint.OnEnterSavePoint += HandleEnterSavePoint;
         GameManager.SetGameplayEnabled += SetInputControllable;
     }
+    private void OnDestroy()
+    {
+        SavePoint.OnEnterSavePoint -= HandleEnterSavePoint;
+        GameManager.SetGameplayEnabled -= SetInputControllable;
+    }
 
     private void HandleEnterSavePoint(Vector2 savePointPos)
     {

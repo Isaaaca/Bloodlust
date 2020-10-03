@@ -15,6 +15,12 @@ public class RoomConfinedCamera : MonoBehaviour
     {
         Room.OnEnterRoom += ChangeRoom;
     }
+    private void OnDestroy()
+    {
+        Room.OnEnterRoom -= ChangeRoom;
+
+    }
+
     // Start is called before the first frame update
     void Start()
     {

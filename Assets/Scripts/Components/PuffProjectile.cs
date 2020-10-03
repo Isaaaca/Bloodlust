@@ -5,18 +5,20 @@ using UnityEngine;
 
 public class PuffProjectile : Projectile
 {
-    [SerializeField]private Animator animator = null;
     
     public float duration = 2f;
     private float timer = 0f;
 
-    protected override void Start() { }
-
-    public void Fire(Vector2 startPos, Vector2 dir)
+    protected override void Start()
     {
-        rb2d.position = startPos;
-        velocity = Vector2.Scale(dir,initialVelocity);
+        base.Start();
+    }
+
+    public override void Fire(Vector2 startPos, Vector2 dir)
+    {
+        base.Fire(startPos, dir);
         timer = duration;
+
     }
 
     private void Update()
@@ -26,6 +28,7 @@ public class PuffProjectile : Projectile
             timer -= Time.deltaTime;
             if (timer <= 0)
             {
+
                 if (animator != null)
                 {
                     animator.Play("Destroy");
@@ -38,8 +41,4 @@ public class PuffProjectile : Projectile
         }
     }
 
-    private void OnDestroyAnimFinish()
-    {
-        this.gameObject.SetActive(false);
-    }
 }

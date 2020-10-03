@@ -17,6 +17,10 @@ public class CutsceneDirector : MonoBehaviour
     private SequenceEvent currEvent = null;
     private bool waiting = true;
 
+    private void OnDestroy()
+    {
+        DialogueManager.OnDialogueStartEnd -= HandleDialogueEvent;
+    }
     private void Awake()
     {
         DialogueManager.OnDialogueStartEnd += HandleDialogueEvent;

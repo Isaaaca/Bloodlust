@@ -6,6 +6,7 @@ public class InteractableSwitch : Interactable
 {
     private Sequence sequence = null;
     [SerializeField] SwitchControllableObject controlledObject = null;
+    [SerializeField] private Animator animator = null;
     public void Awake()
     {
         //create sequence
@@ -28,6 +29,12 @@ public class InteractableSwitch : Interactable
         sequence.name = name+"seq";
 
     }
+    protected override void OnInteract()
+    {
+        animator.SetTrigger("Switch");
+        base.OnInteract();
+    }
+
     public override Sequence GetSequence()
     {
         return sequence;

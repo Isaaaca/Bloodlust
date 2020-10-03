@@ -1,12 +1,44 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Cinemachine;
 
 public class CamController: MonoBehaviour
 {
+    public static CamController Instance { get; private set; }
+
     [SerializeField] private Cinemachine.CinemachineVirtualCamera followCam = null;
     [SerializeField] private Cinemachine.CinemachineVirtualCamera centeredCam = null;
     [SerializeField] private Cinemachine.CinemachineVirtualCamera jumpCam = null;
+    [SerializeField] private float defaultShakeIntensity = 2.5f;
+    private float shakeTimer=0;
+
+    private void Awake()
+    {
+        CamController.Instance = this;
+    }
+
+    public void CameraShake(float duration)
+    {
+        GetCurrentVcam().GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>().m_AmplitudeGain = defaultShakeIntensity;
+        shakeTimer = shakeTimer > 0 ? shakeTimer + duration: duration;
+    }
+
+    public void CameraShake(float duration, float intensity)
+    {
+        GetCurrentVcam().GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>().m_AmplitudeGain = intensity;
+        shakeTimer = shakeTimer > 0 ? shakeTimer + duration : duration;
+    }
+
+    private void Update()
+    {
+        if (shakeTimer > 0)
+        {
+            shakeTimer -= Time.deltaTime;
+            if(shakeTimer<=0)
+                GetCurrentVcam().GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>().m_AmplitudeGain = 0;
+        }
+    }
 
     public enum CameraMode
     {
@@ -66,7 +98,7 @@ public class CamController: MonoBehaviour
         return camMode;
     }
 
-    private Cinemachine.CinemachineVirtualCamera GetCurrentVcam()
+    private CinemachineVirtualCamera GetCurrentVcam()
     {
         if (camMode == CameraMode.Follow)
             return followCam;

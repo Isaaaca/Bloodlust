@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 5704908462003959482}
   - component: {fileID: 5704908462003959481}
   - component: {fileID: 5704908462003959459}
+  - component: {fileID: 492024004424131899}
   m_Layer: 9
   m_Name: Pouncer
   m_TagString: Untagged
@@ -72,8 +73,8 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -0.06}
-  m_Size: {x: 0.47, y: 0.3}
+  m_Offset: {x: 0, y: 0.3916883}
+  m_Size: {x: 0.84829956, y: 0.7751929}
   m_Direction: 1
 --- !u!212 &5704908462003959463
 SpriteRenderer:
@@ -114,7 +115,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -2619973207249853711, guid: 0226a719b2dc64e4ca7170d1ea029475,
+  m_Sprite: {fileID: 7672759098259192623, guid: 09b45c84083c82e4ea1a2aa7dbab2054,
     type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -134,9 +135,9 @@ Animator:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5704908462003959483}
-  m_Enabled: 0
+  m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: b95265f99b6d90e438df1308a89c8bab, type: 2}
+  m_Controller: {fileID: 9100000, guid: 943f8744743c92448bd061ab37fb855b, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -163,13 +164,14 @@ MonoBehaviour:
   minGroundNormalY: 0.65
   physicsIgnoredLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 768
   groundSpeed: 1.6
   airSpeed: 8
   jumpTakeOffSpeed: 15
   smallJumpDuration: 0.01
   fallingGravityMultiplier: 1.3
   cancelJumpGravity: 3
+  facingRight: 0
 --- !u!114 &5704908462003959481
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -185,13 +187,20 @@ MonoBehaviour:
   health:
     max: 30
     current: 30
-  aggroRange: 1.23
-  lungeDistance: 2.04
-  lungeDuration: 0.5
+  invulnerabilityDuration: 0.6
+  lustRelief: 0
+  aggroRange: 5
+  lungeDistance: 6
+  lungeDuration: 0.7
   windUpTime: 0.4
   coolDownTime: 1
   groundDetection: {fileID: 5704908462965626036}
-  goOnSlope: 0
+  minRunDuration: 0.2
+  maxRunDuration: 2
+  minIdleDuration: 1
+  maxIdleDuration: 5
+  idleWeight: 1
+  runWeight: 3
 --- !u!114 &5704908462003959459
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -204,6 +213,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5215ded32ea2ad546918cf922933d699, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  damage: 10
+  active: 1
+--- !u!70 &492024004424131899
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5704908462003959483}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -0.58, y: 0.78313524}
+  m_Size: {x: 0.5638334, y: 0.35985473}
+  m_Direction: 1
 --- !u!1 &5704908462965626037
 GameObject:
   m_ObjectHideFlags: 0
@@ -228,7 +255,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5704908462965626037}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.25, y: -0.125, z: 0}
+  m_LocalPosition: {x: -0.82, y: 0.044, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 5704908462003959460}

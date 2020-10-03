@@ -41,6 +41,9 @@ public class PufferEnemyController : Character
     protected override void Start()
     {
         base.Start();
+        float totalWeight = idleWeight + runWeight;
+        idleWeight /= totalWeight;
+        runWeight /= totalWeight;
         layer_mask = LayerMask.GetMask("Obstacle","OneWay");
         player = GameManager.GetPlayer();
     }

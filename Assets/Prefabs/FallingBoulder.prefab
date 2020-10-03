@@ -12,10 +12,9 @@ GameObject:
   - component: {fileID: 7438236906548922337}
   - component: {fileID: 7438236906548922338}
   - component: {fileID: 7438236906548922342}
-  - component: {fileID: 7438236906548922339}
-  - component: {fileID: 7438236906548922341}
-  - component: {fileID: 7438236906548922343}
   - component: {fileID: 7438236906548922340}
+  - component: {fileID: 2851539318038764312}
+  - component: {fileID: 4433727985714194962}
   m_Layer: 12
   m_Name: FallingBoulder
   m_TagString: Untagged
@@ -76,7 +75,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 8862490222565589630, guid: a0496a2b61c617e418b4922a8e688d93,
+  m_Sprite: {fileID: -8471095213289756079, guid: 3e0c12899aaa42f41944b3c78105d39f,
     type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -123,51 +122,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!58 &7438236906548922339
-CircleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7438236906548922364}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  serializedVersion: 2
-  m_Radius: 0.34375
---- !u!114 &7438236906548922341
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7438236906548922364}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 74f2f02a9ee682b4dbeabcf95c32ffc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  destroy: 0
---- !u!114 &7438236906548922343
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7438236906548922364}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fddada86ed420a342b6bb32bb5a52818, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  drag: 0
-  rb2d: {fileID: 7438236906548922342}
-  gravityModifier: 0.2
-  initialVelocity: {x: 0, y: -12}
 --- !u!95 &7438236906548922340
 Animator:
   serializedVersion: 3
@@ -187,3 +141,63 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!60 &2851539318038764312
+PolygonCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7438236906548922364}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0}
+    oldSize: {x: 2, y: 2}
+    newSize: {x: 0.6875, y: 0.40625}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Points:
+    m_Paths:
+    - - {x: -0.061129555, y: 1.3921194}
+      - {x: -0.39217857, y: 1.0825405}
+      - {x: -0.67056537, y: 0.94320655}
+      - {x: -0.62088823, y: 0.46589673}
+      - {x: -0.28634793, y: 0.2903502}
+      - {x: -0.13371116, y: 0.028396726}
+      - {x: 0.24451774, y: 0.042595148}
+      - {x: 0.5370983, y: 0.2726903}
+      - {x: 0.5512916, y: 1.3353257}
+--- !u!114 &4433727985714194962
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7438236906548922364}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fddada86ed420a342b6bb32bb5a52818, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  drag: 0
+  destroyOnXhits: 1
+  destroyGameObject: 0
+  camShakeOnImpact: 1
+  camShakeIntensity: 0.8
+  camShakeDuration: 0.2
+  rb2d: {fileID: 7438236906548922342}
+  col2d: {fileID: 0}
+  gravityModifier: 0
+  initialVelocity: {x: 0, y: -12}
+  passThroughLayers:
+    serializedVersion: 2
+    m_Bits: 256
+  velocity: {x: 0, y: 0}

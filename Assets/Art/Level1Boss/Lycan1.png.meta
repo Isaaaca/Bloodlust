@@ -131,6 +131,159 @@ TextureImporter:
   - first:
       213: 8283302440242857811
     second: Lycan1_42
+  - first:
+      213: -3836840666826266548
+    second: Lycan1_0
+  - first:
+      213: -1300218674803553582
+    second: Lycan1_1
+  - first:
+      213: -2877771458650150307
+    second: Lycan1_2
+  - first:
+      213: 8750278006693949295
+    second: Lycan1_3
+  - first:
+      213: 4965489361423210990
+    second: Lycan1_4
+  - first:
+      213: 3881342777548308208
+    second: Lycan1_5
+  - first:
+      213: -6509055091228278400
+    second: Lycan1_6
+  - first:
+      213: 7190120390331285339
+    second: Lycan1_7
+  - first:
+      213: 5284817828172938150
+    second: Lycan1_8
+  - first:
+      213: -1177137398800240718
+    second: Lycan1_9
+  - first:
+      213: -5492144254587640672
+    second: Lycan1_10
+  - first:
+      213: 1706639340212644655
+    second: Lycan1_11
+  - first:
+      213: -4315292011666839971
+    second: Lycan1_12
+  - first:
+      213: -739263171174178166
+    second: Lycan1_13
+  - first:
+      213: 7151403496793564631
+    second: Lycan1_14
+  - first:
+      213: 4040732157350683178
+    second: Lycan1_15
+  - first:
+      213: 6339548739982951728
+    second: Lycan1_16
+  - first:
+      213: 7775737484328074655
+    second: Lycan1_17
+  - first:
+      213: 5462833121065958188
+    second: Lycan1_18
+  - first:
+      213: 5565455501040630037
+    second: Lycan1_19
+  - first:
+      213: 5095574451437570627
+    second: Lycan1_20
+  - first:
+      213: 7805354055688397356
+    second: Lycan1_21
+  - first:
+      213: 8448168579915928668
+    second: Lycan1_22
+  - first:
+      213: 6747626045912439873
+    second: Lycan1_23
+  - first:
+      213: 4650012550130093513
+    second: Lycan1_24
+  - first:
+      213: -9085073195331515095
+    second: Lycan1_25
+  - first:
+      213: -5508391220790767528
+    second: Lycan1_26
+  - first:
+      213: -5539718253101338360
+    second: Lycan1_27
+  - first:
+      213: -6510095818978705772
+    second: Lycan1_28
+  - first:
+      213: 2591288550215961568
+    second: Lycan1_29
+  - first:
+      213: -1593509630778101079
+    second: Lycan1_30
+  - first:
+      213: -7568025147756203296
+    second: Lycan1_31
+  - first:
+      213: 8239368454216462541
+    second: Lycan1_32
+  - first:
+      213: -1033138691415653056
+    second: Lycan1_33
+  - first:
+      213: -1614058846085794855
+    second: Lycan1_34
+  - first:
+      213: 6398522751224126774
+    second: Lycan1_35
+  - first:
+      213: -8713398665605567795
+    second: Lycan1_36
+  - first:
+      213: -1561227901091312077
+    second: Lycan1_37
+  - first:
+      213: 7700192986121680949
+    second: Lycan1_38
+  - first:
+      213: -3346370684934461240
+    second: Lycan1_39
+  - first:
+      213: 2734765094181018529
+    second: Lycan1_40
+  - first:
+      213: -3047520319267206942
+    second: Lycan1_41
+  - first:
+      213: 2905585664373708792
+    second: Lycan1_42
+  - first:
+      213: 5132450418957784515
+    second: Lycan1_43
+  - first:
+      213: -8258083291242529973
+    second: Lycan1_44
+  - first:
+      213: 8878288524510160091
+    second: Lycan1_45
+  - first:
+      213: 224535549994306626
+    second: Lycan1_46
+  - first:
+      213: 4193298141809622154
+    second: Lycan1_47
+  - first:
+      213: -3261681376878551814
+    second: Lycan1_48
+  - first:
+      213: 3024751560092873211
+    second: Lycan1_49
+  - first:
+      213: 5974818152720648079
+    second: Lycan1_50
   externalObjects: {}
   serializedVersion: 10
   mipmaps:
@@ -231,7 +384,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 192
+        y: 224
         width: 32
         height: 32
       alignment: 9
@@ -241,8 +394,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b8104365c05be5f90800000000000000
-      internalID: -6962928909277724277
+      spriteID: c482c02fdbdc0cac0800000000000000
+      internalID: -3836840666826266548
       vertices: []
       indices: 
       edges: []
@@ -252,7 +405,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 32
-        y: 192
+        y: 224
         width: 32
         height: 32
       alignment: 9
@@ -262,8 +415,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8b808881a5c734760800000000000000
-      internalID: 7440927735746660536
+      spriteID: 2da410e0102b4fde0800000000000000
+      internalID: -1300218674803553582
       vertices: []
       indices: 
       edges: []
@@ -273,7 +426,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 64
-        y: 192
+        y: 224
         width: 32
         height: 32
       alignment: 9
@@ -283,8 +436,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 357c4f6596cbf3ed0800000000000000
-      internalID: -2432018113140308141
+      spriteID: d5a666efa1a1018d0800000000000000
+      internalID: -2877771458650150307
       vertices: []
       indices: 
       edges: []
@@ -294,6 +447,27 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 96
+        y: 224
+        width: 32
+        height: 32
+      alignment: 9
+      pivot: {x: 0.25, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f6fe7e27c7b3f6970800000000000000
+      internalID: 8750278006693949295
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Lycan1_4
+      rect:
+        serializedVersion: 2
+        x: 0
         y: 192
         width: 32
         height: 32
@@ -304,29 +478,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d60c0144a9d1f8aa0800000000000000
-      internalID: -6156669617188061075
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Lycan1_4
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 160
-        width: 32
-        height: 32
-      alignment: 9
-      pivot: {x: 0.25, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 62997d1d9cc2abec0800000000000000
-      internalID: -3550476110907598554
+      spriteID: ee99c931446f8e440800000000000000
+      internalID: 4965489361423210990
       vertices: []
       indices: 
       edges: []
@@ -336,7 +489,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 32
-        y: 160
+        y: 192
         width: 32
         height: 32
       alignment: 9
@@ -346,8 +499,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f09fb0ff4f48d7800800000000000000
-      internalID: 611791312178116879
+      spriteID: 0fe7b4321bc4dd530800000000000000
+      internalID: 3881342777548308208
       vertices: []
       indices: 
       edges: []
@@ -357,7 +510,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 64
-        y: 160
+        y: 192
         width: 32
         height: 32
       alignment: 9
@@ -367,8 +520,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 41214bbca2ba00a70800000000000000
-      internalID: 8791214672921760276
+      spriteID: 08104e781e03ba5a0800000000000000
+      internalID: -6509055091228278400
       vertices: []
       indices: 
       edges: []
@@ -378,7 +531,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 96
-        y: 160
+        y: 192
         width: 32
         height: 32
       alignment: 9
@@ -388,8 +541,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 68c36a07e3bb49c20800000000000000
-      internalID: 3212398311074315398
+      spriteID: b5f3dfd666078c360800000000000000
+      internalID: 7190120390331285339
       vertices: []
       indices: 
       edges: []
@@ -399,7 +552,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 128
-        y: 160
+        y: 192
         width: 32
         height: 32
       alignment: 9
@@ -409,8 +562,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 14a08f3012c062650800000000000000
-      internalID: 6207662472316848705
+      spriteID: 6ab36e680d1775940800000000000000
+      internalID: 5284817828172938150
       vertices: []
       indices: 
       edges: []
@@ -420,7 +573,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 160
-        y: 160
+        y: 192
         width: 32
         height: 32
       alignment: 9
@@ -430,8 +583,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c2d3439c42fe05160800000000000000
-      internalID: 7012367561089367340
+      spriteID: 2bf2fa4c5c7f9afe0800000000000000
+      internalID: -1177137398800240718
       vertices: []
       indices: 
       edges: []
@@ -441,7 +594,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 192
-        y: 160
+        y: 192
         width: 32
         height: 32
       alignment: 9
@@ -451,8 +604,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a033ef77f3fb52fa0800000000000000
-      internalID: -5826040263616875766
+      spriteID: 0a4e91a26ebf7c3b0800000000000000
+      internalID: -5492144254587640672
       vertices: []
       indices: 
       edges: []
@@ -462,7 +615,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 224
-        y: 160
+        y: 192
         width: 32
         height: 32
       alignment: 9
@@ -472,8 +625,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e4d6b5a5268b4a8f0800000000000000
-      internalID: -530096123560628914
+      spriteID: f2be41110733fa710800000000000000
+      internalID: 1706639340212644655
       vertices: []
       indices: 
       edges: []
@@ -483,6 +636,27 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 256
+        y: 192
+        width: 32
+        height: 32
+      alignment: 9
+      pivot: {x: 0.25, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d56648e57c00d14c0800000000000000
+      internalID: -4315292011666839971
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Lycan1_13
+      rect:
+        serializedVersion: 2
+        x: 0
         y: 160
         width: 32
         height: 32
@@ -493,29 +667,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e8d59cb7c93049140800000000000000
-      internalID: 4725405879645068686
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Lycan1_13
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 128
-        width: 32
-        height: 32
-      alignment: 9
-      pivot: {x: 0.25, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: a123dcf256022adb0800000000000000
-      internalID: -4782224235348282854
+      spriteID: a8262a6001c9db5f0800000000000000
+      internalID: -739263171174178166
       vertices: []
       indices: 
       edges: []
@@ -525,7 +678,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 32
-        y: 128
+        y: 160
         width: 32
         height: 32
       alignment: 9
@@ -535,8 +688,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5b0546db4741926b0800000000000000
-      internalID: -5320698993135300427
+      spriteID: 7d5eddf2793ee3360800000000000000
+      internalID: 7151403496793564631
       vertices: []
       indices: 
       edges: []
@@ -546,7 +699,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 64
-        y: 128
+        y: 160
         width: 32
         height: 32
       alignment: 9
@@ -556,8 +709,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9edb7acd3f23834e0800000000000000
-      internalID: -2001794011405763095
+      spriteID: a22a2670d70931830800000000000000
+      internalID: 4040732157350683178
       vertices: []
       indices: 
       edges: []
@@ -567,7 +720,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 96
-        y: 128
+        y: 160
         width: 32
         height: 32
       alignment: 9
@@ -577,8 +730,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0c0826578477d0240800000000000000
-      internalID: 4759591534291222720
+      spriteID: 03585fa9df99af750800000000000000
+      internalID: 6339548739982951728
       vertices: []
       indices: 
       edges: []
@@ -588,7 +741,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 128
-        y: 128
+        y: 160
         width: 32
         height: 32
       alignment: 9
@@ -598,8 +751,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d6973912e8ec43fe0800000000000000
-      internalID: -1210115290011829907
+      spriteID: f9d701c5b08f8eb60800000000000000
+      internalID: 7775737484328074655
       vertices: []
       indices: 
       edges: []
@@ -609,7 +762,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 160
-        y: 128
+        y: 160
         width: 32
         height: 32
       alignment: 9
@@ -619,8 +772,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c988ecfbd4bf967a0800000000000000
-      internalID: -6383294685471930212
+      spriteID: c2bff50c7c1efcb40800000000000000
+      internalID: 5462833121065958188
       vertices: []
       indices: 
       edges: []
@@ -630,7 +783,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 192
-        y: 128
+        y: 160
         width: 32
         height: 32
       alignment: 9
@@ -640,8 +793,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 24b69f2f9a0f23180800000000000000
-      internalID: -9136976081264743614
+      spriteID: 51935c88a487c3d40800000000000000
+      internalID: 5565455501040630037
       vertices: []
       indices: 
       edges: []
@@ -651,6 +804,27 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 224
+        y: 160
+        width: 32
+        height: 32
+      alignment: 9
+      pivot: {x: 0.25, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 34a0e7057fd17b640800000000000000
+      internalID: 5095574451437570627
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Lycan1_21
+      rect:
+        serializedVersion: 2
+        x: 0
         y: 128
         width: 32
         height: 32
@@ -661,29 +835,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b25c05dba14d97e20800000000000000
-      internalID: 3348941009237099819
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Lycan1_21
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 96
-        width: 32
-        height: 32
-      alignment: 9
-      pivot: {x: 0.25, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 36e05bb79672a1f00800000000000000
-      internalID: 1088225593963908707
+      spriteID: c22267bb820325c60800000000000000
+      internalID: 7805354055688397356
       vertices: []
       indices: 
       edges: []
@@ -693,7 +846,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 32
-        y: 96
+        y: 128
         width: 32
         height: 32
       alignment: 9
@@ -703,8 +856,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e0d8dcee757e43c90800000000000000
-      internalID: -7190868340149220082
+      spriteID: c545188209ced3570800000000000000
+      internalID: 8448168579915928668
       vertices: []
       indices: 
       edges: []
@@ -714,7 +867,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 64
-        y: 96
+        y: 128
         width: 32
         height: 32
       alignment: 9
@@ -724,8 +877,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 343d11386df671940800000000000000
-      internalID: 5266801256345752387
+      spriteID: 14cd8c7632264ad50800000000000000
+      internalID: 6747626045912439873
       vertices: []
       indices: 
       edges: []
@@ -735,6 +888,27 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 96
+        y: 128
+        width: 32
+        height: 32
+      alignment: 9
+      pivot: {x: 0.25, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9cdcc9b07c9288040800000000000000
+      internalID: 4650012550130093513
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Lycan1_25
+      rect:
+        serializedVersion: 2
+        x: 0
         y: 96
         width: 32
         height: 32
@@ -745,29 +919,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7f36e97a4c9b74830800000000000000
-      internalID: 4055414243747324919
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Lycan1_25
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 64
-        width: 32
-        height: 32
-      alignment: 9
-      pivot: {x: 0.25, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 92e77f0117fbda5d0800000000000000
-      internalID: -3049570880323092951
+      spriteID: 92d87d940165be180800000000000000
+      internalID: -9085073195331515095
       vertices: []
       indices: 
       edges: []
@@ -777,7 +930,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 32
-        y: 64
+        y: 96
         width: 32
         height: 32
       alignment: 9
@@ -787,8 +940,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f6661360056a9f840800000000000000
-      internalID: 5258416902563260015
+      spriteID: 850d2e09e534e83b0800000000000000
+      internalID: -5508391220790767528
       vertices: []
       indices: 
       edges: []
@@ -798,7 +951,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 64
-        y: 64
+        y: 96
         width: 32
         height: 32
       alignment: 9
@@ -808,8 +961,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2e2665529db1f08a0800000000000000
-      internalID: -6336815531238726942
+      spriteID: 801b5287997fe13b0800000000000000
+      internalID: -5539718253101338360
       vertices: []
       indices: 
       edges: []
@@ -819,6 +972,27 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 96
+        y: 96
+        width: 32
+        height: 32
+      alignment: 9
+      pivot: {x: 0.25, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 49eb408385e77a5a0800000000000000
+      internalID: -6510095818978705772
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Lycan1_29
+      rect:
+        serializedVersion: 2
+        x: 0
         y: 64
         width: 32
         height: 32
@@ -829,29 +1003,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e78dbf3d0c0649de0800000000000000
-      internalID: -1327329608860968834
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Lycan1_29
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 32
-        width: 32
-        height: 32
-      alignment: 9
-      pivot: {x: 0.25, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: ab79ca78dfc8fc290800000000000000
-      internalID: -7867915003462117446
+      spriteID: 0ebc82a053b16f320800000000000000
+      internalID: 2591288550215961568
       vertices: []
       indices: 
       edges: []
@@ -861,6 +1014,132 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 32
+        y: 64
+        width: 32
+        height: 32
+      alignment: 9
+      pivot: {x: 0.25, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9a2be4ffe67b2e9e0800000000000000
+      internalID: -1593509630778101079
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Lycan1_31
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 64
+        width: 32
+        height: 32
+      alignment: 9
+      pivot: {x: 0.25, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0e2b4c8a939f8f690800000000000000
+      internalID: -7568025147756203296
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Lycan1_32
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 64
+        width: 32
+        height: 32
+      alignment: 9
+      pivot: {x: 0.25, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dc0b12f74fd185270800000000000000
+      internalID: 8239368454216462541
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Lycan1_33
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 64
+        width: 32
+        height: 32
+      alignment: 9
+      pivot: {x: 0.25, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 045457e75dd89a1f0800000000000000
+      internalID: -1033138691415653056
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Lycan1_34
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 64
+        width: 32
+        height: 32
+      alignment: 9
+      pivot: {x: 0.25, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9d3ba78f706b999e0800000000000000
+      internalID: -1614058846085794855
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Lycan1_35
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 64
+        width: 32
+        height: 32
+      alignment: 9
+      pivot: {x: 0.25, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 63d18f99a8e1cc850800000000000000
+      internalID: 6398522751224126774
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Lycan1_36
+      rect:
+        serializedVersion: 2
+        x: 0
         y: 32
         width: 32
         height: 32
@@ -871,14 +1150,35 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d2749ba2ae2ea4db0800000000000000
-      internalID: -4806780156897573075
+      spriteID: dcaa736441ac31780800000000000000
+      internalID: -8713398665605567795
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Lycan1_31
+      name: Lycan1_37
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 32
+        width: 32
+        height: 32
+      alignment: 9
+      pivot: {x: 0.25, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 33e0606ee77655ae0800000000000000
+      internalID: -1561227901091312077
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Lycan1_38
       rect:
         serializedVersion: 2
         x: 64
@@ -892,14 +1192,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a8fd1ef2cf85770b0800000000000000
-      internalID: -5731014160647331958
+      spriteID: 538bcb739b49cda60800000000000000
+      internalID: 7700192986121680949
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Lycan1_32
+      name: Lycan1_39
       rect:
         serializedVersion: 2
         x: 96
@@ -913,14 +1213,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c2e79c62479cc7350800000000000000
-      internalID: 6015904702964268588
+      spriteID: 8c863b5879d4f81d0800000000000000
+      internalID: -3346370684934461240
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Lycan1_33
+      name: Lycan1_40
       rect:
         serializedVersion: 2
         x: 128
@@ -934,14 +1234,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 216253fd3dbca7980800000000000000
-      internalID: -8540289632511384046
+      spriteID: 1ab1cce1d56d3f520800000000000000
+      internalID: 2734765094181018529
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Lycan1_34
+      name: Lycan1_41
       rect:
         serializedVersion: 2
         x: 160
@@ -955,14 +1255,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f2685d40c0311d9e0800000000000000
-      internalID: -1598475450398177745
+      spriteID: 2e80b448a6805b5d0800000000000000
+      internalID: -3047520319267206942
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Lycan1_35
+      name: Lycan1_42
       rect:
         serializedVersion: 2
         x: 192
@@ -976,14 +1276,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4a5a21178ca313640800000000000000
-      internalID: 5057888489078695332
+      spriteID: 8f7567d64c6b25820800000000000000
+      internalID: 2905585664373708792
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Lycan1_36
+      name: Lycan1_43
       rect:
         serializedVersion: 2
         x: 0
@@ -997,14 +1297,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 00e491e0ace8697e0800000000000000
-      internalID: -1759061605970522624
+      spriteID: 3c5984196702a3740800000000000000
+      internalID: 5132450418957784515
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Lycan1_37
+      name: Lycan1_44
       rect:
         serializedVersion: 2
         x: 32
@@ -1018,14 +1318,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 40699646faec2c5e0800000000000000
-      internalID: -1890721640842947068
+      spriteID: b4b76e3fff4656d80800000000000000
+      internalID: -8258083291242529973
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Lycan1_38
+      name: Lycan1_45
       rect:
         serializedVersion: 2
         x: 64
@@ -1039,14 +1339,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a00eded2b72d8fa00800000000000000
-      internalID: 790613161096896522
+      spriteID: bd4ead4bf54063b70800000000000000
+      internalID: 8878288524510160091
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Lycan1_39
+      name: Lycan1_46
       rect:
         serializedVersion: 2
         x: 96
@@ -1060,14 +1360,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 334fe73083b55d400800000000000000
-      internalID: 348284842326029363
+      spriteID: 24c8bd0a4e5bd1300800000000000000
+      internalID: 224535549994306626
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Lycan1_40
+      name: Lycan1_47
       rect:
         serializedVersion: 2
         x: 128
@@ -1081,14 +1381,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4d27a0250d3ecff10800000000000000
-      internalID: 2304967593175970516
+      spriteID: a8c3ed36176913a30800000000000000
+      internalID: 4193298141809622154
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Lycan1_41
+      name: Lycan1_48
       rect:
         serializedVersion: 2
         x: 160
@@ -1102,14 +1402,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 68ca001bde7aeadd0800000000000000
-      internalID: -2472854506061124474
+      spriteID: afc95a0a11e2cb2d0800000000000000
+      internalID: -3261681376878551814
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Lycan1_42
+      name: Lycan1_49
       rect:
         serializedVersion: 2
         x: 192
@@ -1123,8 +1423,29 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3574dcdbea334f270800000000000000
-      internalID: 8283302440242857811
+      spriteID: bf1f421a4831af920800000000000000
+      internalID: 3024751560092873211
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Lycan1_50
+      rect:
+        serializedVersion: 2
+        x: 224
+        y: 0
+        width: 32
+        height: 32
+      alignment: 9
+      pivot: {x: 0.25, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f8748763471dae250800000000000000
+      internalID: 5974818152720648079
       vertices: []
       indices: 
       edges: []

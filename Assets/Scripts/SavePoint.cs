@@ -6,6 +6,8 @@ public class SavePoint : AreaTrigger
 {
     public static event Action<Vector2> OnEnterSavePoint = (savePointPos) => { };
 
+    [SerializeField] Animator animator = null;
+
     protected override void OnTriggerEnter2D(Collider2D collision)
     {
         base.OnTriggerEnter2D(collision);
@@ -13,6 +15,7 @@ public class SavePoint : AreaTrigger
         if (player != null)
         {
             OnEnterSavePoint(this.transform.position);
+            animator.SetBool("Activated", true);
             SaveManager.playerSpawnPoint = this.transform.position;
             player.health.Set(player.health.GetMax());
         }

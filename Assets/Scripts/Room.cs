@@ -45,14 +45,26 @@ public class Room : MonoBehaviour
         GetRoomChildren();
         DeactivateChildren();
 
-        Room.OnEnterRoom += (enteredroom) => {
-            if (roomActive && enteredroom != this)
-            {
-                DeactivateChildren();
-                roomActive = false;
-            }
-        };
+        Room.OnEnterRoom += HandleEnterRoomEvent;
+        
     }
+
+    private void OnDestroy()
+    {
+        Room.OnEnterRoom -= HandleEnterRoomEvent;
+
+    }
+    private void HandleEnterRoomEvent(Room enteredroom)
+    {
+        if (roomActive && enteredroom != this)
+        {
+            DeactivateChildren();
+            roomActive = false;
+        }
+    }
+
+
+
 
     private void OnTriggerEnter2D(Collider2D collision)
     {

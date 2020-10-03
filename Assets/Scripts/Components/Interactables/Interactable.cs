@@ -19,6 +19,11 @@ public abstract class Interactable : MonoBehaviour
         GameManager.SetGameplayEnabled += (enabled) => SetInteractable(enabled);
     }
 
+    private void OnDestroy()
+    {
+        GameManager.SetGameplayEnabled -= (enabled) => SetInteractable(enabled);
+    }
+
     // Update is called once per frame
     void Update()
     {

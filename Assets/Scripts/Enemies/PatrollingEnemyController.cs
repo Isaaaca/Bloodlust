@@ -7,7 +7,6 @@ public class PatrollingEnemyController : Character
 
     [SerializeField] private Transform groundDetection = null;
     [SerializeField] private bool goOnSlope = false;
-    private bool movingRight = true;
     private int layer_mask;
 
     protected override void Start()
@@ -21,9 +20,9 @@ public class PatrollingEnemyController : Character
         Collider2D wallInfo = Physics2D.OverlapPoint(groundDetection.position,layer_mask);
         if (groundInfo.collider == false || wallInfo!=false || (!goOnSlope && groundInfo.normal.y!=1))
         {
-            movingRight = !movingRight;
+            controller.Turn();
         }
-        controller.HoriMove(movingRight ? 1: -1);
+        controller.HoriMove(controller.IsFacingRight() ? 1: -1);
 
         base.Update();
     }

@@ -18,14 +18,18 @@ public class FlutteringEnemyController : Character
         base.Start();
         origin = rb2d.position;
         targetPoint = GetNextDestination();
-        timer = 0;
+        timer = Random.Range(0.01f, pauseTime);
     }
 
     // Update is called once per frame
     protected override void Update()
     {
-
-        if (timer <= 0)
+        if (timer > 0)
+        {
+            timer -= Time.deltaTime;
+            animator.SetBool("Moving", false);
+        }
+        else
         {
             Vector2 dir = targetPoint - rb2d.position;
             if (dir.magnitude < 0.1)
@@ -43,14 +47,8 @@ public class FlutteringEnemyController : Character
                 controller.HoriMove(dir.x);
                 controller.VertMove(dir.y);
             }
-        }
-        else
-        {
-            timer -= Time.deltaTime;
-            animator.SetBool("Moving", false);
 
         }
-
         base.Update();
         if (dead)
         {

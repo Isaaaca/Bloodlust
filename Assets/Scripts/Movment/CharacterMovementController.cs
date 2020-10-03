@@ -188,6 +188,7 @@ public class CharacterMovementController : PhysicsObject
             releasedJumpInput = false;
             gravityModifier = baseGravityModifier;
             velocity.y = jumpTakeOffSpeed;
+            smallJumpAirtime = smallJumpDuration;
         }
         if (grounded)
         {
@@ -195,7 +196,6 @@ public class CharacterMovementController : PhysicsObject
             //only reset when landing or standing still. Else might get reset mid-jump when still registered as grounded.
             if (velocity.y <=0f)
             {
-                smallJumpAirtime = smallJumpDuration;
                 jumped = false;
             }
 
@@ -282,6 +282,10 @@ public class CharacterMovementController : PhysicsObject
                 if (arcWidth != 0)
                 {
                     move += ParametricMovement(arcWidthDir, arcWidth, arcDuration, arcElapsedTime, arcWfunc);
+                }
+                if (turning)
+                {
+                    newFacingDir = (move.x == 0 ? facingRight : move.x > 0.00f);
                 }
                 arcElapsedTime += Time.deltaTime;
             }
