@@ -12,8 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a7d023ce8a4fb24f8d1adb95d5f5814, type: 3}
   m_Name: Level2DecisionMaking_Event
   m_EditorClassIdentifier: 
-  sequence: {fileID: 11400000, guid: c0176f7b46aae6a4abaaea4d0d78aee4, type: 2}
+  sequence: {fileID: 11400000, guid: f872b5b83c586d248963a5a325bb37df, type: 2}
   condition:
-  - 01SEQ010
-  - 01SEQ011
-  - 01SEQ012
+  - 02SEQ021
+  - 02SEQ022
+  - 02SEQ023
+  - 02SEQ024
+  - 02SEQ025

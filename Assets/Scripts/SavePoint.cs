@@ -1,23 +1,30 @@
 ﻿using System;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class SavePoint : AreaTrigger
 {
     public static event Action<Vector2> OnEnterSavePoint = (savePointPos) => { };
 
     [SerializeField] Animator animator = null;
+    private bool activated = false;
 
     protected override void OnTriggerEnter2D(Collider2D collision)
     {
-        base.OnTriggerEnter2D(collision);
-        PlayerController player = collision.GetComponent<PlayerController>();
-        if (player != null)
+        if (!activated)
         {
-            OnEnterSavePoint(this.transform.position);
-            animator.SetBool("Activated", true);
-            SaveManager.playerSpawnPoint = this.transform.position;
-            player.health.Set(player.health.GetMax());
+            base.OnTriggerEnter2D(collision);
+            PlayerController player = collision.GetComponent<PlayerController>();
+            if (player != null)
+            {
+                OnEnterSavePoint(this.transform.position);
+                activated = true;
+                if(animator!=null) animator.SetBool("Activated", activated);
+                SaveManager.playerSpawnPoint = this.transform.position;
+                SaveManager.curruntLevelSceneCode = SceneManager.GetActiveScene().buildIndex;
+                player.health.Set(player.health.GetMax());
+            }
         }
+        
     }
 }

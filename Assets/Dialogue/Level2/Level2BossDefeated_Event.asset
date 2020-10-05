@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 60ccffa2068bc1b4c9b027a0113cac03, type: 3}
   m_Name: Level2BossDefeated_Event
   m_EditorClassIdentifier: 
-  sequence: {fileID: 11400000, guid: e93b4045aa0365145b85d4d303954504, type: 2}
+  sequence: {fileID: 11400000, guid: f225ac37d0ce51240a1b7337a277b15d, type: 2}

@@ -10,15 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bc713fd48c9bbdd41b4c72f20e126069, type: 3}
-  m_Name: 02DIA001
+  m_Name: 02DIA005_2
   m_EditorClassIdentifier: 
   dialogueLines:
-  - speaker: Hal
-    lookAt: 02NPC001
-    text: 
-    options: []
-  - speaker: 
-    lookAt: 
-    text: 
+  - speaker: Sheriff
+    lookAt: Player
+    text: I should probably talk to some of the campers...
     options: []
   nextDialogue: {fileID: 0}

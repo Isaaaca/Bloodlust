@@ -27,8 +27,6 @@ public class Projectile : MonoBehaviour, ResetableInterface
     {
         animator = GetComponent<Animator>();
         col2d = GetComponent<Collider2D>();
-        velocity = initialVelocity;
-        hitsLeft = destroyOnXhits;
     }
 
     // Update is called once per frame

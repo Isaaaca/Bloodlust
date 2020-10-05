@@ -9,10 +9,6 @@ public class PuffProjectile : Projectile
     public float duration = 2f;
     private float timer = 0f;
 
-    protected override void Start()
-    {
-        base.Start();
-    }
 
     public override void Fire(Vector2 startPos, Vector2 dir)
     {

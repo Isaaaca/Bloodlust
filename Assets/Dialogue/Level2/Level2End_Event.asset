@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 60ccffa2068bc1b4c9b027a0113cac03, type: 3}
   m_Name: Level2End_Event
   m_EditorClassIdentifier: 
-  sequence: {fileID: 11400000, guid: e084df7be2a255e4499f8d79194dfbc1, type: 2}
+  sequence: {fileID: 11400000, guid: 04ee75e3c53500d4aa743c9f18b2cd9f, type: 2}

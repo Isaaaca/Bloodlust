@@ -10,7 +10,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] ScreenFader screen = null;
     [SerializeField] CamController camController = null;
     [SerializeField] CutsceneDirector cutsceneDirector = null;
-    [SerializeField] LevelEndMenu levelEndMenu = null;
+    [SerializeField] GameMenu levelEndMenu = null;
     [SerializeField] string lastCondition = "";
     [SerializeField] GameEventDictionary eventDictionary = null;
 
@@ -74,9 +74,16 @@ public class GameManager : MonoBehaviour
 
     private void HandleGameOver(char type)
     {
-        string code = type + currRoom;
+        string code = type+ levelCode + currRoom;
         SaveManager.IncrementCounter(code);
+        cutsceneDirector.CutSequence();
+        camController.SwitchCamera(CamController.CameraMode.Follow);
         screen.FadeToBlack();
+        if(type == 'L')
+        {
+            player.GetLust().Set(0);
+            //increase sensitivity
+        }
         isReloading = true;
         CheckForScriptedEvent(code);
     }
@@ -99,7 +106,6 @@ public class GameManager : MonoBehaviour
     {
         currRoom = room.name;
         CheckForScriptedEvent(room.name);
-        print(room.name);
     }
 
     private void HandleInteractEvent(string id, Interactable interactable)
@@ -147,7 +153,7 @@ public class GameManager : MonoBehaviour
             screen.FadeToBlack();
             player.enabled = false;
             //Load Level End screen
-            levelEndMenu.ShowMenu();
+            levelEndMenu.ShowLevelEndMenu();
         }
     }
 
@@ -157,5 +163,11 @@ public class GameManager : MonoBehaviour
         SetGameplayEnabled(false);
         cutsceneDirector.PlaySequence(sequence);
 
+    }
+
+    public void SetGamePause(bool paused)
+    {
+        Time.timeScale = paused ? 0 : 1;
+        SetGameplayEnabled(!paused);
     }
 }

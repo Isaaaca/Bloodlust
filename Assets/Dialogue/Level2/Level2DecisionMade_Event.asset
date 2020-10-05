@@ -14,12 +14,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sequenceDictionary:
     m_keys:
-    - 01DIA013_3A
-    - 01DIA013_3B
-    - 01DIA013_3D
-    - 01DIA013_3C
+    - 02DIA026_1D
+    - 02DIA026_2D
+    - 02DIA026_1A
+    - 02DIA026_1B
+    - 02SEQ026
     m_values:
-    - {fileID: 11400000, guid: 55ac35f775e9fdd47894ec88c9d34024, type: 2}
-    - {fileID: 11400000, guid: 55ac35f775e9fdd47894ec88c9d34024, type: 2}
-    - {fileID: 11400000, guid: ed726de669cfa094fbc239a898ba148c, type: 2}
+    - {fileID: 11400000, guid: 09ebaa02bda6fc045820d949d01f20ae, type: 2}
+    - {fileID: 11400000, guid: 7c085aca46789fe419901cb42d483c22, type: 2}
+    - {fileID: 11400000, guid: ec16b5a81dcc97b44958b229aa14f667, type: 2}
+    - {fileID: 11400000, guid: ec16b5a81dcc97b44958b229aa14f667, type: 2}
     - {fileID: 11400000, guid: e084df7be2a255e4499f8d79194dfbc1, type: 2}

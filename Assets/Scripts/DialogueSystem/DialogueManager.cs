@@ -105,6 +105,11 @@ public class DialogueManager : MonoBehaviour
         }
     }
 
+    public void CloseDialogue()
+    {
+        dialogueBox.SetActive(false);
+    }
+
     private void ChangeSelection(bool increment)
     {
         if (increment && currSelection < numOpt)

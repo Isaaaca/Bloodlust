@@ -129,7 +129,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tooltip: {fileID: 1798585864495248618}
   convoType: 1
-  sequences: []
+  sequences:
+  - {fileID: 0}
 --- !u!114 &-3599282794501431665
 MonoBehaviour:
   m_ObjectHideFlags: 0

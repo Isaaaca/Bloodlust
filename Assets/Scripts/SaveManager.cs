@@ -7,6 +7,8 @@ public static class SaveManager
     private static HashSet<string> gameProgress = new HashSet<string>();
     private static Dictionary<string, int> counters = new Dictionary<string, int>();
     public static Vector2 playerSpawnPoint;
+    public static int curruntLevelSceneCode = 1;
+
     public static void Clear()
     {
         gameProgress.Clear();

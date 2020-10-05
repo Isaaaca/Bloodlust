@@ -153,9 +153,17 @@ public class CutsceneDirector : MonoBehaviour
         }
     }
 
+    public void CutSequence()
+    {
+        dialogueManager.CloseDialogue();
+        index = currentSequence.scriptedEvents.Length;
+        waiting = true;
+    }
+
     private void StopWaiting()
     {
         waiting = false;
         index++;
+
     }
 }

@@ -11,7 +11,7 @@ public class Room : MonoBehaviour
     [SerializeField] private float bottomBorder = 1;
     [SerializeField] private float leftBorder = 1;
     [SerializeField] private float rightBorder = 1;
-    private List<GameObject> childObjects = new List<GameObject>();
+    private Dictionary<GameObject,bool> childObjects = new Dictionary<GameObject,bool>();
     private PolygonCollider2D col2D;
     private bool roomActive = false;
 
@@ -80,7 +80,7 @@ public class Room : MonoBehaviour
 
     void DeactivateChildren()
     {
-        foreach (GameObject child in childObjects)
+        foreach (GameObject child in childObjects.Keys)
         {
             child.SetActive(false);
         }
@@ -88,9 +88,10 @@ public class Room : MonoBehaviour
     
     void ActivateChildren()
     {
-        foreach (GameObject child in childObjects)
+        foreach (GameObject child in childObjects.Keys)
         {
-            child.SetActive(true);
+            if (childObjects[child])
+                child.SetActive(true);
         }
     }
 
@@ -101,7 +102,7 @@ public class Room : MonoBehaviour
             GameObject child = transform.GetChild(i).gameObject;
             if (!child.name.Contains(name))
             {
-                childObjects.Add(child);
+                childObjects.Add(child, child.activeSelf);
             }
         }
     }
