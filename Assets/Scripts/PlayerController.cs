@@ -33,6 +33,8 @@ public class PlayerController : Character
     {
         SavePoint.OnEnterSavePoint += HandleEnterSavePoint;
         GameManager.SetGameplayEnabled += SetInputControllable;
+        if (SaveManager.playerSpawnPoint != Vector2.zero)
+            transform.position = initialPosition = SaveManager.playerSpawnPoint;
     }
     private void OnDestroy()
     {

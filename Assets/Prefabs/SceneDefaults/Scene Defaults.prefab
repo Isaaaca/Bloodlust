@@ -1102,7 +1102,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 167738655347131182}
         m_MethodName: Unpause
         m_Mode: 1
         m_Arguments:
@@ -1487,7 +1487,7 @@ GameObject:
   - component: {fileID: 5205692830655768444}
   - component: {fileID: 4151373692953993945}
   m_Layer: 0
-  m_Name: Chapter Complete Text (TMP)
+  m_Name: Pause Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1752,7 +1752,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 167738655347131182}
         m_MethodName: MainMenu
         m_Mode: 1
         m_Arguments:

@@ -13,6 +13,8 @@ public static class SaveManager
     {
         gameProgress.Clear();
         counters.Clear();
+        playerSpawnPoint = Vector2.zero;
+        curruntLevelSceneCode = 1;
     }
 
     public static void AddEvent(string eventCode)
