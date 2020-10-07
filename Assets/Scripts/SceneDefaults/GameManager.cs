@@ -99,6 +99,16 @@ public class GameManager : MonoBehaviour
             SaveManager.AddEvent(code);
             CheckForScriptedEvent(code);
         }
+        else if (character.name == "Lunarian")
+        {
+            SetGameplayEnabled(false);
+            string code = levelCode + character.name.Substring(0, 3) + currRoom;
+            SaveManager.IncrementCounter(code);
+            cutsceneDirector.CutSequence();
+            camController.SwitchCamera(CamController.CameraMode.Follow);
+            screen.CustomFade(1f, 2f);
+            isReloading = true;
+        }
         else
         {
             SaveManager.IncrementCounter(levelCode + character.name.Substring(0,3)+currRoom);
