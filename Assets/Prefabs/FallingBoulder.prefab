@@ -191,8 +191,8 @@ MonoBehaviour:
   destroyOnXhits: 1
   destroyGameObject: 0
   camShakeOnImpact: 1
-  camShakeIntensity: 0.8
-  camShakeDuration: 0.2
+  camShakeIntensity: 3
+  camShakeDuration: 0.25
   rb2d: {fileID: 7438236906548922342}
   col2d: {fileID: 0}
   gravityModifier: 0

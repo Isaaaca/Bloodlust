@@ -37,3 +37,11 @@ MonoBehaviour:
     duration: 1.5
     opacity: 0
     position: {x: 0, y: 0}
+  - eventType: 8
+    switchable: {fileID: 0}
+    dialogue: {fileID: 11400000, guid: fda01708a3974ca46b32b0f6541e60a4, type: 2}
+    target: 
+    targetTransform: {fileID: 0}
+    duration: 1.5
+    opacity: 0
+    position: {x: 0, y: 0}

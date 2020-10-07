@@ -32,7 +32,7 @@ MonoBehaviour:
   - eventType: 3
     switchable: {fileID: 0}
     dialogue: {fileID: 11400000, guid: 02caec6cafe60314e813feaac02f0e3a, type: 2}
-    target: 02SEQ006
+    target: 02NPC004
     targetTransform: {fileID: 0}
     duration: 1
     opacity: 1

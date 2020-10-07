@@ -9,6 +9,11 @@ public class SavePoint : AreaTrigger
     [SerializeField] Animator animator = null;
     private bool activated = false;
 
+    private void OnEnable()
+    {
+        if(activated && animator!=null) animator.SetBool("Activated", activated);
+    }
+
     protected override void OnTriggerEnter2D(Collider2D collision)
     {
         if (!activated)

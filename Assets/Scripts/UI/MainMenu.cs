@@ -21,7 +21,7 @@ public class MainMenu : MonoBehaviour
 
     }
 
-public void NewGame()
+    public void NewGame()
     {
         SaveManager.Clear();
         SceneManager.LoadScene(tutorialSceneIndex);

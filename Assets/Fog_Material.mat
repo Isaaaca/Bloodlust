@@ -32,6 +32,6 @@ Material:
     - Vector1_2614A010: 3
     - Vector1_F7FA44EF: 2
     m_Colors:
-    - Color_BAC8039D: {r: 0.044367485, g: 0.9206253, b: 2.1185474, a: 0}
+    - Color_BAC8039D: {r: 0.0627451, g: 1.3019608, b: 2.9960785, a: 0}
     - Vector2_5BE33A2F: {r: 0.2, g: 0, b: 0, a: 0}
     - Vector2_8E95D9FE: {r: -0.4, g: 0, b: 0, a: 0}

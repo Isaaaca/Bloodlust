@@ -91,7 +91,11 @@ public class Room : MonoBehaviour
         foreach (GameObject child in childObjects.Keys)
         {
             if (childObjects[child])
+            {
                 child.SetActive(true);
+                ResetableInterface resetable = child.GetComponent<ResetableInterface>();
+                if (resetable != null) resetable.Reset();
+            }
         }
     }
 

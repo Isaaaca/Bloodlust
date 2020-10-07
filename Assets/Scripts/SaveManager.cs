@@ -43,16 +43,34 @@ public static class SaveManager
         }
     }
 
+    public static void ClearLevelData(string LevelCode)
+    {
+        foreach(string eventCode in gameProgress)
+        {
+            if (eventCode.StartsWith(LevelCode)) gameProgress.Remove(eventCode);
+        }
+
+        foreach (string key in counters.Keys)
+        {
+            if (key.StartsWith(LevelCode))
+            {
+                counters.Remove(key);
+            }
+        }
+    }
+
     public static int GetCounter(string counterCode)
     {
-        if (counters.ContainsKey(counterCode))
+        int total = 0;
+        foreach (string key in counters.Keys)
         {
-            return counters[counterCode];
+            if (key.Contains(counterCode))
+            {
+                total += counters[key];
+            }
         }
-        else
-        {
-            return 0;
-        }
+
+        return total;
     }
    
 }

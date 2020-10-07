@@ -76,7 +76,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 2100000, guid: 3577b48cdb4788b45917cab339a3baea, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -160,6 +160,8 @@ MonoBehaviour:
     max: 5
     current: 5
   invulnerabilityDuration: 0.4
+  lustRelief: 0
+  activeAfterDeath: 0
   range: 2
   pauseTime: 2
 --- !u!114 &5434508822114570956
@@ -203,12 +205,12 @@ PrefabInstance:
     - target: {fileID: 6466655846444592193, guid: 291951522a67c6b4eb23c749eb87943a,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 0.065
       objectReference: {fileID: 0}
     - target: {fileID: 6466655846444592193, guid: 291951522a67c6b4eb23c749eb87943a,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 0.06
       objectReference: {fileID: 0}
     - target: {fileID: 6466655846444592193, guid: 291951522a67c6b4eb23c749eb87943a,
         type: 3}
@@ -263,7 +265,7 @@ PrefabInstance:
     - target: {fileID: 6466655846444592199, guid: 291951522a67c6b4eb23c749eb87943a,
         type: 3}
       propertyPath: strength
-      value: 1.5
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 291951522a67c6b4eb23c749eb87943a, type: 3}

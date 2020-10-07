@@ -47,8 +47,14 @@ public class GameMenu : MonoBehaviour
 
     public void NextLevel()
     {
+        SaveManager.playerSpawnPoint = Vector2.zero;
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     } 
+
+    public void Save()
+    {
+
+    }
     
     public void MainMenu()
     {
