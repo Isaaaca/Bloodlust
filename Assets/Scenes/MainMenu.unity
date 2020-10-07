@@ -5061,6 +5061,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tutorialSceneIndex: 1
+  defaultSelection: {fileID: 5160429204302439862}
 --- !u!224 &206633843246941269
 RectTransform:
   m_ObjectHideFlags: 0

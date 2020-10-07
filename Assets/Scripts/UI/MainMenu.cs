@@ -13,10 +13,13 @@ public class MainMenu : MonoBehaviour
     {
         EventSystem.current.SetSelectedGameObject(null);
         EventSystem.current.SetSelectedGameObject(defaultSelection);
+        SaveManager.Load();
+
     }
     public void LoadLevel(int sceneIndex)
     {
         SaveManager.playerSpawnPoint = Vector2.zero;
+        SaveManager.ClearLevelData("0"+(sceneIndex - 1).ToString());
         SceneManager.LoadScene(sceneIndex);
 
     }
@@ -24,13 +27,13 @@ public class MainMenu : MonoBehaviour
     public void NewGame()
     {
         SaveManager.Clear();
+        SaveManager.Save();
         SceneManager.LoadScene(tutorialSceneIndex);
-
     }
 
     public void ContinueGame()
     {
-        SceneManager.LoadScene(SaveManager.curruntLevelSceneCode);
+        SceneManager.LoadScene(SaveManager.currentLevelSceneCode);
         
     }
 }

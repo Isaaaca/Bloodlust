@@ -26,7 +26,8 @@ public class SavePoint : AreaTrigger
                 activated = true;
                 if(animator!=null) animator.SetBool("Activated", activated);
                 SaveManager.playerSpawnPoint = this.transform.position;
-                SaveManager.curruntLevelSceneCode = SceneManager.GetActiveScene().buildIndex;
+                SaveManager.currentLevelSceneCode = SceneManager.GetActiveScene().buildIndex;
+                SaveManager.Save();
                 player.health.Set(player.health.GetMax());
             }
         }

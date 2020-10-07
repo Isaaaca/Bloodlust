@@ -1,20 +1,66 @@
 ﻿using System.Collections;
+using System.IO;
+using System.Xml.Serialization;
 using System.Collections.Generic;
 using UnityEngine;
 
 public static class SaveManager 
 {
     private static HashSet<string> gameProgress = new HashSet<string>();
-    private static Dictionary<string, int> counters = new Dictionary<string, int>();
+    private static XmlSerializableCounters counters = new XmlSerializableCounters();
     public static Vector2 playerSpawnPoint;
-    public static int curruntLevelSceneCode = 1;
+    public static int currentLevelSceneCode = 1;
+
+
+    private static XmlSerializer hashSetSerializer = new XmlSerializer(typeof(HashSet<string>));
+    private static XmlSerializer counterSerializer = new XmlSerializer(typeof(XmlSerializableCounters));
+
+
+
+    public static void Save()
+    {
+        PlayerPrefs.DeleteAll();
+        string xml;
+
+        StringWriter stringWriter = new StringWriter();
+        hashSetSerializer.Serialize(stringWriter, gameProgress);
+        xml = stringWriter.ToString();
+        PlayerPrefs.SetString("gameProgress", xml);
+
+        stringWriter = new StringWriter();
+        counterSerializer.Serialize(stringWriter, counters);
+        xml = stringWriter.ToString();
+        PlayerPrefs.SetString("counters", xml);
+
+        PlayerPrefs.SetFloat("PlaerPosX", playerSpawnPoint.x);
+        PlayerPrefs.SetFloat("PlaerPosY", playerSpawnPoint.y);
+        PlayerPrefs.SetInt("CurrLevel", currentLevelSceneCode);
+
+    }
+
+    public static void Load()
+    {
+        string xml = PlayerPrefs.GetString("counters");
+        StringReader stringReader = new StringReader(xml);
+        counters = (XmlSerializableCounters)counterSerializer.Deserialize(stringReader);
+
+        xml = PlayerPrefs.GetString("gameProgress");
+        stringReader = new StringReader(xml);
+        gameProgress = (HashSet<string>)hashSetSerializer.Deserialize(stringReader);
+
+        float xPos = PlayerPrefs.GetFloat("PlaerPosX", playerSpawnPoint.x);
+        float yPos = PlayerPrefs.GetFloat("PlaerPosY", playerSpawnPoint.y);
+        playerSpawnPoint = new Vector2(xPos, yPos);
+        currentLevelSceneCode = PlayerPrefs.GetInt("CurrLevel", currentLevelSceneCode);
+
+    }
 
     public static void Clear()
     {
         gameProgress.Clear();
         counters.Clear();
         playerSpawnPoint = Vector2.zero;
-        curruntLevelSceneCode = 1;
+        currentLevelSceneCode = 1;
     }
 
     public static void AddEvent(string eventCode)
@@ -45,12 +91,15 @@ public static class SaveManager
 
     public static void ClearLevelData(string LevelCode)
     {
-        foreach(string eventCode in gameProgress)
+        string[] eventCodes = new string[gameProgress.Count];
+        gameProgress.CopyTo(eventCodes);
+        foreach(string eventCode in eventCodes)
         {
             if (eventCode.StartsWith(LevelCode)) gameProgress.Remove(eventCode);
         }
-
-        foreach (string key in counters.Keys)
+        string[] counterCodes = new string[counters.Count];
+        counters.Keys.CopyTo(counterCodes,0);
+        foreach (string key in counterCodes)
         {
             if (key.StartsWith(LevelCode))
             {
