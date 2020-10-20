@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 
 public class test: MonoBehaviour
 {
@@ -11,9 +12,11 @@ public class test: MonoBehaviour
     public CutsceneDirector cd;
     public Sequence sequence;
     public Door door;
+    private AudioSource audioSource;
     // Start is called before the first frame update
     private void Start()
     {
+        audioSource = GetComponent<AudioSource>();
     }
 
     public static void poop()
@@ -26,6 +29,7 @@ public class test: MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Alpha0)) SF.FadeIn();
         if (Input.GetKeyDown(KeyCode.Alpha8)) cd.PlaySequence(sequence);
         if (Input.GetKeyDown(KeyCode.Alpha7)) door.OnSwitch();
+        if (Input.GetKeyDown(KeyCode.Alpha5)) audioSource.PlayOneShot(audioSource.clip);
     }
     void OnDrawGizmosSelected()
     {

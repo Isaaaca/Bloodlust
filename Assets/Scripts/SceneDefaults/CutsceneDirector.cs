@@ -156,7 +156,7 @@ public class CutsceneDirector : MonoBehaviour
     public void CutSequence()
     {
         dialogueManager.CloseDialogue();
-        index = currentSequence.scriptedEvents.Length;
+        index = int.MaxValue;
         waiting = true;
     }
 

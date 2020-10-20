@@ -46,7 +46,7 @@ GameObject:
   - component: {fileID: 3343394608145276198}
   - component: {fileID: 3343394608145276207}
   m_Layer: 9
-  m_Name: Patroller
+  m_Name: AuraPatroller
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -166,7 +166,7 @@ Animator:
   m_GameObject: {fileID: 3343394608145276199}
   m_Enabled: 0
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: b95265f99b6d90e438df1308a89c8bab, type: 2}
+  m_Controller: {fileID: 0}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -190,6 +190,10 @@ MonoBehaviour:
   health:
     max: 30
     current: 30
+  invulnerabilityDuration: 0.4
+  lustRelief: 0
+  activeAfterDeath: 0
+  hurtSoundClip: {fileID: 8300000, guid: 6d780c9ab5c839a4b9b22145ff39fc28, type: 3}
   groundDetection: {fileID: 3343394607723942905}
   goOnSlope: 0
 --- !u!114 &3343394608145276207
@@ -208,12 +212,16 @@ MonoBehaviour:
   drag: 0
   body: {fileID: 3343394608145276194}
   minGroundNormalY: 0.65
+  physicsIgnoredLayers:
+    serializedVersion: 2
+    m_Bits: 0
   groundSpeed: 1.6
   airSpeed: 8
   jumpTakeOffSpeed: 15
   smallJumpDuration: 0.01
   fallingGravityMultiplier: 1.3
   cancelJumpGravity: 3
+  facingRight: 0
 --- !u!1 &3343394609482374501
 GameObject:
   m_ObjectHideFlags: 0

@@ -18,9 +18,9 @@ public class Level3Boss : BaseBossController
     [SerializeField] private float pauseTime = 0.1f;
     [SerializeField] private int numGaps = 3;
     [SerializeField] private float boulderTimingOffset = 0.2f;
-    [SerializeField] private float slamCamShakeIntensity;
-    [SerializeField] private float slamCamShakeduration;
-    [SerializeField] private Projectile[] boulders;
+    [SerializeField] private float slamCamShakeIntensity = 0;
+    [SerializeField] private float slamCamShakeduration = 0;
+    [SerializeField] private Projectile[] boulders = null;
     private float minX = float.MaxValue; 
     private float maxX = float.MaxValue;
     private float xOffset = float.MaxValue;

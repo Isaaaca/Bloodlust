@@ -192,6 +192,8 @@ MonoBehaviour:
     current: 30
   invulnerabilityDuration: 0.4
   lustRelief: 0
+  activeAfterDeath: 0
+  hurtSoundClip: {fileID: 8300000, guid: 6d780c9ab5c839a4b9b22145ff39fc28, type: 3}
   groundDetection: {fileID: 2834482667414517426}
   goOnSlope: 0
 --- !u!114 &2834482667831785572

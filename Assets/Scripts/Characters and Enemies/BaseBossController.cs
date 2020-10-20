@@ -69,6 +69,7 @@ public abstract class BaseBossController : Character
     {
         if (invulTimer <= 0 && health.Get() > 0 && !animator.GetBool("Roar"))
         {
+            if (hurtSoundClip != null) AudioManager.PlayClip(hurtSoundClip);
             health.Modify(-dmg);
             animator.SetTrigger("Hurt");
             if (health.Get() == 0)

@@ -77,7 +77,7 @@ public class GameManager : MonoBehaviour
         if (!isReloading)
         {
             SetGameplayEnabled(false);
-            string code = type+ levelCode + currRoom;
+            string code = levelCode + type + currRoom;
             SaveManager.IncrementCounter(code);
             cutsceneDirector.CutSequence();
             camController.SwitchCamera(CamController.CameraMode.Follow);
@@ -93,7 +93,7 @@ public class GameManager : MonoBehaviour
 
     private void HandleCharacterDeath(Character character)
     {
-        if(character.name == "Boss")
+        if (character.name == "Boss")
         {
             string code = levelCode + character.name;
             SaveManager.AddEvent(code);
@@ -111,7 +111,7 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            SaveManager.IncrementCounter(levelCode + character.name.Substring(0,3)+currRoom);
+            SaveManager.IncrementCounter(levelCode+"M" +currRoom+ character.name.Substring(0, 3));
         }
     }
 
@@ -143,7 +143,8 @@ public class GameManager : MonoBehaviour
                         playerLust.Set(0);
                     }
 
-                    //TODO: reset rooms
+                    SaveManager.playerLust = player.GetLust().Get();
+                    SaveManager.Save();
                     screen.FadeIn();
                 }
                 else if (screen.getOpacity() == 0)
@@ -187,6 +188,8 @@ public class GameManager : MonoBehaviour
     public void SetGamePause(bool paused)
     {
         Time.timeScale = paused ? 0 : 1;
-        SetGameplayEnabled(!paused);
+        Input.ResetInputAxes();
+        if (!gameEventRunning)
+            SetGameplayEnabled(!paused);
     }
 }

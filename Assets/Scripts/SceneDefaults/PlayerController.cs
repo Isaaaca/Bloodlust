@@ -36,6 +36,7 @@ public class PlayerController : Character
         base.Awake();
         SavePoint.OnEnterSavePoint += HandleEnterSavePoint;
         GameManager.SetGameplayEnabled += SetInputControllable;
+        lust.Set(SaveManager.playerLust);
         if (SaveManager.playerSpawnPoint != Vector2.zero)
             transform.position = initialPosition = SaveManager.playerSpawnPoint;
     }

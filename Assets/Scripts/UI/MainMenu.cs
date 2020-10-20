@@ -9,11 +9,18 @@ public class MainMenu : MonoBehaviour
     [SerializeField] private int tutorialSceneIndex = 1;
     [SerializeField] private GameObject defaultSelection = null;
 
+    private static bool loaded = false;
+
     private void Start()
     {
         EventSystem.current.SetSelectedGameObject(null);
         EventSystem.current.SetSelectedGameObject(defaultSelection);
-        SaveManager.Load();
+        BgmManager.instance.FadeOut(0f);
+        if (!loaded)
+        {
+            SaveManager.Load();
+            loaded = true;
+        }
 
     }
     public void LoadLevel(int sceneIndex)

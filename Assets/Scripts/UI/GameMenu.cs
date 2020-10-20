@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class GameMenu : MonoBehaviour
 {
@@ -12,30 +13,56 @@ public class GameMenu : MonoBehaviour
     [SerializeField] private GameObject pausePanel = null;
     [SerializeField] private GameObject pauseDefaultSelection = null;
     [SerializeField] private GameManager gameManager = null;
+    [SerializeField] private LevelFeedback[] feedbacks = null;
+    [SerializeField] private Slider sfxVolumeSlider = null;
+    [SerializeField] private Slider bgmVolumeSlider = null;
 
     private void Update()
     {
         if(levelEndPanel.activeSelf == false
-            && Input.GetKeyDown(KeyCode.BackQuote))
+            && Input.GetKeyDown(KeyCode.P))
         {
-            if (pausePanel.activeSelf) Unpause();
-            else Pause();
+            TogglePause();
         }
     }
     public void ShowLevelEndMenu()
     {
         levelEndPanel.SetActive(true);
+        foreach( LevelFeedback fb in feedbacks)
+        {
+            fb.LoadFeedback();
+        }
         screen.FadeIn();
+        SaveManager.currentLevelSceneCode = SceneManager.GetActiveScene().buildIndex + 1;
+        SaveManager.playerSpawnPoint = Vector2.zero;
+        SaveManager.Save();
         EventSystem.current.SetSelectedGameObject(null);
         EventSystem.current.SetSelectedGameObject(levelEndDefaultSelection);
 
+    }
+
+    public void TogglePause()
+    {
+        if (pausePanel.activeSelf) Unpause();
+        else Pause();
     }
     public void Pause()
     {
         gameManager.SetGamePause(true);
         pausePanel.SetActive(true);
+        bgmVolumeSlider.value = BgmManager.instance.GetVolume();
+        sfxVolumeSlider.value = AudioManager.instance.GetVolume();
         EventSystem.current.SetSelectedGameObject(null);
         EventSystem.current.SetSelectedGameObject(pauseDefaultSelection);
+    }
+
+    public void ChangeSfxVolume(float volume)
+    {
+        AudioManager.instance.SetVolume(volume);
+    }
+    public void ChangeBgmVolume(float volume)
+    {
+        BgmManager.instance.SetVolume(volume);
     }
 
     public void Unpause()

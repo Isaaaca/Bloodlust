@@ -12,6 +12,7 @@ public abstract class Character : MonoBehaviour, ResetableInterface
     public float invulnerabilityDuration = 0.4f;
     [SerializeField] protected float lustRelief = 0f;
     [SerializeField] protected bool activeAfterDeath= false;
+    [SerializeField] protected AudioClip hurtSoundClip= null;
 
 
     protected CharacterMovementController controller;
@@ -62,6 +63,7 @@ public abstract class Character : MonoBehaviour, ResetableInterface
         {
             health.Modify(-dmg);
             animator.SetTrigger("Hurt");
+            if(hurtSoundClip!= null) AudioManager.PlayClip(hurtSoundClip);
             if (health.Get() == 0)
             {
                 animator.SetBool("Dead", true);

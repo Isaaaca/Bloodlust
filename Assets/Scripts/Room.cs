@@ -11,9 +11,20 @@ public class Room : MonoBehaviour
     [SerializeField] private float bottomBorder = 1;
     [SerializeField] private float leftBorder = 1;
     [SerializeField] private float rightBorder = 1;
+    [SerializeField] private Music music = Music.Nill;
+    [SerializeField] private AudioClip overrideMusic = null;
+    
     private Dictionary<GameObject,bool> childObjects = new Dictionary<GameObject,bool>();
     private PolygonCollider2D col2D;
     private bool roomActive = false;
+
+    public enum Music
+    {
+        Silence,
+        Override,
+        Default,
+        Nill
+    }
 
 
     private void Awake()
@@ -68,6 +79,21 @@ public class Room : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        switch(music)
+        {
+            case Music.Override:
+                BgmManager.instance.CrossFade(overrideMusic);
+                break;
+            case Music.Silence:
+                BgmManager.instance.FadeOut();
+                break;
+            case Music.Default:
+                BgmManager.instance.FadeToDefault();
+                break;
+            case Music.Nill:
+                break;
+        }
+
         OnEnterRoom(this);
         roomActive = true;
         ActivateChildren();

@@ -112,6 +112,8 @@ MonoBehaviour:
     current: 40
   invulnerabilityDuration: 0.4
   lustRelief: 0
+  activeAfterDeath: 0
+  hurtSoundClip: {fileID: 8300000, guid: 6d780c9ab5c839a4b9b22145ff39fc28, type: 3}
   range: 9.5
   windUpTime: 0.5
   coolDownTime: 3

@@ -16,6 +16,8 @@ public class DialogueManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI[] optionTexts = null;
     [SerializeField] private Image[] selectionImages = null;
     [SerializeField] private GameObject dialogueBox = null;
+    [SerializeField] private AudioClip nextAudioClip = null;
+    [SerializeField] private AudioClip changeSelectionAudioClip = null;
 
     private Dialogue dialogue;
     private int currLineIndex = 0;
@@ -75,7 +77,7 @@ public class DialogueManager : MonoBehaviour
     public void NextLine()
     {
         var currentLine = dialogue.dialogueLines[currLineIndex];
-
+       
         currLineIndex++;
         if (currLineIndex >= dialogue.dialogueLines.Length)
         {
@@ -92,6 +94,10 @@ public class DialogueManager : MonoBehaviour
             else
             {
                 //end convo
+                if (nextAudioClip != null)
+                {
+                    AudioManager.PlayClip(nextAudioClip);
+                }
                 dialogueBox.SetActive(false);
                 //since dialogues are contained within sequences, only choices need to be logged.
                 //OnDialogueEvent(dialogue.name);
@@ -112,20 +118,30 @@ public class DialogueManager : MonoBehaviour
 
     private void ChangeSelection(bool increment)
     {
+        
         if (increment && currSelection < numOpt)
         {
             currSelection++;
             UpdateSelectionUI();
+            if (changeSelectionAudioClip != null)
+            {
+                AudioManager.PlayClip(changeSelectionAudioClip);
+            }
         }
         else if(!increment && currSelection > 1)
         {
             currSelection--;
             UpdateSelectionUI();
+            if (changeSelectionAudioClip != null)
+        {
+            AudioManager.PlayClip(changeSelectionAudioClip);
+        }
         }
     }
 
     private void UpdateSelectionUI()
     {
+        
         for (int i = 0; i < selectionImages.Length; i++)
         {
             if (i == currSelection-1) selectionImages[i].enabled = true;
@@ -135,6 +151,11 @@ public class DialogueManager : MonoBehaviour
 
     private void UpdateDialogueDisplay()
     {
+
+        if (nextAudioClip != null)
+        {
+            AudioManager.PlayClip(nextAudioClip);
+        }
         string target = dialogue.dialogueLines[currLineIndex].lookAt;
         if (target == "")
             target = dialogue.dialogueLines[currLineIndex].speaker;

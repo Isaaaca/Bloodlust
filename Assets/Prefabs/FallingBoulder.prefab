@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 7438236906548922340}
   - component: {fileID: 2851539318038764312}
   - component: {fileID: 4433727985714194962}
+  - component: {fileID: 7431379249002270981}
   m_Layer: 12
   m_Name: FallingBoulder
   m_TagString: Untagged
@@ -201,3 +202,23 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   velocity: {x: 0, y: 0}
+--- !u!114 &7431379249002270981
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7438236906548922364}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 77c582df781e31f4faa0625c3d90029e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  audioDictionary:
+    m_keys:
+    - Crash
+    m_values:
+    - {fileID: 8300000, guid: 7da5e05900d95004fadc77fddcb3a5cb, type: 3}
+  falloff: 1
+  minDis: 10
+  maxDis: 20

@@ -26,7 +26,7 @@ MonoBehaviour:
     dialogue: {fileID: 11400000, guid: 6c07236d4b8610f46931e6f180b27b9d, type: 2}
     target: 
     targetTransform: {fileID: 0}
-    duration: 2
+    duration: 1
     opacity: 1
     position: {x: 0, y: 0}
   - eventType: 5
@@ -42,6 +42,6 @@ MonoBehaviour:
     dialogue: {fileID: 11400000, guid: 6c07236d4b8610f46931e6f180b27b9d, type: 2}
     target: 
     targetTransform: {fileID: 0}
-    duration: 1
+    duration: 3
     opacity: 0
     position: {x: 0, y: 0}

@@ -34,7 +34,7 @@ MonoBehaviour:
     dialogue: {fileID: 0}
     target: 
     targetTransform: {fileID: 0}
-    duration: 0.6
+    duration: 1
     opacity: 0
     position: {x: 0, y: 0}
   - eventType: 3

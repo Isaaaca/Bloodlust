@@ -9,9 +9,11 @@ public static class SaveManager
     private static HashSet<string> gameProgress = new HashSet<string>();
     private static XmlSerializableCounters counters = new XmlSerializableCounters();
     public static Vector2 playerSpawnPoint;
+    public static float playerLust = 0;
     public static int currentLevelSceneCode = 1;
 
 
+    private static int playSession = 0;
     private static XmlSerializer hashSetSerializer = new XmlSerializer(typeof(HashSet<string>));
     private static XmlSerializer counterSerializer = new XmlSerializer(typeof(XmlSerializableCounters));
 
@@ -32,9 +34,11 @@ public static class SaveManager
         xml = stringWriter.ToString();
         PlayerPrefs.SetString("counters", xml);
 
-        PlayerPrefs.SetFloat("PlaerPosX", playerSpawnPoint.x);
-        PlayerPrefs.SetFloat("PlaerPosY", playerSpawnPoint.y);
+        PlayerPrefs.SetFloat("PlayerPosX", playerSpawnPoint.x);
+        PlayerPrefs.SetFloat("PlayerPosY", playerSpawnPoint.y);
+        PlayerPrefs.SetFloat("PlayerLust", playerLust);
         PlayerPrefs.SetInt("CurrLevel", currentLevelSceneCode);
+        PlayerPrefs.SetInt("PlaySession", playSession);
 
     }
 
@@ -48,10 +52,12 @@ public static class SaveManager
         stringReader = new StringReader(xml);
         gameProgress = (HashSet<string>)hashSetSerializer.Deserialize(stringReader);
 
-        float xPos = PlayerPrefs.GetFloat("PlaerPosX", playerSpawnPoint.x);
-        float yPos = PlayerPrefs.GetFloat("PlaerPosY", playerSpawnPoint.y);
+        float xPos = PlayerPrefs.GetFloat("PlayerPosX", playerSpawnPoint.x);
+        float yPos = PlayerPrefs.GetFloat("PlayerPosY", playerSpawnPoint.y);
         playerSpawnPoint = new Vector2(xPos, yPos);
+        playerLust = PlayerPrefs.GetFloat("PlayerLust", playerLust);
         currentLevelSceneCode = PlayerPrefs.GetInt("CurrLevel", currentLevelSceneCode);
+        playSession = PlayerPrefs.GetInt("PlaySession")+1;
 
     }
 
