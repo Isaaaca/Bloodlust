@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 3037226099589717362}
   - component: {fileID: 3037226099589717363}
   - component: {fileID: 4876313723107516920}
+  - component: {fileID: 5096741183650378708}
   m_Layer: 16
   m_Name: Switch
   m_TagString: Untagged
@@ -146,6 +147,26 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &5096741183650378708
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3037226099589717360}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 77c582df781e31f4faa0625c3d90029e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  audioDictionary:
+    m_keys:
+    - Flip
+    m_values:
+    - {fileID: 8300000, guid: 4b73a1269f7b02242998b7664c64aecf, type: 3}
+  falloff: 0
+  minDis: 10
+  maxDis: 20
 --- !u!1 &3037226100282933562
 GameObject:
   m_ObjectHideFlags: 0
