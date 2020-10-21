@@ -8,6 +8,7 @@ public class MainMenu : MonoBehaviour
 {
     [SerializeField] private int tutorialSceneIndex = 1;
     [SerializeField] private GameObject defaultSelection = null;
+    [SerializeField] private ScreenFader seceneChangeScreen = null;
 
     private static bool loaded = false;
 
@@ -26,8 +27,16 @@ public class MainMenu : MonoBehaviour
     public void LoadLevel(int sceneIndex)
     {
         SaveManager.playerSpawnPoint = Vector2.zero;
+        SaveManager.playerLust = 0;
         SaveManager.ClearLevelData("0"+(sceneIndex - 1).ToString());
-        SceneManager.LoadScene(sceneIndex);
+        StartCoroutine(TransitionToScene(sceneIndex));
+
+    }
+    IEnumerator TransitionToScene(int levelIndex)
+    {
+        seceneChangeScreen.FadeToBlack();
+        yield return new WaitForSeconds(1f);
+        SceneManager.LoadScene(levelIndex);
 
     }
 
@@ -35,12 +44,12 @@ public class MainMenu : MonoBehaviour
     {
         SaveManager.Clear();
         SaveManager.Save();
-        SceneManager.LoadScene(tutorialSceneIndex);
+        StartCoroutine(TransitionToScene(tutorialSceneIndex));
     }
 
     public void ContinueGame()
     {
-        SceneManager.LoadScene(SaveManager.currentLevelSceneCode);
+        StartCoroutine(TransitionToScene(SaveManager.currentLevelSceneCode));
         
     }
 }

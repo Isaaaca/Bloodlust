@@ -8,6 +8,7 @@ using UnityEngine.UI;
 public class GameMenu : MonoBehaviour
 {
     [SerializeField] private ScreenFader screen = null;
+    [SerializeField] private ScreenFader seceneChangeScreen = null;
     [SerializeField] private GameObject levelEndPanel = null;
     [SerializeField] private GameObject levelEndDefaultSelection = null;
     [SerializeField] private GameObject pausePanel = null;
@@ -74,18 +75,26 @@ public class GameMenu : MonoBehaviour
 
     public void NextLevel()
     {
+        int nexwLvlSceneIndex = SceneManager.GetActiveScene().buildIndex + 1;
+
         SaveManager.playerSpawnPoint = Vector2.zero;
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        SaveManager.playerLust = 0;
+        SaveManager.ClearLevelData("0" + (nexwLvlSceneIndex - 1).ToString());
+        StartCoroutine(TransitionToScene(nexwLvlSceneIndex));
     } 
 
-    public void Save()
+    IEnumerator TransitionToScene(int levelIndex)
     {
+        seceneChangeScreen.FadeToBlack();
+        yield return new WaitForSeconds(1f);
+        SceneManager.LoadScene(levelIndex);
 
     }
+
     
     public void MainMenu()
     {
         if (pausePanel.activeSelf) gameManager.SetGamePause(false);
-        SceneManager.LoadScene(0);
+        StartCoroutine(TransitionToScene(0));
     }
 }

@@ -7,7 +7,7 @@ public class LevelCounterFeedback : LevelFeedback
     [SerializeField] string counterCode = "";
     public override void LoadFeedback()
     {
-        mainText.text = SaveManager.GetCounter(counterCode).ToString("N");
+        mainText.text = SaveManager.GetCounter(counterCode).ToString("N0");
         
     }
 }

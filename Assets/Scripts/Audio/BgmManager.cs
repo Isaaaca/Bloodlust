@@ -71,7 +71,7 @@ public class BgmManager : MonoBehaviour
     }
     public void FadeToDefault(float duration)
     {
-        if (sources[currSource].clip.name != defaultBGM.name)
+        if (sources[currSource].clip == null || sources[currSource].clip.name != defaultBGM.name)
         {
             CrossFade(defaultBGM, duration);
         }
